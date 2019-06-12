@@ -5,10 +5,12 @@ import {BrowserRouter} from 'react-router-dom';
 import Routes from './routes';
 import TopNav from './components/app/topnav';
 
+const baseURL = process.env.PUBLIC_URL || '';
+
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">TopNav
+    <BrowserRouter basename={baseURL}>
+      <div className="App">
         <TopNav></TopNav>
         {/* <div className="container"> */}
             <Routes></Routes>
