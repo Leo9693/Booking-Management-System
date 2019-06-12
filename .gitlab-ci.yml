@@ -1,0 +1,45 @@
+# Using the node alpine image to build the React app
+image: node:alpine
+
+# Announce the URL as per CRA docs
+# https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration
+variables:
+  PUBLIC_URL: /booking-management
+  S3_BUCKET_NAME: ""
+
+# Cache node modules - speeds up future builds
+cache:
+  paths:
+  - node_modules
+
+# Name the stages involved in the pipeline
+stages:
+- build
+- deploy
+
+build:
+  stage: build
+  script:
+    - npm install # Install all dependencies
+    - npm run build --prod # Build for prod
+    - cp build/index.html build/404.html # Overwrite 404 page
+  artifacts:
+    paths:
+    - build 
+  only:
+    - branch-leo # Only run on ... branch
+
+pages:  
+  stage: deploy
+  environment: staging
+  variables:
+    GIT_STRATEGY: none
+    GIT_CHECKOUT: "false"
+  script:
+    - mv build public # Move build files to public dir for Gitlab Pages
+  artifacts:
+    paths:
+    - public # The built files for Gitlab Pages to serve
+  only:
+    - branch-leo # Only run on ... branch
+
