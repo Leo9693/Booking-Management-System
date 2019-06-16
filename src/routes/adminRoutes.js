@@ -1,22 +1,22 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
-import adminView from '../components/admin/adminView';
-import adminDetailView from '../components/admin/adminDetailView';
+import {Route} from 'react-router-dom';
+import AdminView from '../components/admin/adminView';
+import AdminDetailView from '../components/admin/adminDetailView';
 
-class adminRoutes extends React.Component {
+class AdminRoutes extends React.Component {
 
 
     render() {
         const props = this.props;
         return (
-            <Switch>
-                <Route exact path={`${props.match.path}/`} component={adminView}/>
-                <Route path={`${props.match.path}/:id`} component={adminDetailView}/>
-            </Switch>
+            <div>
+                <Route exact path={`${props.match.path}/`} component={AdminView}/>
+                <Route path={`${props.match.path}/:id`} component={AdminDetailView}/>
+            </div>
         )
     }
 }
 
-export default adminRoutes
+export default AdminRoutes
 
 
