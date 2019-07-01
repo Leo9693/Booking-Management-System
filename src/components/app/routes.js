@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Login from './login';
+import Signup from './signup';
 //import OrderRoutes from './routes/orderRoutes';
 //import ClientRoutes from './routes/clientRoutes';
 //import SigninRoutes from './routes/signinRoutes';
@@ -10,7 +11,8 @@ import Login from './login';
 
 export default () => (
     <Switch>
-        <Route exact path="/" component={Login} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
         <Route path="/orders" component={() => <h2>This is order page</h2>} />
         {/* <Route path="/admins" component={AdminRoutes}/> */}
         {/* <Route path="/clients" component={ClientView}/> */}

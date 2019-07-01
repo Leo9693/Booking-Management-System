@@ -2,14 +2,17 @@ import { actionTypes } from './index';
 import { login } from '../../../api/auth';
 
 export const inputChange = (inputKey, inputValue) => ({
-    type: actionTypes.LOGIN_INPUT,
+    type: actionTypes.HANDLE_INPUT,
     inputKey,
     inputValue
 });
 
-export const setError = (err) => ({
-    type: actionTypes.SET_ERROR,
+export const setLoginError = (err) => ({
+    type: actionTypes.SET_LOGIN_ERROR,
     err
 });
 
-
+export const setSignupError = (err) => ({
+    type: actionTypes.SET_SIGNUP_ERROR,
+    err
+});

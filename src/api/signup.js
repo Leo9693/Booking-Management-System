@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function handleSignup(name, email, password) {
+export function signup(name, email, password) {
     return axios.post('/users', {name, email, password}).then((res) => {
         console.log(res);
         const {token} = res.data;

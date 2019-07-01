@@ -9,7 +9,7 @@ class Login extends Component {
         const {loginError, loginEmail, loginPassword, history} = this.props;
         return (
             <div className="container">
-                {loginError && <div>{loginError.response.data}</div>}
+                
                 <form>
                     <label 
                         htmlFor="inputName" 
@@ -47,9 +47,10 @@ class Login extends Component {
                         onClick={(event) => this.props.handleSubmit(event, loginEmail, loginPassword, loginError, history)}
                         // loading={isFetching}
                     >
-                        Sign in
+                        log in
                     </button>
                 </form>
+                {loginError && <div>{loginError.response.data}</div>}
             </div>            
         )
     }
@@ -74,12 +75,11 @@ const mapDispatch = (dispatch) => {
             event.preventDefault();
             console.log(loginError);
             if (loginError) {
-                console.log('loginError');
-                dispatch(actionCreators.setError(null));
+                dispatch(actionCreators.setLoginError(null));
             }
             login(loginEmail, loginPassword)
                 .then(() => history.replace('/orders'))
-                .catch(err => dispatch(actionCreators.setError(err)));
+                .catch(err => dispatch(actionCreators.setLoginError(err)));
             //dispatch(actionCreators.loginSubmit(loginEmail, loginPassword));
 
         }
