@@ -1,26 +1,28 @@
 import React, {Component} from 'react';
-// import logo from './logo.svg';
-import './App.css';
-import Routes from './components/App/routes';
-import TopNav from './components/App/topnav';
-import {loggedIn} from './api/auth';
-
+import store from './store/index';
+import { Provider } from 'react-redux';
+import Routes from './components/app/routes';
+//import Login from './components/app/login';
+// import TopNav from './components/App/topnav';
+// import {loggedIn} from './api/auth';
 
 class App extends Component {
 
   render() {
     console.log('App render');
     return (
-      <div className="app">
-        {
+      <Provider store={store}>
+        <div className="app">
+        {/* {
           loggedIn() && <TopNav />
-        }
+        } */}
         {/* <TopNav /> */}
         {/* <main className="container"> */}
-			  <Routes />
+        <Routes />
+        {/* <Login /> */}
         {/* </main> */}
-      </div>
-
+        </div>
+      </Provider>
     );
   }
 }

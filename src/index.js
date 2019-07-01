@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 // import './style/index.scss'
@@ -14,7 +14,7 @@ const baseURL = process.env.PUBLIC_URL || '';
 ReactDOM.render(
     <BrowserRouter basename={baseURL}>
 
-        <App />
+        <Route path="/" component={App} />
 
     </BrowserRouter>, document.getElementById('root'));
 
