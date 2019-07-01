@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-
 import {login} from '../../api/auth';
 
-class SigninView extends Component {
+class LoginView extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isFetching: false,
+            // isFetching: false,
             email: '',
             password: '',
+            error: null,
         };
     }
 
@@ -26,23 +26,31 @@ class SigninView extends Component {
 
         const {email, password} = this.state;
         this.setState({
-            isFetching: true,
+            // isFetching: true,
+            error: null,
         });
 
-        login(email, password).then(auth => {
-            this.setState({
-                isFetching: false,
+        login(email, password).
+            then(auth => {
+            // this.setState({
+            //     isFetching: false,
+            // });
+            this.props.history.replace('/clients');
+            }).catch(err => {
+                console.log(err.response.data);
+                this.setState({
+                    error: err,
+                })
             });
-
-            this.props.history.push('/');
-        });
     }
 
     render() {
-        const {isFetching, email, password} = this.state;
-
+        // const {isFetching, email, password} = this.state;
+        const {email, password} = this.state;
+        console.log('loginView is rendered');
         return (
             <div className="container">
+                {this.state.error && <div>{this.state.error.response.data}</div>}
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="inputName" className="sr-only">
                         email:
@@ -66,14 +74,10 @@ class SigninView extends Component {
                     >
                         Sign in
                     </button>
-
                 </form>
-
             </div>
         )
     }
 }
 
-export default withRouter(SigninView);
-
-//export default SigninView;
+export default withRouter(LoginView);

@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 // import logo from './logo.svg';
 import './App.css';
-
-import Routes from './routes';
-import TopNav from './components/app/topnav';
-
+import Routes from './components/App/routes';
+import TopNav from './components/App/topnav';
 import {loggedIn} from './api/auth';
 
 
@@ -13,14 +11,14 @@ class App extends Component {
   render() {
     console.log('App render');
     return (
-
-      <div>
+      <div className="app">
         {
           loggedIn() && <TopNav />
         }
-        <main className="container">
-          <Routes />
-        </main>
+        {/* <TopNav /> */}
+        {/* <main className="container"> */}
+			  <Routes />
+        {/* </main> */}
       </div>
 
     );

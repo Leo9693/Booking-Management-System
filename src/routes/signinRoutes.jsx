@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-import SigninView from '../components/app/signinView';
+// import SigninView from '../components/App/loginView';
 
 class SigninRoutes extends React.Component {
 
@@ -8,7 +8,7 @@ class SigninRoutes extends React.Component {
         const props = this.props;
         return (
             <div>
-                <Route exact path={`${props.match.path}/`} component={SigninView}/>
+                {/* <Route exact path={`${props.match.path}/`} component={SigninView}/> */}
                 {/* <Route path={`${props.match.path}/:id`} component={ClientDetailView}/> */}
             </div>
         )
