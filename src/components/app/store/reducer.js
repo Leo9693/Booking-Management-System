@@ -13,7 +13,7 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
     switch(action.type) {
-        case actionTypes.HANDLE_INPUT:
+        case actionTypes.HANDLE_INPUT_CHANGE:
             // const newState = Object.assign({}, state);
             // newState[action.inputKey] = action.inputValue;
             // 上面和下面两种写法都可以

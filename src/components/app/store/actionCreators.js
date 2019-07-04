@@ -1,8 +1,8 @@
 import { actionTypes } from './index';
-import { login } from '../../../api/auth';
+//import { login } from '../../../api/auth';
 
 export const inputChange = (inputKey, inputValue) => ({
-    type: actionTypes.HANDLE_INPUT,
+    type: actionTypes.HANDLE_INPUT_CHANGE,
     inputKey,
     inputValue
 });
