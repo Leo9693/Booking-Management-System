@@ -3,8 +3,21 @@ import {Modal, Form, Button, Row, Col} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import { actionCreators } from './store';
 
-class CreateModal extends Component {  
+class CreateModal extends Component {
+    componentDidMount() {
+        console.log('componentDidMount');
+    }
+
+    componentDidUpdate() {
+        console.log('11componentDidUpdate');  
+    }
+
+    componentWillUnmount() {
+        console.log('componentWillUnmount');   
+    }
+
     render() {
+        console.log('render');   
         const {isShowCreate, newCategoryName, newCategoryDescription, errorInfo, currentPage, pageSize} = this.props;
         const {closeCreate, handleInputChange, submitCreate} = this.props;
         return (

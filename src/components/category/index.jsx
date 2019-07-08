@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from './store';
-import { DropdownButton, Dropdown, Button } from 'react-bootstrap';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
 import CreateModal from './createModal';
 import DeleteConfirmModal from './deleteConfirmModal'; 
 import UpdateModal from './updateModal';
 import Paginating from './paginating';
+import {LoadingButton} from '../UI/Button';
 
 class Category extends Component {
 
     render() {
 
         const {handleInputChange, handleSearch, handleDetail, handleDelete, handleUpdate, showCreate, changePageSize} = this.props;
-        const {documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue} = this.props;
+        const {documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue, isShowCreate} = this.props;
         console.log('Category1');
         console.log(errorInfo);
         return (
@@ -31,11 +32,11 @@ class Category extends Component {
                     <option value="searchAll">Search All</option>
                     <option value="name">Search By Name</option>
                 </select>
-                <button className="btn btn-outline-primary mr-2"
+                <LoadingButton className="btn mr-2" buttonStyle="btn-outline-primary" type="submit"
                     onClick={(event) => handleSearch(event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue)}
                 >
                     Search
-                </button>
+                </LoadingButton>
                 <div className="input-group">
                     <div className="input-group-prepend">
                         <span className="input-group-text">Sort By: </span>
@@ -58,7 +59,7 @@ class Category extends Component {
             </div>
 
 
-            <CreateModal/>
+            {isShowCreate && <CreateModal/>}
             <DeleteConfirmModal />
             {isShowUpdateModal && <UpdateModal />}
             {errorInfo && <div style={{color: "red"}}>{errorInfo.response.data}</div>}
@@ -123,6 +124,7 @@ const mapState = (state) => ({
     errorInfo: state.category.errorInfo,
     sortKey: state.category.sortKey,
     sortValue: state.category.sortValue,
+    isShowCreate: state.category.isShowCreate
 });
 
 const mapDispatch = (dispatch) => ({

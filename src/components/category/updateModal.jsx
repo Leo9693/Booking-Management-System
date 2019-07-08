@@ -5,10 +5,21 @@ import { actionCreators } from './store';
 
 class UpdateModal extends Component {  
     componentDidMount() {
+        console.log('componentDidMount');
         this.props.getUpdateCategory(this.props.selectedCategoryID);
     }
+
+    componentDidUpdate() {
+        console.log('componentDidUpdate');  
+    }
+
+    componentWillUnmount() {
+        console.log('componentWillUnmount');   
+    }
+
     
     render() {
+        console.log('render');
         const {isShowUpdateModal, updateCategoryName, updateCategoryDescription, errorInfo, selectedCategoryID, currentPage, pageSize} = this.props;
         const {closeUpdateModal, handleInputChange, submitUpdate} = this.props;
         return (
