@@ -7,6 +7,7 @@ import DeleteConfirmModal from './deleteConfirmModal';
 import UpdateModal from './updateModal';
 import Paginating from './paginating';
 import {LoadingButton} from '../UI/Button';
+import { Link } from 'react-router-dom';
 
 class Category extends Component {
 
@@ -80,11 +81,14 @@ class Category extends Component {
                                     <td className="col-2">{item.name}</td>
                                     <td className="col-7">{item.description}</td>
                                     <td className="col-3">
-                                        <button type="button" className="btn btn-info btn-sm mr-4">
-                                            <i className="fas fa-info text-light px-1"
-                                                onClick={() => handleDetail(item._id)}
-                                            />
-                                        </button>
+                                        {console.log(item._id)}
+                                        <Link to={`/categories/${item._id}`}>
+                                            <button type="button" className="btn btn-info btn-sm mr-4">
+                                                <i className="fas fa-info text-light px-1"
+                                                    onClick={() => handleDetail(item._id)}
+                                                />
+                                            </button>
+                                        </Link>
                                         <button type="button" className="btn btn-warning btn-sm mr-4"
                                             onClick={() => handleUpdate(item._id)}
                                         >

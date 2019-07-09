@@ -8,3 +8,4 @@ export const SET_DELETE_CONFIRM = 'category/set_delete-confirm';
 export const SET_SELECTED_CATEGORY_ID = 'category/set_selected_category_id';
 export const SHOW_UPDATE_MODAL = 'category/show_update_modal';
 export const SET_CURRENT_PAGE = 'category/set_current_page';
+export const SET_IS_LOADING = 'category/set_is_loading';

@@ -19,6 +19,10 @@ const defaultState = {
     setPageAs: 1,
     sortKey: 'name',
     sortValue: 1,
+    isLoading: false,
+    detailedCategory: {},
+    addedBusinessSelector: 'id',
+    addedBusinessInfo: '',
 }
 
 export default (state = defaultState, action) => {
@@ -59,6 +63,10 @@ export default (state = defaultState, action) => {
         case actionTypes.SET_CURRENT_PAGE:
             const {page} = action;
             return {...state, currentPage: page};
+
+        case actionTypes.SET_IS_LOADING:
+            const {isLoading} = action;
+            return {...state, isLoading};
         default:
             return state;
     }

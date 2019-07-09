@@ -32,3 +32,11 @@ export function updateCategoryByID(name, description, id) {
                     return res;
                 });
 }
+
+export function addBusinessToCategoryById(addedBusinessInfo, categoryID) {
+    return axios.post(`/categories/${categoryID}/businesses/${addedBusinessInfo}`)
+                // .then((res) => {
+                //     console.log(res);
+                //     return res;
+                // });
+}

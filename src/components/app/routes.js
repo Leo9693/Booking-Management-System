@@ -4,6 +4,7 @@ import Login from './login';
 import Signup from './signup';
 import Navigation from './navigation';
 import Category from '../category';
+import CategoryDetails from '../category/categoryDetails';
 //import OrderRoutes from './routes/orderRoutes';
 //import ClientRoutes from './routes/clientRoutes';
 //import SigninRoutes from './routes/signinRoutes';
@@ -19,7 +20,8 @@ export default () => (
             <Route path="/signup" component={Signup} />
             <Route path="/nav" component={Navigation} />
             <Route path="/orders" component={() => <h2>This is order page</h2>} />
-            <Route path="/categories" component={Category} />
+            <Route exact path="/categories" component={Category} />
+            <Route path="/categories/:id" component={CategoryDetails} />
             {/* <Route path="/admins" component={AdminRoutes}/> */}
             {/* <Route path="/clients" component={ClientView}/> */}
             {/* <Route exact path="/businesses" component={businessesView}/>
