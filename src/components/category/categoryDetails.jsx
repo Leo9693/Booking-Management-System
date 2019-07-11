@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from './store';
 import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui';
-
+import { Descriptions } from 'antd';
 
 class CategoryDetails extends Component {
     componentDidMount() {
@@ -91,27 +91,46 @@ function DisplayCategory(props) {
     const {detailedCategory} = props;
     return (
 
-        <div>
-            <div>{detailedCategory.name}</div>
-            <div>{detailedCategory.description}</div>
-            {detailedCategory.orders && detailedCategory.orders.map((item) => {
-                return (
-                    <div key={item._id}>
-                        orders: {item._id}
-                    </div>
-            )})}
-            <div>
-                Businesses: 
-            </div>
-            {detailedCategory.businesses && detailedCategory.businesses.map((item) => {
-                return (
-                    <div key={item._id}>
-                        <span>{item.businessName}</span>
-                        <span>{item.email}</span>
-                    </div>
-            )})}
+        <Descriptions bordered column={1}
+                    title="Category Details">
+            <Descriptions.Item label="Name">
+                {detailedCategory.name}
+            </Descriptions.Item>
+            <Descriptions.Item label="Description">
+                {detailedCategory.description}
+            </Descriptions.Item>
+            <Descriptions.Item label="Businesses">
+                {detailedCategory.businesses && detailedCategory.businesses.map((item) => {
+                    return (
+                        <div key={item._id}>
+                            <span>{item.businessName}</span>
+                            <span>{item.email}</span>
+                        </div>
+                )})}
+            </Descriptions.Item>
+        </Descriptions>
 
-        </div>
+        // <div>
+        //     <div>{detailedCategory.name}</div>
+        //     <div>{detailedCategory.description}</div>
+        //     {detailedCategory.orders && detailedCategory.orders.map((item) => {
+        //         return (
+        //             <div key={item._id}>
+        //                 orders: {item._id}
+        //             </div>
+        //     )})}
+        //     <div>
+        //         Businesses: 
+        //     </div>
+        //     {detailedCategory.businesses && detailedCategory.businesses.map((item) => {
+        //         return (
+        //             <div key={item._id}>
+        //                 <span>{item.businessName}</span>
+        //                 <span>{item.email}</span>
+        //             </div>
+        //     )})}
+
+        // </div>
     )
 }
 

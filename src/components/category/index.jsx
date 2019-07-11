@@ -8,11 +8,14 @@ import UpdateModal from './updateModal';
 import Paginating from './paginating';
 import {LoadingButton} from '../UI/Button';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
 
 class Category extends Component {
 
     render() {
-
+          
         const {handleInputChange, handleSearch, handleDetail, handleDelete, handleUpdate, showCreate, changePageSize} = this.props;
         const {documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue, isShowCreate} = this.props;
         console.log('Category1');
@@ -59,7 +62,6 @@ class Category extends Component {
                 </button>    
             </div>
 
-
             {isShowCreate && <CreateModal/>}
             <DeleteConfirmModal />
             {isShowUpdateModal && <UpdateModal />}
@@ -84,19 +86,23 @@ class Category extends Component {
                                         {console.log(item._id)}
                                         <Link to={`/categories/${item._id}`}>
                                             <button type="button" className="btn btn-info btn-sm mr-4">
-                                                <i className="fas fa-info text-light px-1"
-                                                    onClick={() => handleDetail(item._id)}
-                                                />
+                                                <FontAwesomeIcon icon={faInfo} 
+                                                                onClick={() => handleDetail(item._id)} />
+                                                     {/* <i className="fas fa-info text-light px-1" */}
+                                                     {/* onClick={() => handleDetail(item._id)} */}
+                                                 {/* /> */}
                                             </button>
                                         </Link>
                                         <button type="button" className="btn btn-warning btn-sm mr-4"
                                             onClick={() => handleUpdate(item._id)}
                                         >
-                                            <i className="far fa-edit text-light"/>
+                                            <FontAwesomeIcon icon={faEdit} />
+                                            {/* <i className="far fa-edit text-light"/> */}
                                         </button>
                                         <button type="button" className="btn btn-danger btn-sm mr-4"
                                             onClick={() => handleDelete(item._id)}
                                         >
+                                            <FontAwesomeIcon icon={faTrashAlt} />
                                             <i className="far fa-trash-alt text-light"/>
                                         </button>
                                     </td>

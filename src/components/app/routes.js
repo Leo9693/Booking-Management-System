@@ -1,10 +1,11 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 import Login from './login';
 import Signup from './signup';
 import Navigation from './navigation';
 import Category from '../category';
 import CategoryDetails from '../category/categoryDetails';
+import { loggedIn } from '../../api/auth';
 //import OrderRoutes from './routes/orderRoutes';
 //import ClientRoutes from './routes/clientRoutes';
 //import SigninRoutes from './routes/signinRoutes';
@@ -15,13 +16,13 @@ import CategoryDetails from '../category/categoryDetails';
 export default () => (
     <div>       
         <Switch>
-            {/* <Route exact path="/" component={Navigation} /> */}
+            <ProtectedRoute exact path="/" component={Login} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/nav" component={Navigation} />
-            <Route path="/orders" component={() => <h2>This is order page</h2>} />
-            <Route exact path="/categories" component={Category} />
-            <Route path="/categories/:id" component={CategoryDetails} />
+            <ProtectedRoute path="/nav" component={Navigation} />
+            <ProtectedRoute path="/orders" component={() => <h2>This is order page</h2>} />
+            <ProtectedRoute exact path="/categories" component={Category} />
+            <ProtectedRoute path="/categories/:id" component={CategoryDetails} />
             {/* <Route path="/admins" component={AdminRoutes}/> */}
             {/* <Route path="/clients" component={ClientView}/> */}
             {/* <Route exact path="/businesses" component={businessesView}/>
@@ -31,6 +32,17 @@ export default () => (
             {/* <Route exact path="/singup" component={Signup} /> */}
             {/* <Route exact path="/signup" component={SignupView} /> */}
         </Switch>
-    </div>
-    
+    </div>   
 )
+
+const ProtectedRoute = ({component: ProtectedComponent, ...rest}) => {
+    console.log("loggedIn()");
+    console.log(loggedIn());
+    return <Route {...rest}
+        render={props => 
+            (loggedIn()) ?
+            (<ProtectedComponent {...props} />) :
+            (<Redirect to="/login" />)
+        }
+    />
+}

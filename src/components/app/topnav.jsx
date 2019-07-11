@@ -38,13 +38,14 @@ class TopNav extends React.Component {
                     </Nav>
                     <NavDropdown title="Admin" id="basic-nav-dropdown" className="text-light">
                         {
+
                             loggedIn() ? 
                             (
                                 // <NavDropdown.Item as={Link}  to='/signout'>Sign out</NavDropdown.Item>
-                                <NavDropdown.Item onClick={this.handleLogout}>Log out</NavDropdown.Item>
+                                <NavDropdown.Item onClick={this.handleLogout}>Log out 2</NavDropdown.Item>
                             ):
                             (
-                                <NavDropdown.Item as={Link} to='/login'>Log in</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to='/login'>Log in 2</NavDropdown.Item>
                             )
                         } 
                         <NavDropdown.Divider />

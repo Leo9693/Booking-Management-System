@@ -5,8 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-block-ui/style.css';
 import axios from 'axios';
+
 // import './style/index.scss'
+
 axios.defaults.baseURL = 'https://booking-management-database.herokuapp.com/V1';
 
 const baseURL = process.env.PUBLIC_URL || '';

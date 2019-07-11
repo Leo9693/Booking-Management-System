@@ -3,9 +3,13 @@ import store from './store/index';
 import { Provider } from 'react-redux';
 import Routes from './components/app/routes';
 import Navigation from './components/app/navigation';
+import './App.scss';
+import Layout from './components/app/layout';
+import Footer from './components/app/footer';
+
 //import Login from './components/app/login';
 // import TopNav from './components/App/topnav';
-// import {loggedIn} from './api/auth';
+import {loggedIn} from './api/auth';
 
 class App extends Component {
 
@@ -13,7 +17,12 @@ class App extends Component {
     console.log('App render');
     return (
       <Provider store={store}>
-        <div className="container-fluid ">
+        <Layout sider={<Navigation />}
+                content={<Routes />}
+                footer={<Footer />}/> 
+
+
+        {/* <div className="container-fluid ">
           <div className="row no-gutters">
             <div className="col-2">
               <Navigation />
@@ -30,8 +39,8 @@ class App extends Component {
 
             {/* <Login /> */}
             {/* </main> */}
-          </div>
-        </div>
+          {/* </div> */}
+        {/* </div> */} 
       </Provider>
     );
   }

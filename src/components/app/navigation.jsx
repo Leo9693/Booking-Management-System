@@ -15,7 +15,7 @@ class Navigation extends Component {
     render() {
         return (
          
-            <Navbar bg="light" className="flex-column">
+            <Navbar bg="light" className="flex-column" style={{Height: "250vh"}}>
                 <Navbar.Brand as={Link} to="/">Booking Management</Navbar.Brand>
                 <Accordion defaultActiveKey="0">
                     <Card>
@@ -39,24 +39,32 @@ class Navigation extends Component {
                 </Accordion>
 
                 <Nav.Link className="mb-5"  as={Link} to="/orders">Admin User</Nav.Link>
-
-                <NavDropdown 
-                    title="Log in / Sign up" id="basic-nav-dropdown" 
-                    className="text-light"
-                >
-                    {
-                        loggedIn() ? 
-                            <NavDropdown.Item onClick={this.handleLogout}>
-                                Log out
-                            </NavDropdown.Item>
-                            :
-                            <NavDropdown.Item as={Link} to='/login'>
-                                Log in
-                            </NavDropdown.Item>
-                    } 
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item as={Link} to='/signup'>Sign up</NavDropdown.Item>
-                </NavDropdown>
+                
+                {
+                    loggedIn() ? 
+                    (<NavDropdown 
+                        title="Log out / Sign up" id="basic-nav-dropdown" 
+                        className="text-light"
+                    >
+                        <NavDropdown.Item onClick={this.handleLogout}>
+                            Log out
+                        </NavDropdown.Item>                    
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item as={Link} to='/signup'>Sign up</NavDropdown.Item>
+                    </NavDropdown>)
+                    :
+                    (<NavDropdown 
+                        title="Log in / Sign up" id="basic-nav-dropdown" 
+                        className="text-light"
+                    >
+                        <NavDropdown.Item as={Link} to='/login'>
+                            Log in
+                        </NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item as={Link} to='/signup'>Sign up</NavDropdown.Item>
+                    </NavDropdown>)
+                }
+                
             </Navbar>
       
         )
