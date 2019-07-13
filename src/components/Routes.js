@@ -9,8 +9,8 @@ import OrderView from './Orders/OrderView';
 import OrderEdit from './Orders/Edit';
 import LoginView from './Admin/Login';
 import {loggedIn} from "../api/auth";
-
-
+import Category from '../components/category';
+import CategoryDetails from '../components/category/categoryDetails';
 
 export default () => (
     <div>
@@ -26,7 +26,9 @@ export default () => (
      <ProtectedRoute exact path="/" component={Home} />
      <ProtectedRoute exact path="/orders/management" component={OrderManagement} /> 
      <ProtectedRoute exact path="/orders/management/edit/:id" component={OrderEdit} />  
-     <ProtectedRoute exact path="/orders/management/:id" component={OrderView} />     
+     <ProtectedRoute exact path="/orders/management/:id" component={OrderView} />
+     <ProtectedRoute exact path="/categories/" component={Category} />
+     <ProtectedRoute path="/categories/:id" component={CategoryDetails} /> 
      <ProtectedRoute exact path="/admin/setting" component={setting} />
      <Route exact path="/admin/login" component={LoginView} />      
      </BasicLayout>
