@@ -6,6 +6,7 @@ import "antd/dist/antd.css";
 import "./index.css";
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 axios.defaults.baseURL = 'https://handyman-cms.herokuapp.com/api';
 
