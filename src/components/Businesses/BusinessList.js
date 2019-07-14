@@ -23,10 +23,6 @@ render() {
   return (
     <div className="col-sm-offset-2 col-sm-10">
        <form>
-            <div>
-              <p>Please enter your business list</p>
-            </div>
-
             <div className="form-group" onChange={this.handleChange.bind(this)}>
           
               <label htmlFor="InputBName">Business Name</label>
@@ -82,24 +78,28 @@ render() {
     </div> 
   );
  }
-  handleChange(event) {
-    console.log(event.target.value);
-    console.log(event.target.id);
-    this.setState({
-      [event.target.id]: event.target.value,
-    })
+  handleChange=(event)=> {
+      const { id, value } = event.target;
+      this.setState((preState) => {
+      const business = { ...preState.business };
+      business[id] = value;
+      return { business};
+    });
+    // this.setState ({
+    //   [event.target.id]: event.target.value,
+    // })
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.list);
-    console.log(this.state.InputBName);
-    console.log(this.state.InputEmail);
-    console.log(this.state.InputABN);
-    console.log(this.state.InputPhone);
-    console.log(this.state.InputStreet);
-    console.log(this.state.InputPostcode);
-    console.log(this.state.InputState);
+    // console.log(this.state.list);
+    // console.log(this.state.InputBName);
+    // console.log(this.state.InputEmail);
+    // console.log(this.state.InputABN);
+    // console.log(this.state.InputPhone);
+    // console.log(this.state.InputStreet);
+    // console.log(this.state.InputPostcode);
+    // console.log(this.state.InputState);
     this.setState({
       list:[...this.state.list, 
         this.state.InputBName,

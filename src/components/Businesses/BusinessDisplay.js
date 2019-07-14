@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {  Layout, Icon, Button, Input, AutoComplete, Row, Col, List, Avatar,Table, Divider } from 'antd';
 import { Link } from 'react-router-dom';
-import {fetchBusinesses,deleteBusiness, fetchBusinessById} from '../../api/business';
+import { deleteBusiness, fetchBusinessById } from '../../api/business';
 import BlockUi from 'react-block-ui';
 
+const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
 const { Option } = AutoComplete;
 
@@ -16,7 +17,6 @@ class BusinessDisplay extends Component{
            key: 'id',  
            render: (text, record) => (
              <span>    
-           
             <Link
                  to={{
                      pathname: `/businesses${text}`,           
@@ -50,7 +50,7 @@ class BusinessDisplay extends Component{
     constructor(props) {
         super(props);
         this.state = {
-          loading: false,
+        //   loading: false,
 
           isFetching: false,
 
@@ -63,48 +63,51 @@ class BusinessDisplay extends Component{
     }
 
     componentDidMount(){
-        const { id } = this.props.match.params;
+        const id = this.props.match.params.id;
             this.setState({ 
                 isLoading: true,
         })
-
         fetchBusinessById(id)
         .then(business => {
             this.setState({ isLoading: false, business, error: null });
         })
         .catch(error => {
-            this.setState({ isLoading: false, error });
+            this.setState({ isLoading: false, error:error });
         });
     }
 
-    handleEdit = (event) => {
+    handleEdit = event => {
         const { business } = this.state;
-        this.props.history.push({
-            pathname: `/businesses/list`,
-        });
+        this.props.history.push({pathname:`/businesses/list/${business._id}`});
       }
      
-      handleDelete(event) {
+      handleDelete = event => {
         if (window.confirm("Do you want to delete this business list ?")) {
           const { id } = this.props.match.params;
-            this.setState({ loading: true });
+            this.setState({ isLoading: false });
+
           deleteBusiness(id).then(res => {
-              this.setState({ loading: false });
-              this.props.history.push('/businesses');
+              this.setState({ isLoading: false });
+              this.props.history.replace('/businesses');
           }).catch(error => {
-              this.setState({ loading: false, error });
+              this.setState({ isLoading: false, error });
           });
         }
-      }
+      };
         
     render(){
+        const {isLoading, business} = this.state;
         return (<div>
-            <Layout style={{}}>
+            <Layout>
                 <Header className="bd-header">
                     <Row>
                         <Col span={12}>
                             <div className="bd-search">
-                                
+                            <Search
+                                placeholder="input search text"
+                                onSearch={value => console.log(value)}
+                                style={{ width: 200 }}
+                            />
                             </div>
                         </Col>
 
@@ -118,19 +121,18 @@ class BusinessDisplay extends Component{
                     </Row>
                 </Header>
                 <Content className="bd-content">   
-                    <BlockUi 
-                    // blocking={loading}
-                    >
+                    <BlockUi blocking={this.state.isLoading}>
                         <Table columns={this.columns} 
                         // dataSource={this.props.businesses} 
-                       
-                        
                         />
    
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Button primary className={'btn-group'} onClick={this.handleEdit}>
+                      <Link to={{pathname: `/businesses/list`, state: { business },}}>
+                         <Button primary className={'btn-group'} onClick={this.handleEdit}>
                             Edit
                          </Button>
+                      </Link>
+                       
                         <Button danger className={'btn-group'} onClick={this.handleDelete}>
                             Delete
                          </Button>   
