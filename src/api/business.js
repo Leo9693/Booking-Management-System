@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-export function fetchBusinesses(){
+export function fetchBusinesses(search){
     return axios
     .get('/businesses')
     .then((response) => {return response.data}) //箭头函数 

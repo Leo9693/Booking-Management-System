@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {  Layout, Icon, Button, Input, AutoComplete, Row, Col, List, Avatar,Table, Divider } from 'antd';
 import { Link } from 'react-router-dom';
-import { deleteBusiness, fetchBusinessById } from '../../api/business';
+import { deleteBusiness, fetchBusinessById, fetchBusinesses } from '../../api/business';
 import BlockUi from 'react-block-ui';
 
 const { Search } = Input;
@@ -9,105 +9,110 @@ const { Header, Footer, Sider, Content } = Layout;
 const { Option } = AutoComplete;
 
 class BusinessDisplay extends Component{
-
- columns = [
-        {
-           title: 'Business Name',
-         dataIndex: '_id',
-           key: 'id',  
-           render: (text, record) => (
-             <span>    
-            <Link
-                 to={{
-                     pathname: `/businesses${text}`,           
-                 }}>{text}
-             </Link>          
-             </span>      
-          ),
-        },
-        {
-          title: 'Email',
-          dataIndex: 'email',
-          key: 'email',
-        },        
-        {
-            title: 'ABN',
-            dataIndex: 'abn',
-            key: 'abn',
-        },    
-        {
-            title: 'Phone',
-            dataIndex: 'phone',
-            key: 'business',
-        },  
-        {
-          title: 'Postcode',
-          dataIndex: 'postcode',
-          key: 'postcode',
-      }, 
-      ]; 
-
     constructor(props) {
         super(props);
         this.state = {
-        //   loading: false,
+            businesses: [],
 
-          isFetching: false,
+            isFetching: false,
 
-          isLoading: false,
-          isSaving: false,
-          notFound: false,
-          error: null,
-          business: {},
-        }
+            isLoading: false,
+            isSaving: false,
+            notFound: false,
+            error: null,
+        };
+        this.columns = [
+            {
+            title: 'Business Name',
+             dataIndex: '_id',
+               key: 'id',  
+               render: (businesses, record) => (
+                 <span>    
+                <Link
+                     to={{
+                         pathname: `/businesses`,           
+                     }}>{businesses}
+                 </Link>          
+                 </span>      
+              ),
+            },
+            {
+              title: 'Email',
+              dataIndex: 'email',
+              key: 'email',
+            },        
+            {
+                title: 'ABN',
+                dataIndex: 'abn',
+                key: 'abn',
+            },    
+            {
+                title: 'Phone',
+                dataIndex: 'phone',
+                key: 'business',
+            },  
+            {
+              title: 'Postcode',
+              dataIndex: 'postcode',
+              key: 'postcode',
+          }, 
+          ]; 
     }
 
-    componentDidMount(){
-        const id = this.props.match.params.id;
-            this.setState({ 
-                isLoading: true,
-        })
-        fetchBusinessById(id)
-        .then(business => {
-            this.setState({ isLoading: false, business, error: null });
-        })
-        .catch(error => {
-            this.setState({ isLoading: false, error:error });
-        });
-    }
+    componentDidMount() {
+        this.setState({ isFetching: true, error: null});
+        fetchBusinesses()
+          .then(data => {
+              console.log(data.data);         
+            this.setState({ businesses: data.data});
+            console.log(this.state.businesses)
+          })
+          .catch(error => {
+            this.setState({ isFetching: false, error});
+          });
+      };
 
-    handleEdit = event => {
+    handleSearch = e => {
+        e.preventDefault();
+        console.log(this.props.form.getFieldsValue());
+    }
+    
+    handleEdit = e => {
         const { business } = this.state;
         this.props.history.push({pathname:`/businesses/list/${business._id}`});
-      }
+    }
      
-      handleDelete = event => {
-        if (window.confirm("Do you want to delete this business list ?")) {
-          const { id } = this.props.match.params;
-            this.setState({ isLoading: false });
+    handleDelete = e => {
+    if (window.confirm("Do you want to delete this business list ?")) {
+        const { id } = this.props.match.params;
+        this.setState({ isLoading: false });
 
-          deleteBusiness(id).then(res => {
-              this.setState({ isLoading: false });
-              this.props.history.replace('/businesses');
-          }).catch(error => {
-              this.setState({ isLoading: false, error });
-          });
-        }
-      };
-        
-    render(){
+        deleteBusiness(id).then(res => {
+            this.setState({ isLoading: false });
+            this.props.history.replace('/businesses');
+        }).catch(error => {
+            this.setState({ isLoading: false, error });
+        });
+    }
+    };
+
+    render() {
         const {isLoading, business} = this.state;
+        
         return (<div>
             <Layout>
                 <Header className="bd-header">
                     <Row>
                         <Col span={12}>
-                            <div className="bd-search">
-                            <Search
-                                placeholder="input search text"
-                                onSearch={value => console.log(value)}
-                                style={{ width: 200 }}
-                            />
+                            <div className="bd-search" onSubmit={this.handleSearch.bind(this)} 
+                            Layout="inline">
+                                
+                                    <Search
+                                        placeholder="input search text"
+                                        onSearch={value => console.log(value)}
+                                        style={{ width: 200 }}
+                                    />
+                                
                             </div>
                         </Col>
 
@@ -144,8 +149,8 @@ class BusinessDisplay extends Component{
                 </Footer>
              </Layout>
          </div> 
-        );
-   }
+        )
+    }
 }
     
 export default BusinessDisplay;
