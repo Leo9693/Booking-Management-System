@@ -1,6 +1,6 @@
 
 import { Form, Icon, Input, Button, Modal ,Row, Col} from 'antd';
-import React, { Component } from 'react';
+import React from 'react';
 import UserLayout from '../Ui/user';
 import {withRouter} from "react-router-dom";
 import { login, creatNewUser } from '../../api/auth';

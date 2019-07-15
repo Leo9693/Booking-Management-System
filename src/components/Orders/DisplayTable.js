@@ -5,10 +5,7 @@ import { Link } from 'react-router-dom';
 import { Table, Divider } from 'antd';
 
 
-export default class displayTable extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
+export default class displayTable extends React.Component {   
     columns = [
         {
           title: 'ID',
@@ -44,7 +41,7 @@ export default class displayTable extends React.Component {
           title: 'Service Type',
           dataIndex: 'category.name',
           key: 'category',
-      }, 
+        }, 
         {
           title: 'Action',
           dataIndex: '_id',
@@ -74,7 +71,7 @@ export default class displayTable extends React.Component {
     render() {
       return (
    
-        <div><Table columns={this.columns} dataSource={this.props.orders} />,
+        <div><Table columns={this.columns} dataSource={this.props.orders} rowKey="_id" />,
        </div>
        
       );

@@ -12,7 +12,9 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "antd": "^3.20.0",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "react-block-ui": "1.1.2",
+    "classnames": "^2.2.5"
   },
   "scripts": {
     "start": "react-scripts start",

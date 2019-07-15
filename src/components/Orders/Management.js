@@ -2,8 +2,10 @@
 import {fetchOrders } from '../../api/order';
 import React from 'react';
 import DisplayTable from './DisplayTable';
+import BlockUi from 'react-block-ui';
 
-import { Form, Row, Col, Input, Button, Select, Slider} from 'antd';
+import { Form, Row, Col, Input, Button, Select, Slider } from 'antd';
+// import { createTracing } from 'trace_events';
 const Option = Select.Option;
 class OrdersManagement extends React.Component {
     constructor(props) {
@@ -18,9 +20,8 @@ class OrdersManagement extends React.Component {
       this.setState({ isFetching: true, error: null});
       fetchOrders()
         .then(data => {
-            console.log(data.data);         
-          this.setState({ orders: data.data});
-          console.log(this.state.orders)
+          console.log(data);
+          this.setState({ orders: data.orders,isFetching: false});
         })
         .catch(error => {
           this.setState({ isFetching: false, error});
@@ -31,7 +32,18 @@ class OrdersManagement extends React.Component {
     handleSearch = e => {
       e.preventDefault();
       this.props.form.validateFields((err, values) => {
-        if (!err) {console.log('Received values of form: ', values)};
+        if (!err) {
+          this.setState({ isFetching: true, error: null});
+          fetchOrders(values)
+            .then(data => {
+              console.log(data);
+              this.setState({ orders: data.orders,isFetching: false});
+            })
+            .catch(error => {
+              this.setState({ isFetching: false, error});
+            });
+          console.log('Received values of form: ', values)
+        };
       });
     };
   
@@ -39,7 +51,7 @@ class OrdersManagement extends React.Component {
       this.props.form.resetFields();
     };
     handleAddNewOrder=()=>{
-      const id = this.props.match.params.id;      
+      // const id = this.props.match.params.id;      
       this.props.history.push({
         pathname: `/orders/management/edit/new`,
     })};
@@ -50,75 +62,73 @@ class OrdersManagement extends React.Component {
         wrapperCol: { span: 16 },
       };
       return (
-        <Form  {...formItemLayout} onSubmit={this.handleSearch}>
-        {/* <Row gutter={24}>{this.getFields()}</Row> */}
-        
+        <Form  {...formItemLayout} onSubmit={this.handleSearch}>     
         <Button type="primary" onClick={this.handleAddNewOrder}>Add New order</Button>
-        
-        <Row gutter={4}>
-        {/* <Col span={6}>
-        <Form.Item label="Field" hasFeedback>
+        <div className="searchField"> 
+        <Row > 
+              <Col>
+        <Form.Item label="Field" hasFeedback style={{ width: 240 }}>
           {getFieldDecorator('searchType', {
-            rules: [{ required: true, message: 'select Customer or Business' }],
+            rules: [{ required: true, message: 'select Customer or Business' }], initialValue: "customer"
           })(
-            <Select placeholder="search type">
+            <Select placeholder="search type" >
               <Option value="customer">Customer</Option>
               <Option value="business">Business</Option>
             </Select>,          
           )}
         </Form.Item >
-         </Col> */}
-         <Col span={6}>
-        <Form.Item label="key word" hasFeedback>
+     
+         
+        <Form.Item label="Name" hasFeedback style={{ width: 240 }}>
           {getFieldDecorator('key')(
             <Input placeholder="key word"/>            
           )}
         </Form.Item>
-        </Col>
-        {/* </Row>
-        <Row> */}        
-        <Col span={6}>
-        <Form.Item label="By Sort" hasFeedback>
-          {getFieldDecorator('sort')(
-            <Select placeholder="Please select which name">
+     
+        <Form.Item label="Sort By" hasFeedback style={{ width: 240 }}>
+          {getFieldDecorator('sort',{ initialValue: "createdAt"})(
+            <Select placeholder="Please select">
               <Option value="status">Order Status</Option>
-              <Option value="createdAt">Creation Time</Option>
+              <Option value="createdAt">Created Time</Option>
               <Option value="grade">Rate</Option>
             </Select>        
           )}
         </Form.Item>
-        </Col>
-        <Col span={6}>
-        <Form.Item label="Results">
+      
+      
+        <Form.Item label="Results" style={{ width: 240 }}>
           {getFieldDecorator('pageSize')(
             <Slider 
             min={10}
             max={50}
               marks={{
                 10: '10',
-                15: '15',
                 20: '20',
                 30: '30',
+                40: '40',
                 50:'50' ,            
               }}
             />,
           )}
         </Form.Item>
+     
+        {/* <Form.Item label="Current" style={{ width: 240 }}>
+          {getFieldDecorator('page', { initialValue: 1 })(<InputNumber min={1} max={10} />)}
+          <span className="ant-form-text"> results</span>
+        </Form.Item>         */}
+        <Button type="primary" htmlType="submit">
+          Search
+        </Button>
+        <Button onClick={this.handleReset}>         
+          Clear
+        </Button> 
         </Col>
         </Row>
-        <Row>
-          <Col gutter={2} span={4} style={{ textAlign: 'right' }}>
-            <Button type="primary" htmlType="submit">
-              Search
-            </Button>
-            <Button onClick={this.handleReset}> 
-            {/* //style={{ marginLeft:2}}  */}
-              Clear
-            </Button>
-          </Col>
-        </Row>
-        <div >          
+        </div>   
+        <div > 
+        <BlockUi blocking={this.state.isFetching}>      
         <DisplayTable orders={this.state.orders}/>
+        </BlockUi>   
         </div>
       </Form>
       )

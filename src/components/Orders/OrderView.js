@@ -1,7 +1,9 @@
 import { Card, Steps, Row, Col } from 'antd';
-import {fetchOrderById} from '../../api/order';
+import {fetchOrderById, deleteOrder} from '../../api/order';
+import BlockUi from 'react-block-ui';
 import React from 'react';
 const {Step} =Steps;
+
 
 
 export default class Orders extends React.Component {
@@ -16,10 +18,8 @@ export default class Orders extends React.Component {
         const id = this.props.match.params.id;
         this.setState({ isFetching: true, error: null});
         fetchOrderById(id)
-          .then(data => {
-                
-            this.setState({ order: data});
-          
+          .then(data => {                
+            this.setState({ order: data,isFetching: false});          
           })
           .catch(error => {
             this.setState({ isFetching: false, error});
@@ -46,30 +46,42 @@ export default class Orders extends React.Component {
       const id = this.props.match.params.id;      
       this.props.history.push({
         pathname: `/orders/management/edit/${id}`,
-    });
+      });
      }
+     handleDelete=()=>{  
+      const id = this.props.match.params.id;    
+      if (window.confirm("Do you want to delete this order ?")) {        
+        deleteOrder(id).then(res => {
+          this.props.history.push('/orders/management');
+        }).catch(error => {
+            console.log(error );
+        });
+      }
+    }
      render() {
       return ( 
-     <Card title={this.stepOrder(this.state.order.status)} style={this.style} actions={[<a onClick={this.handleEdit}>EDIT</a>, <a>DELETE</a>]}>
-        <div style={{ background: '#ECECEC', padding: '10px' }}>
-          <Row gutter={5}>
-            <Col span={12}>
-              <Card title="Customer" bordered={false}>
-              <div>CustomerName</div>
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card title="Business" bordered={false}>
-                BusinessName
-              </Card>
-         </Col>
-          </Row>
-          
-        </div>
-        <div>jobLocation</div>
-        <div>Comments</div>
-        <div>Service Rate</div>
-      </Card>
+    <BlockUi blocking={this.state.isFetching}>
+		<Card title={this.stepOrder(this.state.order.status)} style={this.style} actions={[<a onClick={this.handleEdit}>EDIT</a>, <a onClick={this.handleDelete}>DELETE</a>]}>
+			<div style={{ background: '#ECECEC', padding: '10px' }}>
+			<Row gutter={5}>
+				<Col span={12}>
+				<Card title="Customer" bordered={false}>
+				<div>CustomerName</div>
+				</Card>
+				</Col>
+				<Col span={12}>
+				<Card title="Business" bordered={false}>
+					BusinessName
+				</Card>
+			</Col>
+			</Row>
+			
+			</div>
+			<div>jobLocation</div>
+			<div>Comments</div>
+			<div>Service Rate</div>
+		</Card>
+    </BlockUi>
       )
      }
     }
