@@ -58,45 +58,46 @@ class OrdersManagement extends React.Component {
     formGet=()=>{
       const { getFieldDecorator } = this.props.form;
       const formItemLayout = {
-        labelCol: { span: 8 },
-        wrapperCol: { span: 16 },
+        labelCol: { span: 6},
+        wrapperCol: { span: 18 },     
       };
       return (
-        <Form  {...formItemLayout} onSubmit={this.handleSearch}>     
+        <Form {...formItemLayout} onSubmit={this.handleSearch}>     
         <Button type="primary" onClick={this.handleAddNewOrder}>Add New order</Button>
         <div className="searchField"> 
-        <Row > 
-              <Col>
-        <Form.Item label="Field" hasFeedback style={{ width: 240 }}>
+        <Row type="flex" justify="start" span={24} style={{ marginBottom: 1 }}> 
+        <Col span={6}>        
+        <Form.Item label="Field" hasFeedback >
           {getFieldDecorator('searchType', {
-            rules: [{ required: true, message: 'select Customer or Business' }], initialValue: "customer"
+            rules: [{ required: true, message: 'select Customer or Business' }]
           })(
             <Select placeholder="search type" >
               <Option value="customer">Customer</Option>
               <Option value="business">Business</Option>
             </Select>,          
           )}
-        </Form.Item >
-     
-         
-        <Form.Item label="Name" hasFeedback style={{ width: 240 }}>
+        </Form.Item > 
+        </Col> 
+        <Col span={6}>       
+        <Form.Item label="Name" hasFeedback>
           {getFieldDecorator('key')(
             <Input placeholder="key word"/>            
           )}
         </Form.Item>
-     
-        <Form.Item label="Sort By" hasFeedback style={{ width: 240 }}>
-          {getFieldDecorator('sort',{ initialValue: "createdAt"})(
+        </Col>       
+        <Col span={6}>
+        <Form.Item label="Sort By" hasFeedback>
+          {getFieldDecorator('sort')(
             <Select placeholder="Please select">
               <Option value="status">Order Status</Option>
-              <Option value="createdAt">Created Time</Option>
+              <Option value="createTime">Created Time</Option>
               <Option value="grade">Rate</Option>
             </Select>        
           )}
-        </Form.Item>
-      
-      
-        <Form.Item label="Results" style={{ width: 240 }}>
+        </Form.Item>   
+        </Col>   
+        <Col span={6}>
+        <Form.Item label="Results">
           {getFieldDecorator('pageSize')(
             <Slider 
             min={10}
@@ -110,20 +111,21 @@ class OrdersManagement extends React.Component {
               }}
             />,
           )}
-        </Form.Item>
-     
-        {/* <Form.Item label="Current" style={{ width: 240 }}>
-          {getFieldDecorator('page', { initialValue: 1 })(<InputNumber min={1} max={10} />)}
-          <span className="ant-form-text"> results</span>
-        </Form.Item>         */}
-        <Button type="primary" htmlType="submit">
-          Search
-        </Button>
-        <Button onClick={this.handleReset}>         
-          Clear
-        </Button> 
+        </Form.Item>   
         </Col>
         </Row>
+            
+				
+                <Button type="primary" htmlType="submit">
+                  Search
+                </Button>
+				
+				
+                <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>         
+                  Clear
+                </Button> 
+				
+              
         </div>   
         <div > 
         <BlockUi blocking={this.state.isFetching}>      

@@ -1,4 +1,4 @@
-import { Card, Steps, Row, Col } from 'antd';
+import { Card, Steps, Rate, Descriptions, Row, Col } from 'antd';
 import {fetchOrderById, deleteOrder} from '../../api/order';
 import BlockUi from 'react-block-ui';
 import React from 'react';
@@ -11,7 +11,8 @@ export default class Orders extends React.Component {
       super(props);
       this.state = {
         isFetching: false,
-        order: [],
+		order: [{customer:{customerName:{}}},
+	           {business:{businessName:{}}}],
       };
     }
     componentDidMount() {
@@ -19,7 +20,8 @@ export default class Orders extends React.Component {
         this.setState({ isFetching: true, error: null});
         fetchOrderById(id)
           .then(data => {                
-            this.setState({ order: data,isFetching: false});          
+			this.setState({ order: data,isFetching: false});  
+			console.log(this.state.order);        
           })
           .catch(error => {
             this.setState({ isFetching: false, error});
@@ -57,29 +59,57 @@ export default class Orders extends React.Component {
             console.log(error );
         });
       }
-    }
+	}
+	customer=()=> {
+		const customer=this.state.order.customer;
+		// const ddd=customer.customerName;
+		console.log(customer)
+		// console.log(ddd )
+	};
+		
      render() {
       return ( 
+		
     <BlockUi blocking={this.state.isFetching}>
+        
 		<Card title={this.stepOrder(this.state.order.status)} style={this.style} actions={[<a onClick={this.handleEdit}>EDIT</a>, <a onClick={this.handleDelete}>DELETE</a>]}>
 			<div style={{ background: '#ECECEC', padding: '10px' }}>
-			<Row gutter={5}>
-				<Col span={12}>
-				<Card title="Customer" bordered={false}>
-				<div>CustomerName</div>
+
+				<Card bordered={false}>
+				<Descriptions title="Customer Info">
+				<Descriptions.Item label="CustomerName">{this.customer()}</Descriptions.Item>
+				<Descriptions.Item label="Telephone">1810000000</Descriptions.Item>
+				<Descriptions.Item label="Address">11 First Ave, NorthArea,4000</Descriptions.Item>		
+				</Descriptions>
+				</Card>				
+				<Card  bordered={false}>
+				<Descriptions title="Business Info">
+				<Descriptions.Item label="BusinessName">Zhou Maomao</Descriptions.Item>
+				<Descriptions.Item label="Telephone">1810001111</Descriptions.Item>
+				<Descriptions.Item label="Address">11 First Ave, NorthArea,4000</Descriptions.Item>		
+				</Descriptions>
 				</Card>
-				</Col>
-				<Col span={12}>
-				<Card title="Business" bordered={false}>
-					BusinessName
-				</Card>
-			</Col>
-			</Row>
-			
+            
 			</div>
-			<div>jobLocation</div>
-			<div>Comments</div>
-			<div>Service Rate</div>
+			<div>				
+				<Row gutter={16}>
+					<Col span={8}>
+						<Card title="Job location" bordered={false}>
+						dfajfldjljflajlfdjlfjdlsjfl
+						</Card>
+					</Col>
+					<Col span={8}>
+						<Card title="Service comments" bordered={false}>
+						dfoaufodufoduofu
+						</Card>
+					</Col>
+					<Col span={8}>
+						<Card title="Service grade" bordered={false}>
+						<Rate disabled defaultValue={2} />
+						</Card>
+					</Col>
+				</Row>
+			</div>
 		</Card>
     </BlockUi>
       )

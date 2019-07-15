@@ -23,6 +23,12 @@ export default class displayTable extends React.Component {
           ),
         },
         {
+          title: 'CreatedTime',
+          dataIndex: 'createTime',
+          key: 'createTime',
+        },
+        
+        {
           title: 'Status',
           dataIndex: 'status',
           key: 'status',
