@@ -59,16 +59,7 @@ export default class Orders extends React.Component {
             console.log(error );
         });
       }
-	}
-	customer=()=> {
-		const customer=this.state.order.customer.customerName;
-		// const ddd=customer.customerName;
-
-		console.log(customer)
-		return customer;
-		// console.log(ddd )
-	};
-		
+	}		
      render() {
       return ( 
 		
