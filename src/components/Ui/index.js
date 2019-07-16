@@ -6,7 +6,7 @@ import Logout from '../Admin/Logout';
 const { Header, Footer, Sider, Content } = Layout;
 
 // 引入子菜单组件
-// const SubMenu = Menu.SubMenu; 
+// const SubMenu = Menu.SubMenu;
 
 export default class BasicLayout extends Component {
   // state = {
@@ -60,8 +60,7 @@ export default class BasicLayout extends Component {
           </Content>
           <Footer style={{ textAlign: 'center' }}>Handyman CMS by JR</Footer>
         </Layout>
-      </Layout>
       </div>
-    )
+    );
   }
 }
