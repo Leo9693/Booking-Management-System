@@ -9,8 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-block-ui/style.css';
 
-//axios.defaults.baseURL = 'https://handyman-cms.herokuapp.com/api';
-axios.defaults.baseURL = 'https://booking-management-database.herokuapp.com/V1';
+axios.defaults.baseURL = 'https://handyman-cms.herokuapp.com/api';
 
 const baseURL = process.env.PUBLIC_URL || '';
 

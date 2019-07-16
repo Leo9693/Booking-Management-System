@@ -6,9 +6,10 @@ import {
     createNewCategory, 
     deleteCategoryByID, 
     updateCategoryByID,
-    addBusinessToCategoryById
-} from '../../../api/category';
-import { getDataByFilter } from '../../../api/getData';
+    addBusinessToCategoryById,
+    getDataByFilter
+} from '../../../api/categoryData';
+// import { getDataByFilter } from '../../../api/getData';
 
 export const handleInputChange = (inputName, inputValue) => ({
     type: actionTypes.HANDLE_INPUT_CHANGE,
@@ -21,8 +22,8 @@ export const handleSearch = (currentPage, pageSize) => {
     return (dispatch) => {
         getAllCategories(currentPage, pageSize)
             .then((res) => {
-                const {documentCountBeforePagination, documentsAfterPagination} = res;
-                dispatch(changeList(documentCountBeforePagination, documentsAfterPagination));
+                const {categoryCount, categories} = res;
+                dispatch(changeList(categoryCount, categories));
             }).catch((err) => dispatch(setError(err)));
     }
 };
@@ -31,8 +32,8 @@ export const handleSearchByFilter = (searchFilter, searchKeyword, currentPage, p
     return (dispatch) => {
         getCategoriesByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue)
             .then((res) => {
-                const {documentCountBeforePagination, documentsAfterPagination} = res;
-                dispatch(changeList(documentCountBeforePagination, documentsAfterPagination));
+                const {categoryCount, categories} = res;
+                dispatch(changeList(categoryCount, categories));
             }).catch((err) => dispatch(setError(err)))    
     }
 }

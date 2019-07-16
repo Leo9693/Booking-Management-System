@@ -46,7 +46,7 @@ class Category extends Component {
                 <button className="btn btn-success mr-auto btn-lg"
                         onClick={showCreate}
                 >
-                    Create
+                    Create a new category
                 </button>    
             </div>
 

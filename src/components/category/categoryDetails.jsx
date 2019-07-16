@@ -128,10 +128,13 @@ function DisplayCategory(props) {
             <Descriptions.Item label="Businesses">
                 {detailedCategory.businesses && detailedCategory.businesses.map((item) => {
                     return (
-                        <div key={item._id}>
-                            <span>{item.businessName}</span>
-                            <span>{item.email}</span>
+                        <div key={item}>
+                            <span>{item}</span>
                         </div>
+                        // <div key={item._id}>
+                        //     <span>{item.businessName}</span>
+                        //     <span>{item.email}</span>
+                        // </div>
                 )})}
             </Descriptions.Item>
         </Descriptions>
