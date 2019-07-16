@@ -19,8 +19,7 @@ class OrdersManagement extends React.Component {
     componentDidMount() {
       this.setState({ isFetching: true, error: null});
       fetchOrders()
-        .then(data => {
-          console.log(data);
+        .then(data => {       
           this.setState({ orders: data.orders,isFetching: false});
         })
         .catch(error => {
