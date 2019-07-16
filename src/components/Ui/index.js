@@ -60,7 +60,8 @@ export default class BasicLayout extends Component {
           </Content>
           <Footer style={{ textAlign: 'center' }}>Handyman CMS by JR</Footer>
         </Layout>
-      </div>
+      </Layout>
+    </div>
     );
   }
 }
