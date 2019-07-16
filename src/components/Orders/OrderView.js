@@ -1,7 +1,9 @@
-import { Card, Steps, Row, Col } from 'antd';
-import {fetchOrderById} from '../../api/order';
+import { Card, Steps, Rate, Descriptions, Row, Col } from 'antd';
+import {fetchOrderById, deleteOrder} from '../../api/order';
+import BlockUi from 'react-block-ui';
 import React from 'react';
 const {Step} =Steps;
+
 
 
 export default class Orders extends React.Component {
@@ -9,17 +11,17 @@ export default class Orders extends React.Component {
       super(props);
       this.state = {
         isFetching: false,
-        order: [],
+		order: {customer:{customerName:"abc"},
+	           business:{businessName:"abc"}},
       };
     }
     componentDidMount() {
         const id = this.props.match.params.id;
         this.setState({ isFetching: true, error: null});
         fetchOrderById(id)
-          .then(data => {
-                
-            this.setState({ order: data});
-          
+          .then(data => {                
+			this.setState({ order: data,isFetching: false});  
+			console.log(this.state.order);        
           })
           .catch(error => {
             this.setState({ isFetching: false, error});
@@ -46,30 +48,72 @@ export default class Orders extends React.Component {
       const id = this.props.match.params.id;      
       this.props.history.push({
         pathname: `/orders/management/edit/${id}`,
-    });
+      });
      }
+     handleDelete=()=>{  
+      const id = this.props.match.params.id;    
+      if (window.confirm("Do you want to delete this order ?")) {        
+        deleteOrder(id).then(res => {
+          this.props.history.push('/orders/management');
+        }).catch(error => {
+            console.log(error );
+        });
+      }
+	}
+	customer=()=> {
+		const customer=this.state.order.customer.customerName;
+		// const ddd=customer.customerName;
+
+		console.log(customer)
+		return customer;
+		// console.log(ddd )
+	};
+		
      render() {
       return ( 
-     <Card title={this.stepOrder(this.state.order.status)} style={this.style} actions={[<a onClick={this.handleEdit}>EDIT</a>, <a>DELETE</a>]}>
-        <div style={{ background: '#ECECEC', padding: '10px' }}>
-          <Row gutter={5}>
-            <Col span={12}>
-              <Card title="Customer" bordered={false}>
-              <div>CustomerName</div>
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card title="Business" bordered={false}>
-                BusinessName
-              </Card>
-         </Col>
-          </Row>
-          
-        </div>
-        <div>jobLocation</div>
-        <div>Comments</div>
-        <div>Service Rate</div>
-      </Card>
+		
+    <BlockUi blocking={this.state.isFetching}>
+        
+		<Card title={this.stepOrder(this.state.order.status)} style={this.style} actions={[<a onClick={this.handleEdit}>EDIT</a>, <a onClick={this.handleDelete}>DELETE</a>]}>
+			<div style={{ background: '#ECECEC', padding: '10px' }}>
+
+				<Card bordered={false}>
+				<Descriptions title="Customer Info">
+				<Descriptions.Item label="CustomerName">{this.state.order.customer.customerName}</Descriptions.Item>
+				<Descriptions.Item label="Telephone">1810000000</Descriptions.Item>
+				<Descriptions.Item label="Address">11 First Ave, NorthArea,4000</Descriptions.Item>		
+				</Descriptions>
+				</Card>				
+				<Card  bordered={false}>
+				<Descriptions title="Business Info">
+				<Descriptions.Item label="BusinessName">{this.state.order.business.businessName}</Descriptions.Item>
+				<Descriptions.Item label="Telephone">1810001111</Descriptions.Item>
+				<Descriptions.Item label="Address">11 First Ave, NorthArea,4000</Descriptions.Item>		
+				</Descriptions>
+				</Card>
+            
+			</div>
+			<div>				
+				<Row gutter={16}>
+					<Col span={8}>
+						<Card title="Job location" bordered={false}>
+						dfajfldjljflajlfdjlfjdlsjfl
+						</Card>
+					</Col>
+					<Col span={8}>
+						<Card title="Service comments" bordered={false}>
+						dfoaufodufoduofu
+						</Card>
+					</Col>
+					<Col span={8}>
+						<Card title="Service grade" bordered={false}>
+						<Rate disabled defaultValue={this.state.order.grade} />
+						</Card>
+					</Col>
+				</Row>
+			</div>
+		</Card>
+    </BlockUi>
       )
      }
     }

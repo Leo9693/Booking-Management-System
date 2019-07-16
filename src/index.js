@@ -2,7 +2,9 @@ import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
+import 'react-block-ui/style.css';
+// import './styles/index.scss';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -11,6 +13,7 @@ import 'react-block-ui/style.css';
 axios.defaults.baseURL = 'https://handyman-cms.herokuapp.com/api';
 
 const baseURL = process.env.PUBLIC_URL || '';
+
 
 ReactDOM.render(
   <Router basename={baseURL}>

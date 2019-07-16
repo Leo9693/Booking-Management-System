@@ -1,6 +1,6 @@
 
 // import React from 'react';
-import React, { Component } from 'react';
+import React from 'react';
 import {fetchOrderById, addNewOrder} from '../../api/order';
 import {
   Form,
@@ -11,6 +11,7 @@ import {
   Row,
   Col,
 } from 'antd';
+import BlockUi from 'react-block-ui';
 class Edit extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +30,7 @@ class Edit extends React.Component {
         this.setState({order: data});
       }).then(res => {       
         const order=this.state.order;
+        this.setState({ isFetching: false});
         this.props.form.setFieldsValue(
             { status:`${order.status}`,
               comments:`${order.comments}`,
@@ -72,6 +74,8 @@ class Edit extends React.Component {
       wrapperCol: { span: 14 },
     };
     return (
+      <div>
+      <BlockUi blocking={this.state.isFetching}>
       <Form {...formItemLayout} onSubmit={this.handleSubmit}> 
         <Form.Item label="Customer Id" hasFeedback>
           {getFieldDecorator('customer', {
@@ -134,6 +138,8 @@ class Edit extends React.Component {
         </Row>
         </Form.Item>       
       </Form>
+      </BlockUi>
+      </div>
     );
   }
 }
