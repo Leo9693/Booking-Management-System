@@ -20,7 +20,7 @@ class NormalLoginForm extends React.Component {
       if (!err) {        
         login(values).then(auth => {
           this.setState({ isFetching: false });
-          this.props.history.push('/orders/management');
+          this.props.history.push('/');
         });
         console.log('Received values of form: ', values);
       }

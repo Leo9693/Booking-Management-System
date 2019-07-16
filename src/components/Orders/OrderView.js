@@ -11,8 +11,8 @@ export default class Orders extends React.Component {
       super(props);
       this.state = {
         isFetching: false,
-		order: [{customer:{customerName:{}}},
-	           {business:{businessName:{}}}],
+		order: {customer:{customerName:"abc"},
+	           business:{businessName:"abc"}},
       };
     }
     componentDidMount() {
@@ -61,9 +61,11 @@ export default class Orders extends React.Component {
       }
 	}
 	customer=()=> {
-		const customer=this.state.order.customer;
+		const customer=this.state.order.customer.customerName;
 		// const ddd=customer.customerName;
+
 		console.log(customer)
+		return customer;
 		// console.log(ddd )
 	};
 		
@@ -77,14 +79,14 @@ export default class Orders extends React.Component {
 
 				<Card bordered={false}>
 				<Descriptions title="Customer Info">
-				<Descriptions.Item label="CustomerName">{this.customer()}</Descriptions.Item>
+				<Descriptions.Item label="CustomerName">{this.state.order.customer.customerName}</Descriptions.Item>
 				<Descriptions.Item label="Telephone">1810000000</Descriptions.Item>
 				<Descriptions.Item label="Address">11 First Ave, NorthArea,4000</Descriptions.Item>		
 				</Descriptions>
 				</Card>				
 				<Card  bordered={false}>
 				<Descriptions title="Business Info">
-				<Descriptions.Item label="BusinessName">Zhou Maomao</Descriptions.Item>
+				<Descriptions.Item label="BusinessName">{this.state.order.business.businessName}</Descriptions.Item>
 				<Descriptions.Item label="Telephone">1810001111</Descriptions.Item>
 				<Descriptions.Item label="Address">11 First Ave, NorthArea,4000</Descriptions.Item>		
 				</Descriptions>
@@ -105,7 +107,7 @@ export default class Orders extends React.Component {
 					</Col>
 					<Col span={8}>
 						<Card title="Service grade" bordered={false}>
-						<Rate disabled defaultValue={2} />
+						<Rate disabled defaultValue={this.state.order.grade} />
 						</Card>
 					</Col>
 				</Row>
