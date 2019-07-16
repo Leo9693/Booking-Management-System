@@ -4,7 +4,6 @@ import CustomersView from './Customers/CustomersView';
 import CustomersDetailView from './Customers/CustomerDetailView';
 import CustomerEditView from './Customers/CustomerEditView';
 import HandymanView from './Customers/HandymanView';
-
 import OrderManagement from './Orders/Management';
 import BasicLayout from './Ui/index';
 import setting from './Admin/Setting';
@@ -12,7 +11,9 @@ import Home from './Home';
 import OrderView from './Orders/OrderView';
 import OrderEdit from './Orders/Edit';
 import LoginView from './Admin/Login';
-import { loggedIn } from '../api/auth';
+import { loggedIn } from "../api/auth";
+import Category from '../components/category';
+import CategoryDetails from '../components/category/categoryDetails';
 
 export default () => (
   <div>
@@ -53,6 +54,8 @@ export default () => (
           path='/orders/management/:id'
           component={OrderView}
         />
+        <ProtectedRoute exact path="/categories/" component={Category} />
+        <ProtectedRoute path="/categories/:id" component={CategoryDetails} /> 
         <ProtectedRoute exact path='/admin/setting' component={setting} />
         <Route exact path='/admin/login' component={LoginView} />
       </BasicLayout>
