@@ -1,14 +1,14 @@
 
-import { Menu, Dropdown, Icon, Avatar, Row, Col, Button} from 'antd';
+import { Avatar, Row, Col} from 'antd';
 import React from 'react';
 import {withRouter} from "react-router-dom";
 
 import { getUsername, logout } from '../../api/auth';
 
   class Logout extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
   
     username=getUsername();
     handleLogout=()=>{

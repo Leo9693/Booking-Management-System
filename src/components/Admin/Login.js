@@ -1,6 +1,6 @@
 
 import { Form, Icon, Input, Button, Modal ,Row, Col} from 'antd';
-import React, { Component } from 'react';
+import React from 'react';
 import UserLayout from '../Ui/user';
 import {withRouter} from "react-router-dom";
 import { login, creatNewUser } from '../../api/auth';
@@ -20,7 +20,7 @@ class NormalLoginForm extends React.Component {
       if (!err) {        
         login(values).then(auth => {
           this.setState({ isFetching: false });
-          this.props.history.push('/orders/management');
+          this.props.history.push('/');
         });
         console.log('Received values of form: ', values);
       }
