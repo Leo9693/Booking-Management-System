@@ -19,8 +19,9 @@ class OrdersManagement extends React.Component {
     componentDidMount() {
       this.setState({ isFetching: true, error: null});
       fetchOrders()
-        .then(data => {       
-          this.setState({ orders: data.orders,isFetching: false});
+        .then(data => {  
+          
+          this.setState({ orders: data,isFetching: false});
         })
         .catch(error => {
           this.setState({ isFetching: false, error});
@@ -33,13 +34,16 @@ class OrdersManagement extends React.Component {
       this.props.form.validateFields((err, values) => {
         if (!err) {
           this.setState({ isFetching: true, error: null});
+          console.log(values);
           fetchOrders(values)
             .then(data => {
               console.log(data);
-              this.setState({ orders: data.orders,isFetching: false});
+              this.setState({ orders: data,isFetching: false});
+              
             })
             .catch(error => {
-              this.setState({ isFetching: false, error});
+            
+              this.setState({ orders:[], isFetching: false, error});
             });
           console.log('Received values of form: ', values)
         };
