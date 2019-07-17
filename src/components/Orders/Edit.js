@@ -26,10 +26,12 @@ class Edit extends React.Component {
     const id = this.props.match.params.id;
     this.setState({ isFetching: true, error: null});
     fetchOrderById(id)
-      .then(data => {      
+      .then(data => {
+           
         this.setState({order: data});
       }).then(res => {       
         const order=this.state.order;
+        console.log(order);  
         this.setState({ isFetching: false});
         this.props.form.setFieldsValue(
             { status:`${order.status}`,
@@ -50,8 +52,7 @@ class Edit extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
-     
+      if (!err) {     
         addNewOrder(values)
         .then(() => {
           this.setState({ isSaving: false });
@@ -59,6 +60,7 @@ class Edit extends React.Component {
         })
         .catch(error => {
           this.setState({ isSaving: false, error });
+          console.log(error);
         });
       
       }
