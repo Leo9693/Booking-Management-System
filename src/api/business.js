@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-
 export function fetchBusinesses(search){
     return axios
     .get('/businesses')
-    .then((response) => {return response.data}) //箭头函数 
+    .then((response) => {
+        return response.data;
+    }) //箭头函数 
 }
-
 
 export function fetchBusinessById(id){
     return axios

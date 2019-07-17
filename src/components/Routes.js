@@ -33,6 +33,7 @@ export default () => (
 
      <ProtectedRoute exact path="/businesses" component={BusinessDisplay} /> 
      <ProtectedRoute exact path="/businesses/list" component={BusinessList} /> 
+     <ProtectedRoute exact path="/businesses/list/:id" component={BusinessList} /> 
 
      </BasicLayout>
        }
