@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {LoadingButton} from './Button';
+import {LoadingButton} from './Button.jsx';
 import { Link } from 'react-router-dom';
 
 export default class AddInfoBar extends Component {

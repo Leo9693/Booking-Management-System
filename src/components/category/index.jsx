@@ -14,6 +14,10 @@ import SubTopNav from '../Ui/subTopNav';
 import PaginationBar from '../Ui/paginationBar';
 
 class Category extends Component {
+    componentDidMount() {
+        this.props.initializeData();
+    }
+    
     render() {
         const {handleInputChange, handleSearch, handleDetail, handleDelete, handleUpdate, showCreate, selectPage, changePageSize} = this.props;
         const {documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue, isShowCreate, setPageAs, documentsCount} = this.props;
@@ -161,6 +165,10 @@ const mapDispatch = (dispatch) => ({
         //     dispatch(actionCreators.handleSearchByFilter(searchFilter, searchKeyword));
         // }
         dispatch(actionCreators.handleSearchByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue));
+    },
+
+    initializeData: () => {
+        dispatch(actionCreators.handleSearchByFilter());
     },
 
     showCreate: (event) => {

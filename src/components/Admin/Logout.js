@@ -18,15 +18,15 @@ import { getUsername, logout } from '../../api/auth';
     render() {   
       return (
         
-            <Row span={24}>
-                <Col span={18}> 
+            <Row span={24} className="logout">
+                <Col span={16}> 
                     <h2>Welcome to JR Handyman CMS</h2>
                 </Col>     
-                <Col span={2} style={{margin:0}}>                        
-                    <div> <span><Avatar style={{ backgroundColor: '#87d068' }} icon="user" /> Hi,{this.username}</span></div>        
+                <Col span={5} style={{margin:0}}>                        
+                    <div><Avatar style={{ backgroundColor: '#87d068' }} icon="user" /><span>Hi,{this.username}</span></div>        
                 </Col>
                 <Col span={2}> 
-                    <a onClick={this.handleLogout}>Log out</a>
+                    <a onClick={this.handleLogout} id="logout__button">Log out</a>
                 </Col> 
             </Row>
        

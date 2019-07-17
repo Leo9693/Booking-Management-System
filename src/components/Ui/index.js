@@ -47,13 +47,13 @@ export default class BasicLayout extends Component {
             <Menu.Item key="5"><Link to="/categories">Categories</Link></Menu.Item>
           </Menu>
         </Sider>
-        <Layout style={{ marginLeft: 200 }}>
-          <Header style={{ background: '#fff', textAlign: 'center', padding: 0 }}>
+        <Layout style={{ marginLeft: 200, minHeight: "100vh" }}>
+          <Header style={{ background: '#fff', textAlign: 'left', padding: 0 }}>
             <div>       
               <Logout />
             </div>
           </Header>
-          <Content style={{ margin: '24px 16px 0' }}>
+          <Content style={{ margin: '12px 0' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               {this.props.children}
             </div>
