@@ -1,5 +1,5 @@
 import React from 'react';
-
+import classnames from 'classnames';
 
 export default function Button(props) {
     const {
@@ -11,9 +11,11 @@ export default function Button(props) {
     } = props;
 
     return (
-        <button className={className + ' ' + buttonStyle}
+    
+        <button className={classnames(className, buttonStyle)}
                 type={type} {...rest}
         >
+            {console.log(1)}
             {children}
         </button>
     );
