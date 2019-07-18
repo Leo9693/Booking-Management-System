@@ -10,6 +10,7 @@ export default class SubTopNav extends Component {
             titleLink,
             searchList,
             sortList,
+            isLoading,
         } = this.props;
         const {handleInputChange, search} = this.props;
         return(
@@ -38,8 +39,9 @@ export default class SubTopNav extends Component {
                     ))}
                     {/* <option value="name">Search By Name</option> */}
                 </select>
+                {console.log("isLoading111" + isLoading)}
                 <LoadingButton className="btn mr-2" buttonStyle="btn-outline-primary" type="submit"
-                    onClick={search}
+                    onClick={search} isLoading={isLoading}
                 >
                     Search
                 </LoadingButton>

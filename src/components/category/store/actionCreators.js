@@ -20,21 +20,32 @@ export const handleInputChange = (inputName, inputValue) => ({
 export const handleSearch = (currentPage, pageSize) => {
     // 此处return 函数包裹是必须的，直接getAllData（）出错
     return (dispatch) => {
+        dispatch(setIsLoading(true));
         getAllCategories(currentPage, pageSize)
             .then((res) => {
+                dispatch(setIsLoading(false));
                 const {categoryCount, categories} = res;
                 dispatch(changeList(categoryCount, categories));
-            }).catch((err) => dispatch(setError(err)));
+            })
+            .catch((err) => {
+                dispatch(setIsLoading(false));
+                dispatch(setError(err))
+            });
     }
 };
 
 export const handleSearchByFilter = (searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue) => {
     return (dispatch) => {
+        dispatch(setIsLoading(true));
         getCategoriesByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue)
             .then((res) => {
                 const {categoryCount, categories} = res;
                 dispatch(changeList(categoryCount, categories));
-            }).catch((err) => dispatch(setError(err)))    
+                dispatch(setIsLoading(false));
+            })
+            .catch((err) => {
+                dispatch(setIsLoading(false));
+                dispatch(setError(err))})    
     }
 }
 
@@ -54,11 +65,17 @@ export const closeCreate = () => ({
 
 export const createCategory = (name, description, currentPage, pageSize) => {
     return (dispatch) => {
+        dispatch(setIsLoading(true));
         createNewCategory(name, description)
             .then((res) => {
+                dispatch(setIsLoading(false));
                 dispatch(closeCreate());
                 dispatch(handleSearch(currentPage, pageSize));
-            }).catch((err) => dispatch(setError(err)));
+            })
+            .catch((err) => {
+                dispatch(setIsLoading(false));
+                dispatch(setError(err));
+            });
     }
 }
 
@@ -79,13 +96,18 @@ export const setSelectedCategoryID = (id) => ({
 
 export const deleteSelectedCategory = (id, currentPage, pageSize) => {
     return (dispatch) => {
+        dispatch(setIsLoading(true));
         deleteCategoryByID(id)
             .then(() => {
+                dispatch(setIsLoading(false));
                 dispatch(setSelectedCategoryID(''));
                 dispatch(setDeleteConfirm(false));
                 dispatch(handleSearch(currentPage, pageSize));
             })
-            .catch((err) => dispatch(setError(err)));
+            .catch((err) => {
+                dispatch(setIsLoading(false));
+                dispatch(setError(err))
+            });
 
     }
 }

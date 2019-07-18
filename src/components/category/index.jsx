@@ -12,6 +12,8 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import SubTopNav from '../Ui/subTopNav';
 import PaginationBar from '../Ui/paginationBar';
+import BlockUi from 'react-block-ui'
+import { setIsLoading } from './store/actionCreators';
 
 class Category extends Component {
     componentDidMount() {
@@ -20,7 +22,7 @@ class Category extends Component {
     
     render() {
         const {handleInputChange, handleSearch, handleDetail, handleDelete, handleUpdate, showCreate, selectPage, changePageSize} = this.props;
-        const {documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue, isShowCreate, setPageAs, documentsCount} = this.props;
+        const {documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue, isShowCreate, setPageAs, documentsCount, isLoading} = this.props;
 
         const search = (event) => {
             handleSearch(event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue)
@@ -40,19 +42,20 @@ class Category extends Component {
         const pageSizeSelectorList=[1, 3, 5, 10, 15, 20];
 
         return (
-            <div>
-                <SubTopNav handleInputChange={handleInputChange} search={search}
+        <div>
+            <BlockUi blocking={isLoading}>
+                <SubTopNav handleInputChange={handleInputChange} search={search} isLoading={isLoading}
                             title={"Category Data Management"} titleLink={"/categories"}
                             searchList={["name", "description"]} sortList={["name", "description"]}
-                />
-            
-            <div className="py-3 px-3">                
-                <button className="btn btn-success mr-auto btn-lg"
-                        onClick={showCreate}
-                >
-                    Create a new category
-                </button>    
-            </div>
+                />            
+                <div className="py-3 px-3">                
+                    <button className="btn btn-success mr-auto btn-lg"
+                            onClick={showCreate}
+                    >
+                        Create a new category
+                    </button>    
+                </div>
+            </BlockUi>
 
             {isShowCreate && <CreateModal/>}
             
@@ -121,13 +124,14 @@ class Category extends Component {
                         onClickSetPage={onClickSetPage}
                         handleInputChange={handleInputChange}
                         onChangePageSize={onChangePageSize}
+                        isLoading={isLoading}
                     />
                 </div>
             </div>
             
             }
             
-            </div>
+        </div>
         )
     }
 }
@@ -145,7 +149,8 @@ const mapState = (state) => ({
     sortKey: state.category.sortKey,
     sortValue: state.category.sortValue,
     isShowCreate: state.category.isShowCreate,
-    setPageAs: state.category.setPageAs
+    setPageAs: state.category.setPageAs,
+    isLoading: state.category.isLoading
 });
 
 const mapDispatch = (dispatch) => ({
@@ -194,6 +199,7 @@ const mapDispatch = (dispatch) => ({
         if (page < 1 || page > pageCount) {
             return;
         }
+        dispatch(actionCreators.setIsLoading(true));
         dispatch(actionCreators.selectPage(page));
         dispatch(actionCreators.handleSearchByFilter(searchFilter, searchKeyword, page, pageSize, sortKey, sortValue));
     },
@@ -203,7 +209,8 @@ const mapDispatch = (dispatch) => ({
         dispatch(actionCreators.handleInputChange(name, value));
         pageSize = value;
         dispatch(actionCreators.handleSearchByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue));
-    }
+    },
+
 });
 
 export default connect(mapState, mapDispatch)(Category);

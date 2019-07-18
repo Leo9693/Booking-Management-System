@@ -66,6 +66,7 @@ export default (state = defaultState, action) => {
 
         case actionTypes.SET_IS_LOADING:
             const {isLoading} = action;
+            console.log("isLoading" + isLoading);
             return {...state, isLoading};
         default:
             return state;

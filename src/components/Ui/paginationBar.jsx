@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Pagination } from 'react-bootstrap';
+import { LoadingButton } from '../Ui/Button.jsx'
 
 export default class PaginationBar extends Component {
     render() {
@@ -10,6 +11,7 @@ export default class PaginationBar extends Component {
             pageSizeSelectorList = [1, 3, 5, 10, 20],
             pageSizeSelectorName = "pageSize",
             setPageInputName = "setPageAs",
+            isLoading,
         } = this.props;
         const {onClickSelectPage, onClickSetPage, handleInputChange, onChangePageSize} = this.props;
         const pageCount = Math.ceil(documentsCount / pageSize);
@@ -154,11 +156,12 @@ export default class PaginationBar extends Component {
                                         max={pageCount} min="1" step="1" 
                                         name={setPageInputName} onChange={handleInputChange}/>
                                 
-                                <button className="btn btn-primary ml-1" type="submit"
+                                <LoadingButton className="btn ml-1" buttonStyle="btn-primary"
+                                        type="submit" isLoading={isLoading}
                                         onClick={(event) => onClickSetPage(event, pageCount)}
                                 >
                                     Go
-                                </button>
+                                </LoadingButton>
                             </div>
                         </form>
                     </div>
