@@ -28,7 +28,7 @@ class CategoryDetails extends Component {
             handleSearch(event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue)
         }
         const handleAddClick = (event) => {
-            addBusinessToCategory(event, addedBusinessSelector, addedBusinessInfo, detailedCategory.id)
+            addBusinessToCategory(event, addedBusinessSelector, addedBusinessInfo, detailedCategory._id)
         }
         
         return (
@@ -74,7 +74,7 @@ class CategoryDetails extends Component {
 
                 {<AddInfoBar  addInfoTitle={"Add Business"}
                             addInfoSelectorName={"addedBusinessSelector"}
-                            addInfoSelectorList={["email", "id"]}
+                            addInfoSelectorList={["name", "id"]}
                             addInfoValue={"addedBusinessInfo"}
                             isLoading={isLoading}
                             linkPath={"categories"}
@@ -128,8 +128,8 @@ function DisplayCategory(props) {
             <Descriptions.Item label="Businesses">
                 {detailedCategory.businesses && detailedCategory.businesses.map((item) => {
                     return (
-                        <div key={item}>
-                            <span>{item}</span>
+                        <div key={item._id}>
+                            <span>{item.businessName}</span>
                         </div>
                         // <div key={item._id}>
                         //     <span>{item.businessName}</span>

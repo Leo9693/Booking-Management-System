@@ -7,9 +7,9 @@ import {
     deleteCategoryByID, 
     updateCategoryByID,
     addBusinessToCategoryById,
-    getDataByFilter
+    getDataByFilter,
+    getBusinessByName
 } from '../../../api/categoryData';
-// import { getDataByFilter } from '../../../api/getData';
 
 export const handleInputChange = (inputName, inputValue) => ({
     type: actionTypes.HANDLE_INPUT_CHANGE,
@@ -182,19 +182,27 @@ export const addBusinessToCategory = (addedBusinessSelector, addedBusinessInfo, 
         if (addedBusinessSelector === 'id') {
             addBusinessToCategoryById(addedBusinessInfo, categoryID)
                 .then((res) => {
+                    setIsLoading(false);
                     dispatch(getDetailedCategory(categoryID));
                 })
-                .catch((err) => dispatch(setError(err)));
+                .catch((err) => {
+                    setIsLoading(false);
+                    dispatch(setError(err))
+                });
         } else {
-            getDataByFilter('businesses', addedBusinessSelector, addedBusinessInfo)
+            // getDataByFilter('businesses', addedBusinessSelector, addedBusinessInfo)
+            console.log('0 rse');
+            console.log(addedBusinessInfo);
+            console.log(categoryID);
+            getBusinessByName(addedBusinessInfo)
                 .then((res) => {
-                    const {id} = res.documentsAfterPagination[0];
-                    addBusinessToCategoryById(id, categoryID);
-                })
-                .then((res) => {
-                    console.log('2nd res');
-                    console.log(res);
-                    dispatch(getDetailedCategory(categoryID));
+                    setIsLoading(false);
+                    const id = res[0]._id;
+                    addBusinessToCategoryById(id, categoryID)
+                        .then((res) => {
+                            setIsLoading(false);
+                            dispatch(getDetailedCategory(categoryID));
+                        });
                 })
                 .catch((err) => dispatch(setError(err)));
         }

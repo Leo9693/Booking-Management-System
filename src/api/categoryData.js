@@ -46,10 +46,23 @@ export function updateCategoryByID(name, description, id) {
 
 export function addBusinessToCategoryById(addedBusinessInfo, categoryID) {
     return axios.post(`/categories/${categoryID}/businesses/${addedBusinessInfo}`)
+        .then((res) => {
+            console.log( 'addBusinessToCategoryById');
+            console.log(res);
+            return res
+        })
 }
 
 export function deleteBusinessFromCategoryById(addedBusinessInfo, categoryID) {
     return axios.delete(`/categories/${categoryID}/businesses/${addedBusinessInfo}`)
+}
+
+export function getBusinessByName(name) {
+    return axios.get('/businesses', {params: {key: name}})
+        .then(res => {
+            const {data} = res;
+            return data; 
+        })
 }
 
 export function getDataByFilter(databaseModel, conditionKey, conditionValue, pageRequested, pageSize, sortKey, sortValue) {
