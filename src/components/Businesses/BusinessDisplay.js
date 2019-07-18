@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-
-import {createForm} from 'rc-form';
-import {  Layout, Button, Input, AutoComplete, Row, Col, Table, Pagination } from 'antd';
+import axios from 'axios';
+import {  Layout, Icon, Button, Input, AutoComplete, Row, Col, List, Avatar,Table, Divider } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
-import { deleteBusiness, fetchBusinesses} from '../../api/business';
+import { deleteBusiness, fetchBusinessById, fetchBusinesses, updateBusiness } from '../../api/business';
 import BlockUi from 'react-block-ui';
+import Item from 'antd/lib/list/Item';
 
 const { Search } = Input;
 const { Header, Footer, Sider, Content } = Layout;
@@ -15,7 +15,9 @@ class BusinessDisplay extends Component{
         super(props);
         this.state = {
             businesses: [],
+
             isFetching: false,
+
             isLoading: false,
             isSaving: false,
             notFound: false,
@@ -28,61 +30,57 @@ class BusinessDisplay extends Component{
                 dataIndex: 'businessName',          
                 key: 'businessName',
                 fixed: 'left',
-                width: '10%',
+                width: 100,
             },      
             {
-              title: 'E-mail',
+              title: 'Email',
               dataIndex: 'email',
               key: 'email',
-              width: '20%',
-            },  
-                    
+            },        
             {
                 title: 'ABN',
                 dataIndex: 'ABN',
                 key: 'ABN',
-                width: '20%',
             },    
             {
-                title: 'Phone Number',
+                title: 'Phone',
                 dataIndex: 'phone',          
                 key: 'phone',
-                width: '20%',
             },  
             {
                 title: 'Street Address',
                 dataIndex: 'streetAddress',            
                 key:'streetAddress',
-                width: '20%',
             },
             {
                 title: 'State',
                 dataIndex: 'state',            
                 key:'state',
-                width: '10%',
             },
             {
               title: 'Postcode',
               dataIndex: 'postcode',           
               key: 'postcode',
-              width: '20%',
-            },        
+            }, 
             {
               title: 'Action',              
               key: 'action',
               fixed: 'right',
-           
+              width: 100,
               render:(text, record)=>
               ( 
               <div style={{ display: 'flex', justifyContent: 'center'}}>
-                <Link to={{pathname: `/businesses/list/${record._id}`, state:{ record }}}>
-                   <Button>Edit</Button>
+                <Link to={{pathname: `/businesses/list/${record._id}`}}>
+                   <Button>
+                        Edit
+                   </Button>
                 </Link>
                     <Button onClick={() => this.handleDelete(record._id)}>Delete</Button>
               </div>
             )             
               }, 
           ]; 
+         
     }
 
     componentDidMount() {
@@ -100,13 +98,6 @@ class BusinessDisplay extends Component{
         e.preventDefault();
         console.log(this.props.form.getFieldsValue());
     }
-
-    // handleEdit = e => {
-    //     const { business } = this.state;
-    //     this.props.history.push({
-    //         pathname: `/businesses/list/${business._id}`,
-    //     });
-    //   
      
     handleDelete = id => {       
         if (window.confirm("Do you want to delete this business ?")) {          
@@ -130,16 +121,16 @@ class BusinessDisplay extends Component{
                     <Row>
                         <Col span={12}>
                             <div className="bd-search" onSubmit={this.handleSearch.bind(this)} 
-                            Layout="inline">                               
-                                <Search
-                                    placeholder="input search text"
-                                    onSearch={value => console.log(value)}
-                                    style={{ 
-                                        width: 200,
-                                     }}
-                                />    
+                            Layout="inline">
+                                
+                                    <Search
+                                        placeholder="input search text"
+                                        onSearch={value => console.log(value)}
+                                        style={{ width: 200 }}
+                                    />    
                             </div>
                         </Col>
+
                         <Col span={12}>
                             <div className="bd-new">
                                 <Link className="bd-link" to={{pathname:`/businesses/list`}}>
@@ -153,15 +144,11 @@ class BusinessDisplay extends Component{
                     <BlockUi blocking={this.state.isLoading}>
                         {console.log(this.state.businesses)}
                         {console.log(this.columns)}
-                        <Table 
-                            columns={this.columns} 
-                            dataSource={this.state.businesses} 
-                            scroll={{ x: 2000, y: 300 }}                  
-                        />
+                        <Table columns={this.columns} dataSource={this.state.businesses} scroll={{ x: 1500, y: 300 }}/>
                     </BlockUi>
                  </Content>
                  <Footer className="bd-footer">
-                      
+                     Footer
                 </Footer>
              </Layout>
          </div> 
@@ -169,6 +156,6 @@ class BusinessDisplay extends Component{
     }
 }
     
-export default BusinessDisplay;
+export default withRouter(BusinessDisplay);
 
 
