@@ -34,7 +34,7 @@ class CategoryDetails extends Component {
         return (
             <BlockUi blocking={isLoading}>
 
-                <SubTopNav handleInputChange={handleInputChange} search={search}
+                <SubTopNav handleInputChange={handleInputChange} search={search} isLoading={isLoading}
                         title={"Category Data Management"} titleLink={"/categories"}
                         searchList={["name", "description"]} sortList={["name", "description"]}
                 />

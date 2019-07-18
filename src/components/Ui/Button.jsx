@@ -1,5 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 export default function Button(props) {
     const {
@@ -30,7 +32,7 @@ export function LoadingButton(props) {
 
     return (
         <Button className="btn btn-primary" disabled={isLoading} {...rest}>
-            {isLoading && <i className="fa fa-circle-o-notch fa-pulse fa-fw" />}
+            {isLoading && <FontAwesomeIcon icon={faCircleNotch} spin/>}
             {children}
         </Button>
     )
