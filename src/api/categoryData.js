@@ -69,3 +69,7 @@ export function getDataByFilter(databaseModel, conditionKey, conditionValue, pag
     //     })
     // }
 }
+
+export function getBusinessByName (key) {
+    return axios.get('/businesses', {params: {key}})
+}
