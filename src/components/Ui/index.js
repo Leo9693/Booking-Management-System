@@ -43,7 +43,7 @@ export default class BasicLayout extends Component {
              </Link> 
             </Menu.Item>
             <Menu.Item key="2"><Link to="/customers/management">Customers</Link></Menu.Item>
-            <Menu.Item key="3"><Link to="/businesses/management">Businesses</Link></Menu.Item>
+            <Menu.Item key="3"><Link to="/businesses">Businesses</Link></Menu.Item>
             <Menu.Item key="4"><Link to="/orders/management">Orders</Link></Menu.Item>
             <Menu.Item key="5"><Link to="/categories">Categories</Link></Menu.Item>
           </Menu>
