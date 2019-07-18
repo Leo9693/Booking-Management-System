@@ -9,6 +9,7 @@ export function fetchOrders(fieldValue) {
         })}
         else {
           const {page, pageSize, key, sort, searchType} = fieldValue;
+          console.log(pageSize);
           return axios
             .get('/orders', {params:{page, pageSize, key, sort, searchType}})
                 .then(response => { 
@@ -22,7 +23,7 @@ export function fetchOrderById(id) {
   return axios
     .get(`/orders/${id}`)
     .then(response => {
-        const order=response.data;      
+        const order=response.data;        
         return order;
     })
     .catch(error => {
