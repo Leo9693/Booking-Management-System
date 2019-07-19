@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect ,Router, HashRouter} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 
 import OrderManagement from './Orders/Management';
 import BasicLayout from './Ui/index';

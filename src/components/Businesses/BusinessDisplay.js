@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
-
-import {createForm} from 'rc-form';
-import {  Layout, Button, Input, AutoComplete, Row, Col, Table, Pagination } from 'antd';
-import { Link, withRouter } from 'react-router-dom';
+import {  Modal, Layout, Button, Input, Row, Col, Table } from 'antd';
+import { Link } from 'react-router-dom';
 import { deleteBusiness, fetchBusinesses} from '../../api/business';
 import BlockUi from 'react-block-ui';
 
 const { Search } = Input;
-const { Header, Footer, Sider, Content } = Layout;
-const { Option } = AutoComplete;
+const { Header, Footer, Content } = Layout;
 
 class BusinessDisplay extends Component{
     constructor(props) {
@@ -20,6 +17,7 @@ class BusinessDisplay extends Component{
             isSaving: false,
             notFound: false,
             error: null,
+            visible: false,
         };
 
         this.columns = [
@@ -29,7 +27,7 @@ class BusinessDisplay extends Component{
                 key: 'businessName',
                 fixed: 'left',
                 width: '10%',
-            },      
+            },
             {
               title: 'E-mail',
               dataIndex: 'email',
@@ -75,14 +73,20 @@ class BusinessDisplay extends Component{
               render:(text, record)=>
               ( 
               <div style={{ display: 'flex', justifyContent: 'center'}}>
-                <Link to={{pathname: `/businesses/list/${record._id}`, state:{ record }}}>
+                <Link to={{pathname: `/businesses/list/${record._id}`}}>
                    <Button>Edit</Button>
                 </Link>
-                    <Button onClick={() => this.handleDelete(record._id)}>Delete</Button>
+
+                <Button 
+                    onClick={() => this.handleDelete(record._id)}
+                    style={{ marginLeft: 8 }}
+                >
+                    Delete
+                </Button>
               </div>
-            )             
-              }, 
-          ]; 
+              )             
+            }, 
+        ]; 
     }
 
     componentDidMount() {
@@ -96,18 +100,10 @@ class BusinessDisplay extends Component{
           });
       };
 
-    handleSearch = e => {
-        e.preventDefault();
-        console.log(this.props.form.getFieldsValue());
+    handleSearch = (data) => {
+        this.setState({search: data})
     }
-
-    // handleEdit = e => {
-    //     const { business } = this.state;
-    //     this.props.history.push({
-    //         pathname: `/businesses/list/${business._id}`,
-    //     });
-    //   
-     
+         
     handleDelete = id => {       
         if (window.confirm("Do you want to delete this business ?")) {          
           this.setState({ isFetching: true });
@@ -129,11 +125,11 @@ class BusinessDisplay extends Component{
                 <Header className="bd-header">
                     <Row>
                         <Col span={12}>
-                            <div className="bd-search" onSubmit={this.handleSearch.bind(this)} 
-                            Layout="inline">                               
+                            <div className="bd-search" 
+                            layout="inline">                         
                                 <Search
                                     placeholder="input search text"
-                                    onSearch={value => console.log(value)}
+                                    onSearch={this.handleSearch}
                                     style={{ 
                                         width: 200,
                                      }}
@@ -142,32 +138,33 @@ class BusinessDisplay extends Component{
                         </Col>
                         <Col span={12}>
                             <div className="bd-new">
-                                <Link className="bd-link" to={{pathname:`/businesses/list`}}>
+                                <Link className="bd-link" to={{pathname:`/businesses/list/create`}}>
                                     <Button type="primary">New List</Button>
                                 </Link>
                             </div>
                         </Col>
                     </Row>
                 </Header>
-                <Content className="bd-content">   
+                <Content className="bd-content"> 
                     <BlockUi blocking={this.state.isLoading}>
                         {console.log(this.state.businesses)}
                         {console.log(this.columns)}
-                        <Table 
-                            columns={this.columns} 
-                            dataSource={this.state.businesses} 
-                            scroll={{ x: 2000, y: 300 }}                  
-                        />
+                            <Table 
+                                columns={this.columns} 
+                                dataSource={this.state.businesses} 
+                                scroll={{ x: 2000, y: 300 }}                  
+                            />
                     </BlockUi>
-                 </Content>
-                 <Footer className="bd-footer">
-                      
+                </Content>
+                <Footer className="bd-footer">
+                    
                 </Footer>
              </Layout>
          </div> 
         )
     }
 }
+
     
 export default BusinessDisplay;
 
