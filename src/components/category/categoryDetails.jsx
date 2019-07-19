@@ -128,8 +128,8 @@ function DisplayCategory(props) {
     const {detailedCategory, handleDelete} = props;
     return (
 
-        <Descriptions bordered column={1}
-                    title="Category Details">
+        <Descriptions bordered column={1} className="my-3">
+                    {/* // title="Category Details" */}
             <Descriptions.Item label="Name">
                 {detailedCategory.name}
             </Descriptions.Item>
