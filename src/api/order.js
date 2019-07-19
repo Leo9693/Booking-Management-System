@@ -2,14 +2,15 @@ import axios from 'axios';
 export function fetchOrders(fieldValue) {  
   if (!fieldValue) {
   return axios
-    .get('/orders?pageSize=10', {})
+    .get('/orders', {})
     .then(response => { 
-        const orders= response.data;       
+        const orders= response.data;  
+        console.log(orders);     
         return orders;
         })}
         else {
           const {page, pageSize, key, sort, searchType} = fieldValue;
-          console.log(pageSize);
+          
           return axios
             .get('/orders', {params:{page, pageSize, key, sort, searchType}})
                 .then(response => { 
