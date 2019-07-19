@@ -65,20 +65,15 @@ export function getBusinessByName(name) {
         })
 }
 
-export function getDataByFilter(databaseModel, conditionKey, conditionValue, pageRequested, pageSize, sortKey, sortValue) {
-    // if (conditionKey === 'searchAll') {
-    //     console.log('sortKey1:' + sortKey);
-    //     return axios.get(`/${databaseModel}`, {params: {pageRequested, pageSize, sortKey, sortValue}})
-    //                 .then(res => {
-    //                     const {data} = res;
-    //                     return data; 
-    //                 })
-    // } else {
-    //     console.log('sortKey2:' + sortKey);
-    //     return axios.get(`/${databaseModel}`, {params: {conditionKey, conditionValue, pageRequested, pageSize, sortKey, sortValue}})
-    //     .then(res => {
-    //         const {data} = res;
-    //         return data; 
-    //     })
-    // }
+export function getBusinessByFilter(searchType, searchKeyword) {
+
+        console.log('searchType:' + searchType);
+        console.log('searchKeyword:' + searchKeyword);
+        return axios.get('/businesses', {params: {searchType, searchKeyword}})
+        .then(res => {
+            console.log(res);
+            const {data} = res;
+            return data; 
+        })
+
 }

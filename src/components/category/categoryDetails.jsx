@@ -85,7 +85,7 @@ class CategoryDetails extends Component {
 
                 {<AddInfoBar  addInfoTitle={"Add Business"}
                             addInfoSelectorName={"addedBusinessSelector"}
-                            addInfoSelectorList={["name", "id"]}
+                            addInfoSelectorList={["businessName", "ABN", "email", "phone", "id"]}
                             addInfoValue={"addedBusinessInfo"}
                             isLoading={isLoading}
                             linkPath={"categories"}
@@ -94,6 +94,7 @@ class CategoryDetails extends Component {
                     />
                 }
 
+                {errorInfo && <div style={{color: "red"}}>{errorInfo.response.data}</div>}
                 {/* <form className="form-inline py-3 px-3">
                     <div className="input-group-prepend">
                         <span className="input-group-text">Add Business</span>
