@@ -7,6 +7,11 @@ import BlockUi from 'react-block-ui';
 import { Descriptions } from 'antd';
 import SubTopNav from '../Ui/subTopNav';
 import AddInfoBar from '../Ui/addInfoBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
+import { deleteBusinessFromCategoryById } from '../../api/categoryData';
+
 
 class CategoryDetails extends Component {
     componentDidMount() {
@@ -22,15 +27,18 @@ class CategoryDetails extends Component {
 
     render() {
         const {isLoading, detailedCategory, addedBusinessSelector, addedBusinessInfo, searchKeyword, searchFilter, currentPage, pageSize, errorInfo, sortKey, sortValue} = this.props;
-        const {handleInputChange, handleSearch, addBusinessToCategory} = this.props;
+        const {handleInputChange, handleSearch, addBusinessToCategory, deleteBusinessFromCategoryById} = this.props;
 
         const search = (event) => {
             handleSearch(event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue)
         }
         const handleAddClick = (event) => {
-            addBusinessToCategory(event, addedBusinessSelector, addedBusinessInfo, detailedCategory.id)
+            addBusinessToCategory(event, addedBusinessSelector, addedBusinessInfo, detailedCategory._id)
         }
-        
+        const handleDelete = (event, businessId) => {
+            deleteBusinessFromCategoryById(event, businessId, detailedCategory._id);
+        }
+        console.log('re-render' + isLoading);
         return (
             <BlockUi blocking={isLoading}>
 
@@ -70,11 +78,14 @@ class CategoryDetails extends Component {
                     </div>
                 </form> */}
                 
-                {(detailedCategory._id) && <DisplayCategory detailedCategory={detailedCategory} />}
+                {(detailedCategory._id) && 
+                    <DisplayCategory detailedCategory={detailedCategory}
+                        handleDelete={handleDelete} 
+                    />}
 
                 {<AddInfoBar  addInfoTitle={"Add Business"}
                             addInfoSelectorName={"addedBusinessSelector"}
-                            addInfoSelectorList={["email", "id"]}
+                            addInfoSelectorList={["name", "id"]}
                             addInfoValue={"addedBusinessInfo"}
                             isLoading={isLoading}
                             linkPath={"categories"}
@@ -114,7 +125,7 @@ class CategoryDetails extends Component {
 }
 
 function DisplayCategory(props) {
-    const {detailedCategory} = props;
+    const {detailedCategory, handleDelete} = props;
     return (
 
         <Descriptions bordered column={1}
@@ -126,40 +137,74 @@ function DisplayCategory(props) {
                 {detailedCategory.description}
             </Descriptions.Item>
             <Descriptions.Item label="Businesses">
-                {detailedCategory.businesses && detailedCategory.businesses.map((item) => {
+                {/* {detailedCategory.businesses && detailedCategory.businesses.map((item) => {
                     return (
-                        <div key={item}>
-                            <span>{item}</span>
+                        <div key={item._id}>
+                            <span>{item.businessName}</span>
+                            <span>{item.email}</span>
                         </div>
-                        // <div key={item._id}>
-                        //     <span>{item.businessName}</span>
-                        //     <span>{item.email}</span>
-                        // </div>
-                )})}
+                )})} */}
+                {(detailedCategory.businesses.length !== 0) && 
+                    <BusinessesTable businesses={detailedCategory.businesses} 
+                        handleDelete={handleDelete}
+                    />}
             </Descriptions.Item>
         </Descriptions>
+    )
+}
 
-        // <div>
-        //     <div>{detailedCategory.name}</div>
-        //     <div>{detailedCategory.description}</div>
-        //     {detailedCategory.orders && detailedCategory.orders.map((item) => {
-        //         return (
-        //             <div key={item._id}>
-        //                 orders: {item._id}
-        //             </div>
-        //     )})}
-        //     <div>
-        //         Businesses: 
-        //     </div>
-        //     {detailedCategory.businesses && detailedCategory.businesses.map((item) => {
-        //         return (
-        //             <div key={item._id}>
-        //                 <span>{item.businessName}</span>
-        //                 <span>{item.email}</span>
-        //             </div>
-        //     )})}
-
-        // </div>
+function BusinessesTable(props) {
+    const { businesses } = props;
+    const { handleDelete } = props;
+    return (
+        <table className="table table-hover table-borderless">
+            <thead>
+                <tr className="row">
+                    <th className="col-2">Name</th>
+                    <th className="col-7">Email</th>
+                    <th className="col-3">Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {businesses.map((item) => (
+                    <tr key={item._id}  className="row">
+                        <td className="col-2">{item.businessName}</td>
+                        <td className="col-7">{item.email}</td>
+                        <td className="col-3">
+                            <Link to={`/businesses/lists/${item._id}`}>
+                                <button type="button" className="btn btn-info btn-sm mr-4 px-1"
+                                        style={{width: "30px"}} 
+                                        data-toggle="tooltip" data-placement="top" title="Details"
+                                >
+                                    <FontAwesomeIcon icon={faInfo} 
+                                        // onClick={() => handleDetail(item._id)} 
+                                    />
+                                        {/* <i className="fas fa-info text-light px-1" */}
+                                        {/* onClick={() => handleDetail(item._id)} */}
+                                    {/* /> */}
+                                </button>
+                            </Link>
+                            <button type="button" className="btn btn-warning btn-sm mr-4"
+                                style={{width: "30px"}} 
+                                // onClick={() => handleUpdate(item._id)}
+                                data-toggle="tooltip" data-placement="top" title="Edit"
+                            >
+                                <FontAwesomeIcon icon={faEdit} />
+                                {/* <i className="far fa-edit text-light"/> */}
+                            </button>
+                            <button type="button" className="btn btn-danger btn-sm mr-4"
+                                style={{width: "30px"}} 
+                                onClick={(event) => handleDelete(event, item._id)}
+                                data-toggle="tooltip" data-placement="top" title="Delete"
+                            >
+                                <FontAwesomeIcon icon={faTrashAlt} />
+                                {/* <i className="far fa-trash-alt text-light"/> */}
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     )
 }
 
@@ -209,6 +254,12 @@ const mapDispatch = (dispatch) => ({
         dispatch(actionCreators.addBusinessToCategory(addedBusinessSelector, addedBusinessInfo, categoryID));
         console.log('getDetailedCategory: ' + categoryID);
         // dispatch(actionCreators.getDetailedCategory(categoryID));
+    },
+
+    deleteBusinessFromCategoryById: (event, businessID, categoryID) => {
+        dispatch(actionCreators.setIsLoading(true));
+        dispatch(actionCreators.setError(''));
+        dispatch(actionCreators.deleteBusinessFromCategory(businessID, categoryID));
     }
 });
 

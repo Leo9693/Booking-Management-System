@@ -7,9 +7,10 @@ import {
     deleteCategoryByID, 
     updateCategoryByID,
     addBusinessToCategoryById,
-    getDataByFilter
+    getDataByFilter,
+    getBusinessByName,
+    deleteBusinessFromCategoryById
 } from '../../../api/categoryData';
-// import { getDataByFilter } from '../../../api/getData';
 
 export const handleInputChange = (inputName, inputValue) => ({
     type: actionTypes.HANDLE_INPUT_CHANGE,
@@ -173,7 +174,10 @@ export const getDetailedCategory = (id) => {
                 // dispatch(setDeleteConfirm(false));
                 // dispatch(handleSearch());
             })
-            .catch((err) => dispatch(setError(err)));
+            .catch((err) => {
+                setIsLoading(false);
+                dispatch(setError(err))
+            });
     }
 }
 
@@ -182,21 +186,50 @@ export const addBusinessToCategory = (addedBusinessSelector, addedBusinessInfo, 
         if (addedBusinessSelector === 'id') {
             addBusinessToCategoryById(addedBusinessInfo, categoryID)
                 .then((res) => {
+                    setIsLoading(false);
                     dispatch(getDetailedCategory(categoryID));
                 })
-                .catch((err) => dispatch(setError(err)));
+                .catch((err) => {
+                    setIsLoading(false);
+                    dispatch(setError(err))
+                });
         } else {
-            getDataByFilter('businesses', addedBusinessSelector, addedBusinessInfo)
+            // getDataByFilter('businesses', addedBusinessSelector, addedBusinessInfo)
+            console.log('0 rse');
+            console.log(addedBusinessInfo);
+            console.log(categoryID);
+            getBusinessByName(addedBusinessInfo)
                 .then((res) => {
-                    const {id} = res.documentsAfterPagination[0];
-                    addBusinessToCategoryById(id, categoryID);
+                    setIsLoading(false);
+                    const id = res[0]._id;
+                    addBusinessToCategoryById(id, categoryID)
+                        .then((res) => {
+                            setIsLoading(false);
+                            dispatch(getDetailedCategory(categoryID));
+                        });
                 })
-                .then((res) => {
-                    console.log('2nd res');
-                    console.log(res);
-                    dispatch(getDetailedCategory(categoryID));
-                })
-                .catch((err) => dispatch(setError(err)));
+                .catch((err) => {
+                    setIsLoading(false);
+                    dispatch(setError(err))
+                });
         }
+    }
+}
+
+export const deleteBusinessFromCategory = (businessID, categoryID) => {
+    return (dispatch) => {
+        setIsLoading(true);
+        deleteBusinessFromCategoryById(businessID, categoryID)
+            .then(res => {
+                setIsLoading(false);
+                
+                console.log(res);
+                console.log('res delete')
+                dispatch(getDetailedCategory(categoryID));
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                dispatch(setError(err))
+            });
     }
 }
