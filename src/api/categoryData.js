@@ -53,8 +53,8 @@ export function addBusinessToCategoryById(addedBusinessInfo, categoryID) {
         })
 }
 
-export function deleteBusinessFromCategoryById(addedBusinessInfo, categoryID) {
-    return axios.delete(`/categories/${categoryID}/businesses/${addedBusinessInfo}`)
+export function deleteBusinessFromCategoryById(deletedBusinessID, categoryID) {
+    return axios.delete(`/categories/${categoryID}/businesses/${deletedBusinessID}`)
 }
 
 export function getBusinessByName(name) {

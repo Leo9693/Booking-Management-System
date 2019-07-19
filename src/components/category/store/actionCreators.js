@@ -8,7 +8,8 @@ import {
     updateCategoryByID,
     addBusinessToCategoryById,
     getDataByFilter,
-    getBusinessByName
+    getBusinessByName,
+    deleteBusinessFromCategoryById
 } from '../../../api/categoryData';
 
 export const handleInputChange = (inputName, inputValue) => ({
@@ -173,7 +174,10 @@ export const getDetailedCategory = (id) => {
                 // dispatch(setDeleteConfirm(false));
                 // dispatch(handleSearch());
             })
-            .catch((err) => dispatch(setError(err)));
+            .catch((err) => {
+                setIsLoading(false);
+                dispatch(setError(err))
+            });
     }
 }
 
@@ -204,7 +208,28 @@ export const addBusinessToCategory = (addedBusinessSelector, addedBusinessInfo, 
                             dispatch(getDetailedCategory(categoryID));
                         });
                 })
-                .catch((err) => dispatch(setError(err)));
+                .catch((err) => {
+                    setIsLoading(false);
+                    dispatch(setError(err))
+                });
         }
+    }
+}
+
+export const deleteBusinessFromCategory = (businessID, categoryID) => {
+    return (dispatch) => {
+        setIsLoading(true);
+        deleteBusinessFromCategoryById(businessID, categoryID)
+            .then(res => {
+                setIsLoading(false);
+                
+                console.log(res);
+                console.log('res delete')
+                dispatch(getDetailedCategory(categoryID));
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                dispatch(setError(err))
+            });
     }
 }
