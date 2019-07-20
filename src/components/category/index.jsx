@@ -10,14 +10,15 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
-import SubTopNav from '../Ui/subTopNav';
+import SubTopNav from '../Ui/subTopNavCategory';
 import PaginationBar from '../Ui/paginationBar';
 import BlockUi from 'react-block-ui'
 import { setIsLoading } from './store/actionCreators';
 
 class Category extends Component {
     componentDidMount() {
-        this.props.initializeData();
+        const {searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue} = this.props;
+        this.props.initializeData(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue);
     }
     
     render() {
@@ -45,16 +46,16 @@ class Category extends Component {
         <div>
             <BlockUi blocking={isLoading}>
                 <SubTopNav handleInputChange={handleInputChange} search={search} isLoading={isLoading}
-                            title={"Category Data Management"} titleLink={"/categories"}
+                            title={"Create new category"} showCreate={showCreate}
                             searchList={["name", "description"]} sortList={["name", "description"]}
                 />            
-                <div className="py-3 px-3">                
+                {/* <div className="py-3 px-3">                
                     <button className="btn btn-success mr-auto btn-lg"
                             onClick={showCreate}
                     >
                         Create a new category
                     </button>    
-                </div>
+                </div> */}
             </BlockUi>
 
             {isShowCreate && <CreateModal/>}
@@ -172,11 +173,14 @@ const mapDispatch = (dispatch) => ({
         dispatch(actionCreators.handleSearchByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue));
     },
 
-    initializeData: () => {
+    initializeData: (searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue) => {
+        dispatch(actionCreators.handleInputChange('pageSize', 5))
+        dispatch(actionCreators.selectPage(1));
         dispatch(actionCreators.handleSearchByFilter());
     },
 
     showCreate: (event) => {
+        console.log('showCreate, showCreate, showCreate, showCreate,showCreate ')
         event.preventDefault();
         dispatch(actionCreators.showCreate());
     },
