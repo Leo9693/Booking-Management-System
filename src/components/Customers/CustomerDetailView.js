@@ -28,7 +28,8 @@ class InfoDetailView extends Component {
 
   handleEdit = event => {
     const { Info } = this.state;
-    this.props.history.push({ pathname: `/customers/booking/${Info._id}` });
+    // this.props.history.push({ pathname: `/customers/booking/${Info._id}` });
+    this.props.history.push({ pathname: `/orders/management/edit/new` });
   };
 
   handleDelete = event => {

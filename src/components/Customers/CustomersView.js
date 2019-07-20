@@ -2,7 +2,6 @@ import BlockUi from 'react-block-ui';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getCustomerByFilter, deleteInfo } from '../../api/customer';
-import CustomersList from './CustomerList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo, faCommentDots } from '@fortawesome/free-solid-svg-icons';
@@ -120,7 +119,7 @@ export default class InfoView extends React.Component {
     });
     this.setState({ isFetching: true, error: null });
     let { searchFilter, searchKeyword, sortKey, currentPage } = this.state;
-    currentPage = 1;
+    // currentPage = 1;
     getCustomerByFilter(
       searchFilter,
       searchKeyword,
@@ -219,8 +218,7 @@ export default class InfoView extends React.Component {
                         <td className='col-3'>{item.preferName}</td>
                         <td className='col-4'>{item.email}</td>
                         <td className='col-3'>
-                          {console.log(item._id)}
-                          <Link to={`/categories/${item._id}`}>
+                          <Link to={`/customers/${item._id}`}>
                             <button
                               type='button'
                               className='btn btn-info btn-sm mr-4 px-1'
@@ -229,10 +227,7 @@ export default class InfoView extends React.Component {
                               data-placement='top'
                               title='Details'
                             >
-                              <FontAwesomeIcon
-                                icon={faCommentDots}
-                                // onClick={() => handleDetail(item._id)}
-                              />
+                              <FontAwesomeIcon icon={faCommentDots} />
                               {/* <i className="fas fa-info text-light px-1" */}
                               {/* onClick={() => handleDetail(item._id)} */}
                               {/* /> */}
