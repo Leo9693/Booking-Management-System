@@ -18,11 +18,12 @@ export default class BasicLayout extends Component {
   //     collapsed: !this.state.collapsed,
   //   });
   // };
+
   render() {
     return (
       <div>       
       <Layout>
-        <Sider width={256} style={{ minHeight: '100vh' } }
+        <Sider  style={{ minHeight: '100vh', position: 'fixed'} }
              breakpoint="md"
              collapsedWidth="0"
              onBreakpoint={broken => {
@@ -44,28 +45,16 @@ export default class BasicLayout extends Component {
             <Menu.Item key="2"><Link to="/customers/management">Customers</Link></Menu.Item>
             <Menu.Item key="3"><Link to="/businesses">Businesses</Link></Menu.Item>
             <Menu.Item key="4"><Link to="/orders/management">Orders</Link></Menu.Item>
-            <Menu.Item key="5"><Link to="/categories/management">Categories</Link></Menu.Item>
-            {/* <SubMenu
-              key="sub5"
-              title={<span><Icon type="dashboard" /><span>Admin User</span></span>}
-            >
-               <Menu.Item key="6"><Link to="/admin/login">Login</Link></Menu.Item>
-               <Menu.Item key="7"><Link to="/admin/setting">Setting</Link></Menu.Item>   
-            </SubMenu>    */}
+            <Menu.Item key="5"><Link to="/categories">Categories</Link></Menu.Item>
           </Menu>
         </Sider>
-        <Layout >
-          <Header style={{ background: '#fff', textAlign: 'center', padding: 0 }}>
-          <div>
-            {/* <Icon
-              className="trigger"
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={this.toggle}
-            /> */}
-            <Logout />
+        <Layout style={{ marginLeft: 200, minHeight: "100vh" }}>
+          <Header style={{ background: '#fff', textAlign: 'left', padding: 0 }}>
+            <div>       
+              <Logout />
             </div>
-            </Header>
-          <Content style={{ margin: '24px 16px 0' }}>
+          </Header>
+          <Content style={{ margin: '12px 0' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               {this.props.children}
             </div>

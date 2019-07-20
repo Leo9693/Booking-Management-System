@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 // import 'antd/dist/antd.css';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout } from 'antd';
 
 
 
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Content } = Layout;
 
 // 引入子菜单组件
-const SubMenu = Menu.SubMenu; 
+// const SubMenu = Menu.SubMenu; 
 
 class BasicLayout extends Component {
   render() {

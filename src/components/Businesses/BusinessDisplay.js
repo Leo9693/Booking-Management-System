@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+
 import { Layout, Button, Input, Row, Col, Table, Form } from 'antd';
 import { Link } from 'react-router-dom';
 import { deleteBusiness, fetchBusinesses} from '../../api/business';
+
 import BlockUi from 'react-block-ui';
+import Item from 'antd/lib/list/Item';
 
 const { Search } = Input;
 const { Header, Content } = Layout;
@@ -12,7 +15,9 @@ class BusinessDisplay extends Component{
         super(props);
         this.state = {
             businesses: [],
+
             isFetching: false,
+
             isLoading: false,
             isSaving: false,
             error: null,
@@ -26,21 +31,23 @@ class BusinessDisplay extends Component{
                 fixed: 'left',
                 width: 150,
             },
+
             {
-              title: 'E-mail',
+              title: 'Email',
               dataIndex: 'email',
               key: 'email',
               width: 250,
             },  
-                    
+
             {
                 title: 'ABN',
                 dataIndex: 'ABN',
                 key: 'ABN',
                 width: 200,
+
             },    
             {
-                title: 'Phone Number',
+                title: 'Phone',
                 dataIndex: 'phone',          
                 key: 'phone',
                 width: 200,
@@ -72,7 +79,9 @@ class BusinessDisplay extends Component{
               ( 
               <div style={{ display: 'flex', justifyContent: 'center'}}>
                 <Link to={{pathname: `/businesses/list/${record._id}`}}>
-                   <Button>Edit</Button>
+                   <Button>
+                        Edit
+                   </Button>
                 </Link>
 
                 <Button 
@@ -150,6 +159,7 @@ class BusinessDisplay extends Component{
                         </div>                          
                     </Col>  
                   </Row>
+
                 </Header>
                 <Content className="bd-content"> 
                     <BlockUi blocking={this.state.isLoading}>
@@ -162,6 +172,7 @@ class BusinessDisplay extends Component{
                             />
                     </BlockUi>
                 </Content>
+
              </Layout>
          </div> 
         )
@@ -169,5 +180,6 @@ class BusinessDisplay extends Component{
 }
 
 export default Form.create()(BusinessDisplay);
+
 
 

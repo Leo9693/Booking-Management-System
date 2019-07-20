@@ -1,6 +1,6 @@
 
 // import React from 'react';
-import React, { Component } from 'react';
+import React from 'react';
 import {fetchOrderById, addNewOrder} from '../../api/order';
 import {
   Form,
@@ -11,6 +11,7 @@ import {
   Row,
   Col,
 } from 'antd';
+import BlockUi from 'react-block-ui';
 class Edit extends React.Component {
   constructor(props) {
     super(props);
@@ -25,10 +26,13 @@ class Edit extends React.Component {
     const id = this.props.match.params.id;
     this.setState({ isFetching: true, error: null});
     fetchOrderById(id)
-      .then(data => {      
+      .then(data => {
+           
         this.setState({order: data});
       }).then(res => {       
         const order=this.state.order;
+        console.log(order);  
+        this.setState({ isFetching: false});
         this.props.form.setFieldsValue(
             { status:`${order.status}`,
               comments:`${order.comments}`,
@@ -48,8 +52,7 @@ class Edit extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
-     
+      if (!err) {     
         addNewOrder(values)
         .then(() => {
           this.setState({ isSaving: false });
@@ -57,6 +60,7 @@ class Edit extends React.Component {
         })
         .catch(error => {
           this.setState({ isSaving: false, error });
+          console.log(error);
         });
       
       }
@@ -72,6 +76,8 @@ class Edit extends React.Component {
       wrapperCol: { span: 14 },
     };
     return (
+      <div>
+      <BlockUi blocking={this.state.isFetching}>
       <Form {...formItemLayout} onSubmit={this.handleSubmit}> 
         <Form.Item label="Customer Id" hasFeedback>
           {getFieldDecorator('customer', {
@@ -134,6 +140,8 @@ class Edit extends React.Component {
         </Row>
         </Form.Item>       
       </Form>
+      </BlockUi>
+      </div>
     );
   }
 }

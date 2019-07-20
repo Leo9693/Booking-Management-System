@@ -1,4 +1,6 @@
 @import '~antd/dist/antd.css';
+@import './styles/logout.scss';
+
 .App {
   text-align: center;
 }
@@ -32,4 +34,3 @@
     transform: rotate(360deg);
   }
 }
-

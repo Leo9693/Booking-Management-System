@@ -1,21 +1,30 @@
 import axios from 'axios';
-
-export function fetchOrders(pageSize, page, key, searchType, sort) {
+export function fetchOrders(fieldValue) {  
+  if (!fieldValue) {
   return axios
-    .get('/orders?pageSize=15?page=1', {})
+    .get('/orders', {})
     .then(response => { 
-        const orders= response;
-    
+        const orders= response.data;  
+        console.log(orders);     
         return orders;
-
-        })
+        })}
+        else {
+          const {page, pageSize, key, sort, searchType} = fieldValue;
+          
+          return axios
+            .get('/orders', {params:{page, pageSize, key, sort, searchType}})
+                .then(response => { 
+                const orders= response.data;
+                return orders;
+              })
+        }
 }
 
 export function fetchOrderById(id) {
   return axios
     .get(`/orders/${id}`)
     .then(response => {
-        const order=response.data;      
+        const order=response.data;        
         return order;
     })
     .catch(error => {
