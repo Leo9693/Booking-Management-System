@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-export function fetchBusinesses(search){
+export function fetchBusinesses(searchKeyword){
     return axios
-    .get('/businesses')
+    .get('/businesses?pageSize=40?page=1', {params: {searchKeyword}})
     .then((response) => {
         return response.data;
-    }) //箭头函数 
+    }) 
 }
 
 export function fetchBusinessById(id){
