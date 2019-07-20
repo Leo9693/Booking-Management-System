@@ -1,11 +1,13 @@
 import React from 'react';
-import {createBusiness, fetchBusinessById} from '../../api/business';
+import { Link} from 'react-router-dom';
+import {createBusiness, fetchBusinessById, updateBusiness} from '../../api/business';
 import {
   Form,
   Input,
   Select,
   Button,
   AutoComplete,
+  Row, Col
 } from 'antd';
 
 const { Option } = Select;
@@ -18,23 +20,68 @@ class BusinessList extends React.Component {
     error: null,
     confirmDirty: false,
     autoCompleteResult: [],
+    businesses:{},
   };
+
+  componentDidMount() {
+    if (this._isNew()) {
+      return ;
+    }
+    const id = this.props.match.params.id;
+    this.setState({ isFetching: true, error: null});
+    fetchBusinessById(id)
+      .then(data => {
+        console.log(data);
+        this.setState({ businesses: data});
+      })
+      .then(()=>{
+        const businesses=this.state.businesses;
+        this.props.form.setFieldsValue(
+            { 
+              ABN:`${businesses.ABN}`,
+              businessName:`${businesses.businessName}`,
+              postcode:`${businesses.postcode}`,
+              state:`${businesses.state}`,
+              email:`${businesses.email}`,
+              streetAddress:`${businesses.streetAddress}`,
+              phone:`${businesses.phone}`,
+           }      
+        )
+      })
+      .catch(error => {
+        this.setState({ isFetching: false, error});
+      });
+  };
+
+  _isNew = () => {
+    const { id } = this.props.match.params;
+    return id === 'create';
+    }
 
   handleSubmit = e => {
     e.preventDefault();
 
     this.props.form.validateFieldsAndScroll((error, values) => {
       if (!error) {
-        this.setState({ isSaving: true});
-
-        console.log('Received values of form: ', values);
-
-        createBusiness(values).then(() => {       
-            this.setState({isSaving: false});
-            this.props.history.replace('/businesses');
-        }).catch(error => {
-            console.log(error);
-          });
+          this.setState({ isSaving: true});
+          console.log('Received values of form: ', values);
+          if(this._isNew()) {
+            createBusiness(values).then(() => {       
+              this.setState({isSaving: false});
+              this.props.history.replace('/businesses');
+            }).catch(error => {
+              console.log(error);
+            });
+          } else {
+            const { id } = this.props.match.params;
+            console.log(id);
+            updateBusiness(id ,values).then(()=>{
+              this.setState({isSaving: false});
+              this.props.history.replace('/businesses');
+            }).catch(error => {
+              console.log(error);
+            });
+          }
       }
     });
   };
@@ -50,7 +97,7 @@ class BusinessList extends React.Component {
   };
 
   render() {
-
+    // const { business, size } = this.state;
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
     const websiteOptions = autoCompleteResult.map(website => (
@@ -60,14 +107,15 @@ class BusinessList extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
          <Form.Item label="Business Name">
-          {getFieldDecorator('businessName', {
+          {getFieldDecorator('businessName', 
+          {
             rules: [
               { 
                 required: true, 
                 message: 'Please input business name!' 
               }
             ],
-          })(<Input />)
+          })(<Input/>)
           }
         </Form.Item>
     
@@ -83,7 +131,7 @@ class BusinessList extends React.Component {
                 message: 'Please input your E-mail!',
               },
             ],
-          })(<Input />)}
+          })(<Input/>)}
         </Form.Item>
 
         <Form.Item label="Phone Number">
@@ -105,7 +153,7 @@ class BusinessList extends React.Component {
                 message: 'Please input ABN!' 
               }
             ],
-          })(<Input />)
+          })(<Input/>)
           }
         </Form.Item>
 
@@ -117,7 +165,7 @@ class BusinessList extends React.Component {
           )}
         </Form.Item>
 
-         <Form.Item label="State">   
+         <Form.Item label="State" >   
           {getFieldDecorator('state')
           (
             <select>
@@ -145,12 +193,18 @@ class BusinessList extends React.Component {
           })(<Input />)
           }
         </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
+        <Row>
+            <Col span={24} style={{ textAlign: 'right' }}>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+                <Link className="bd-link" to={{pathname:`/businesses`}}>
+                  <Button type="primary" style={{ marginLeft: 8 }}>Back</Button>
+                </Link>
+              </Form.Item>
+          </Col>
+        </Row>
       </Form>
     );
   }
