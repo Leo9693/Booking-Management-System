@@ -21,7 +21,7 @@ const defaultState = {
     sortValue: 1,
     isLoading: false,
     detailedCategory: {},
-    addedBusinessSelector: 'businessName',
+    addedBusinessSelector: 'email',
     addedBusinessInfo: '',
 }
 

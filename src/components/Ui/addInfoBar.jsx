@@ -7,7 +7,7 @@ export default class AddInfoBar extends Component {
         const {
             addInfoTitle,
             addInfoSelectorName,
-            addInfoSelectorList = ["businessName"],
+            addInfoSelectorList = ["id"],
             addInfoValue,
             isLoading, 
             linkPath,

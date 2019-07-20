@@ -7,7 +7,7 @@ import {
     deleteCategoryByID, 
     updateCategoryByID,
     addBusinessToCategoryById,
-    getBusinessByFilter,
+    getDataByFilter,
     getBusinessByName,
     deleteBusinessFromCategoryById
 } from '../../../api/categoryData';
@@ -175,7 +175,7 @@ export const getDetailedCategory = (id) => {
                 // dispatch(handleSearch());
             })
             .catch((err) => {
-                dispatch(setIsLoading(false));
+                setIsLoading(false);
                 dispatch(setError(err))
             });
     }
@@ -186,25 +186,30 @@ export const addBusinessToCategory = (addedBusinessSelector, addedBusinessInfo, 
         if (addedBusinessSelector === 'id') {
             addBusinessToCategoryById(addedBusinessInfo, categoryID)
                 .then((res) => {
-                    dispatch(setIsLoading(false));;
+                    setIsLoading(false);
                     dispatch(getDetailedCategory(categoryID));
                 })
                 .catch((err) => {
-                    dispatch(setIsLoading(false));;
+                    setIsLoading(false);
                     dispatch(setError(err))
                 });
         } else {
             // getDataByFilter('businesses', addedBusinessSelector, addedBusinessInfo)
-            getBusinessByFilter(addedBusinessSelector, addedBusinessInfo)
+            console.log('0 rse');
+            console.log(addedBusinessInfo);
+            console.log(categoryID);
+            getBusinessByName(addedBusinessInfo)
                 .then((res) => {
-                    const id = res.businesses[0]._id;
+                    setIsLoading(false);
+                    const id = res[0]._id;
                     addBusinessToCategoryById(id, categoryID)
                         .then((res) => {
+                            setIsLoading(false);
                             dispatch(getDetailedCategory(categoryID));
                         });
                 })
                 .catch((err) => {
-                    dispatch(setIsLoading(false));
+                    setIsLoading(false);
                     dispatch(setError(err))
                 });
         }
@@ -213,13 +218,17 @@ export const addBusinessToCategory = (addedBusinessSelector, addedBusinessInfo, 
 
 export const deleteBusinessFromCategory = (businessID, categoryID) => {
     return (dispatch) => {
-        dispatch(setIsLoading(true));
+        setIsLoading(true);
         deleteBusinessFromCategoryById(businessID, categoryID)
             .then(res => {
+                setIsLoading(false);
+                
+                console.log(res);
+                console.log('res delete')
                 dispatch(getDetailedCategory(categoryID));
             })
             .catch((err) => {
-                dispatch(setIsLoading(false));
+                setIsLoading(false);
                 dispatch(setError(err))
             });
     }
