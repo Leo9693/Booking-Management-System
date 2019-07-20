@@ -15,8 +15,9 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            customerDocumentsCount: 0,
             businessDocumentsCount: 0,
-            orderDocumentsCount: 0,
+            orderDocumentsCount: 15,
         }
     }
     
@@ -25,6 +26,28 @@ class Home extends React.Component {
         console.log(this.props.categoryDocumentsCount);
         if (!this.props.categoryDocumentsCount || this.props.categoryDocumentsCount === 0) {
             this.props.handleSearch();
+        }
+        if (this.state.businessDocumentsCount === 0) {
+            const businessDocumentsCount = this.getCount('businesses');
+            this.setState({
+                businessDocumentsCount: businessDocumentsCount
+            })
+        }
+        if (this.state.customerDocumentsCount === 0 ) {
+            const customerDocumentsCount = this.getCount('customers');
+            this.setState({
+                customerDocumentsCount: customerDocumentsCount
+            })
+        }
+    }
+
+    getCount = (collectionType) => {
+        switch (collectionType) {
+            case 'businesses':
+                return console.log('businesses');
+            case 'customers':
+                return console.log('customers');
+            default: return;
         }
     }
 
