@@ -1,5 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-## CI/CD url(https://dev.d3rzrrm4mby6wp.amplifyapp.com/)
+## AWS S3: url(http://jr-booking-management-system.s3-website-ap-southeast-2.amazonaws.com/)
+## AWS Amplifiy: url(https://dev.d3rzrrm4mby6wp.amplifyapp.com/)
 
 ## Available Scripts
 
