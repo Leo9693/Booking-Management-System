@@ -3,6 +3,8 @@ import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { fetchOrderById } from '../../api/order';
 import { fetchInfoById } from '../../api/customer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfo, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 
 class InfoView extends Component {
   constructor(props) {
@@ -68,25 +70,37 @@ class InfoView extends Component {
                 </li>
                 {Info.orders && (
                   <li>
-                    <span className='item_label'>Order(s)</span>
+                    <span className='item_label'>
+                      Order(s):{Info.orders.length}
+                    </span>
                     <div>
                       {Info.orders && (
                         <div className='mx-5 mt-5'>
                           <table className='my-3 table'>
                             <thead>
                               <tr className='row'>
-                                <th className='col-10'>Order Details</th>
+                                <th className='col-7'>Order Id</th>
+                                <th className='col-5'>Order Details</th>
                               </tr>
                             </thead>
                             <tbody>
                               {Info.orders.map(item => (
-                                <tr key={item._id} className='row'>
-                                  <td
-                                    onClick={() => this.handleUpdate(item)}
-                                    className='col-10'
-                                  >
-                                    [Order Details]
-                                  </td>
+                                <tr className='row'>
+                                  <th className='col-7'>{item}</th>
+
+                                  <th className='col-5'>
+                                    <button
+                                      type='button'
+                                      className='btn btn-warning btn-sm mr-4'
+                                      style={{ width: '30px' }}
+                                      onClick={() => this.handleUpdate(item)}
+                                      data-toggle='tooltip'
+                                      data-placement='top'
+                                    >
+                                      <FontAwesomeIcon icon={faInfo} />
+                                      {/* <i className="far fa-edit text-light"/> */}
+                                    </button>
+                                  </th>
                                 </tr>
                               ))}
                             </tbody>
