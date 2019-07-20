@@ -5,7 +5,7 @@ import { getCustomerByFilter, deleteInfo } from '../../api/customer';
 import CustomersList from './CustomerList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faInfo, faAd } from '@fortawesome/free-solid-svg-icons';
+import { faInfo, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import SubTopNav from '../Ui/subTopNav';
 import PaginationBar from '../Ui/paginationBar';
 
@@ -22,7 +22,7 @@ export default class InfoView extends React.Component {
       documentsCount: '',
       currentPage: 1,
       pageSize: 5,
-      setPageAs: null
+      setPageAs: 1
     };
   }
 
@@ -85,6 +85,8 @@ export default class InfoView extends React.Component {
 
   onClickSetPage = (event, pageCount) => {
     const setPageAs = this.state.setPageAs;
+    // console.log('aaaaaaaaa' + setPageAs);
+    this.setState({ currentPage: setPageAs });
     event.preventDefault();
     if (setPageAs < 1 || setPageAs > pageCount) {
       return;
@@ -102,7 +104,7 @@ export default class InfoView extends React.Component {
         this.setState({
           Info: data.customers,
           documentsCount: data.customerCount,
-          currentPage: setPageAs,
+          // currentPage: setPageAs,
           isFetching: false
         });
       })
@@ -185,17 +187,13 @@ export default class InfoView extends React.Component {
     const pageSizeSelectorList = [1, 3, 5, 10, 15, 20];
     return (
       <div>
-        <Link to='/customers/edit/NEW' className='btn btn-lg btn-primary '>
-          Add new Customer
-        </Link>
-
         <BlockUi blocking={this.state.isFetching}>
           <SubTopNav
             handleInputChange={this.handleInputChange}
             search={this.search}
             // isLoading={isLoading}
-            title={'Customer Data Management'}
-            titleLink={'/customers'}
+            title={'Add New'}
+            titleLink={'/customers/edit/NEW'}
             searchList={['customerName', 'email', 'preferName']}
             sortList={['customerName', 'email', 'preferName']}
           />
@@ -232,7 +230,7 @@ export default class InfoView extends React.Component {
                               title='Details'
                             >
                               <FontAwesomeIcon
-                                icon={faAd}
+                                icon={faCommentDots}
                                 // onClick={() => handleDetail(item._id)}
                               />
                               {/* <i className="fas fa-info text-light px-1" */}
