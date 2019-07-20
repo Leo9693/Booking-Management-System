@@ -99,7 +99,6 @@ export default class InfoView extends React.Component {
       pageSize
     )
       .then(data => {
-        console.log('aa' + setPageAs);
         this.setState({
           Info: data.customers,
           documentsCount: data.customerCount,
