@@ -11,7 +11,7 @@ import Home from './Home';
 import OrderView from './Orders/OrderView';
 import OrderEdit from './Orders/Edit';
 import LoginView from './Admin/Login';
-import { loggedIn } from "../api/auth";
+import { loggedIn } from '../api/auth';
 import Category from '../components/category';
 import CategoryDetails from '../components/category/categoryDetails';
 import BusinessDisplay from './Businesses/BusinessDisplay';
@@ -56,11 +56,19 @@ export default () => (
           path='/orders/management/:id'
           component={OrderView}
         />
-        <ProtectedRoute exact path="/businesses" component={BusinessDisplay} /> 
-        <ProtectedRoute exact path="/businesses/list" component={BusinessList} /> 
-        <ProtectedRoute exact path="/businesses/list/:id" component={BusinessList} /> 
-        <ProtectedRoute exact path="/categories/" component={Category} />
-        <ProtectedRoute path="/categories/:id" component={CategoryDetails} /> 
+        <ProtectedRoute exact path='/businesses' component={BusinessDisplay} />
+        <ProtectedRoute
+          exact
+          path='/businesses/list'
+          component={BusinessList}
+        />
+        <ProtectedRoute
+          exact
+          path='/businesses/list/:id'
+          component={BusinessList}
+        />
+        <ProtectedRoute exact path='/categories/' component={Category} />
+        <ProtectedRoute path='/categories/:id' component={CategoryDetails} />
         <ProtectedRoute exact path='/admin/setting' component={setting} />
         <Route exact path='/admin/login' component={LoginView} />
       </BasicLayout>
