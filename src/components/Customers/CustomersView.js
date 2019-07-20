@@ -1,7 +1,7 @@
 import BlockUi from 'react-block-ui';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getCustomerByFilter } from '../../api/customer';
+import { getCustomerByFilter, deleteInfo } from '../../api/customer';
 import CustomersList from './CustomerList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
@@ -138,6 +138,43 @@ export default class InfoView extends React.Component {
       });
   };
 
+  handleDelete(id) {
+    if (window.confirm('Do you wang to delete this info?')) {
+      this.setState({ isLoading: false });
+      deleteInfo(id)
+        .then(response => {
+          this.setState({ isFetching: true, error: null });
+          const {
+            searchFilter,
+            searchKeyword,
+            sortKey,
+            currentPage,
+            pageSize
+          } = this.state;
+          getCustomerByFilter(
+            searchFilter,
+            searchKeyword,
+            sortKey,
+            currentPage,
+            pageSize
+          )
+            .then(data => {
+              this.setState({
+                Info: data.customers,
+                documentsCount: data.customerCount,
+                isFetching: false
+              });
+            })
+            .catch(error => {
+              this.setState({ isFetching: false, error });
+            });
+        })
+        .catch(error => {
+          this.setState({ isLoading: false, error });
+        });
+    }
+  }
+
   handleUpdate(id) {
     this.props.history.push(`/customers/edit/${id}`);
   }
@@ -219,7 +256,7 @@ export default class InfoView extends React.Component {
                             type='button'
                             className='btn btn-danger btn-sm mr-4'
                             style={{ width: '30px' }}
-                            // onClick={() => handleDelete(item._id)}
+                            onClick={() => this.handleDelete(item._id)}
                             data-toggle='tooltip'
                             data-placement='top'
                             title='Delete'
