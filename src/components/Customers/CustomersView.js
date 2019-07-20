@@ -3,8 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { getCustomerByFilter, deleteInfo } from '../../api/customer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faInfo, faCommentDots } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import {
+  faInfo,
+  faCommentDots,
+  faPen,
+  faEraser
+} from '@fortawesome/free-solid-svg-icons';
 import SubTopNav from '../Ui/subTopNav';
 import PaginationBar from '../Ui/paginationBar';
 
@@ -242,7 +247,7 @@ export default class InfoView extends React.Component {
                             data-placement='top'
                             title='Edit'
                           >
-                            <FontAwesomeIcon icon={faEdit} />
+                            <FontAwesomeIcon icon={faPen} />
                             {/* <i className="far fa-edit text-light"/> */}
                           </button>
                           <button
@@ -254,7 +259,7 @@ export default class InfoView extends React.Component {
                             data-placement='top'
                             title='Delete'
                           >
-                            <FontAwesomeIcon icon={faTrashAlt} />
+                            <FontAwesomeIcon icon={faEraser} />
                             <i className='far fa-trash-alt text-light' />
                           </button>
                         </td>

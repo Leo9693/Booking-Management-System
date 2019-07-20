@@ -24,13 +24,21 @@ export default function Button({
 
   if (linkTo) {
     return (
-      <Link to={linkTo} className={classnames('btn-borderless', className)} {...rest}>
+      <Link
+        to={linkTo}
+        className={classnames('btn-borderless', className)}
+        {...rest}
+      >
         {children}
       </Link>
     );
   }
   return (
-    <button className={classnames('btn', buttonStyle, className)} type={type} {...rest}>
+    <button
+      className={classnames('btn', buttonStyle, className)}
+      type={type}
+      {...rest}
+    >
       {children}
     </button>
   );
@@ -40,7 +48,7 @@ export function LoadingButton({ children, loading, ...rest }) {
   // classnames('fa','fa-spinner', 'fa-fw', {'fa-spin':loading})
   return (
     <Button primary disabled={loading} {...rest}>
-      {loading && <i className="fa fa-circle-o-notch fa-pulse fa-fw" />}
+      {loading && <i className='fa fa-circle-o-notch fa-pulse fa-fw' />}
       {children}
     </Button>
   );

@@ -32,6 +32,12 @@ class InfoDetailView extends Component {
     this.props.history.push({ pathname: `/orders/management/edit/new` });
   };
 
+  handleBack = event => {
+    const { Info } = this.state;
+    // this.props.history.push({ pathname: `/customers/booking/${Info._id}` });
+    this.props.history.push({ pathname: `/customers` });
+  };
+
   handleDelete = event => {
     if (window.confirm('Do you wang to delete this info?')) {
       const { id } = this.props.match.params;
@@ -53,10 +59,15 @@ class InfoDetailView extends Component {
       <BlockUi blocking={this.state.isLoading}>
         <div>
           <CustomerDetailDisplay Info={this.state.Info} />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ justifyContent: 'center' }}>
+            <Button primary className={'btn-group'} onClick={this.handleBack}>
+              Back
+            </Button>
+            {'  '}
             <Button primary className={'btn-group'} onClick={this.handleEdit}>
               Booking
             </Button>
+            {'  '}
             <Button danger className={'btn-group'} onClick={this.handleDelete}>
               Delete
             </Button>
