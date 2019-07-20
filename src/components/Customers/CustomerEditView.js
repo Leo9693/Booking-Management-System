@@ -123,10 +123,10 @@ class InfoEditView extends Component {
             <div className='row'>
               <div className='col-md-12'>
                 <div className='form-group'>
-                  <label>Error</label>
+                  <label>Error:</label>
                   <div>
                     {this.state.error && (
-                      <p>{this.state.error.response.data.error}</p>
+                      <p>{this.state.error.response.data}</p>
                     )}
                   </div>
                 </div>

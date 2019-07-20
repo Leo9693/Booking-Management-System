@@ -12,8 +12,65 @@ const _transform = (Info, i) => {
   };
 };
 
+export function getCustomerByFilter(
+  searchType,
+  searchKeyword,
+  sortType,
+  pageRequested,
+  pageSize,
+  sortValue
+) {
+  if (searchType === 'searchAll') {
+    console.log('fetch1');
+    console.log(searchType);
+    console.log(searchKeyword);
+    console.log(pageRequested);
+    console.log(pageSize);
+    console.log(sortType);
+    console.log(sortValue);
+    return axios
+      .get('/customers', {
+        params: { pageRequested, pageSize, sortType, sortValue }
+      })
+      .then(res => {
+        const { data } = res;
+        console.log(data);
+        return data;
+      });
+  } else {
+    console.log('fetch2');
+    console.log(searchType);
+    console.log(searchKeyword);
+    console.log(pageRequested);
+    console.log(pageSize);
+    console.log(sortType);
+    console.log(sortValue);
+    return axios
+      .get('/customers', {
+        params: {
+          searchType,
+          searchKeyword,
+          pageRequested,
+          pageSize,
+          sortType,
+          sortValue
+        }
+      })
+      .then(res => {
+        const { data } = res;
+        console.log(data);
+        return data;
+      });
+  }
+}
+
 export function fetchInfo() {
   return axios.get('/customers').then(response => response.data);
+}
+export function fetchInfoSearch(searchKeyword, searchFilter, sortKey) {
+  return axios.get('/customers', {
+    params: { searchKeyword, searchFilter, sortKey }
+  });
 }
 
 export function createInfo(data) {
