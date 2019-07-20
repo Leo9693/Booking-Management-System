@@ -46,37 +46,7 @@ class CategoryDetails extends Component {
                         title={"Category Data Management"} titleLink={"/categories"}
                         searchList={["name", "description"]} sortList={["name", "description"]}
                 />
-                {/* <form className="form-inline bg-light py-3 px-3">
-                    <Link to="/categories" className="mr-auto">
-                        <label >Category Data Management</label>
-                    </Link>
-                    <input className="form-control mr-1" type="search"
-                        placeholder="Search Keyword..."
-                        name="searchKeyword" onChange={handleInputChange}
-                    />
-                    <select className="form-control mr-1"
-                        name="searchFilter" onChange={handleInputChange}
-                    >
-                        <option value="searchAll">Search All</option>
-                        <option value="name">Search By Name</option>
-                    </select>
-                    <LoadingButton className="btn mr-2" buttonStyle="btn-outline-primary" type="submit"
-                        onClick={(event) => handleSearch(event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue)}
-                    >
-                        Search
-                    </LoadingButton>
-                    <div className="input-group">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text">Sort By: </span>
-                        </div>
-                        <select className="form-control mr-1"
-                            name="sortKey" onChange={handleInputChange}
-                        >
-                            <option value="name">Name</option>
-                            <option value="description">Description</option>
-                        </select>
-                    </div>
-                </form> */}
+
                 
                 {(detailedCategory._id) && 
                     <DisplayCategory detailedCategory={detailedCategory}
@@ -95,31 +65,7 @@ class CategoryDetails extends Component {
                 }
 
                 {errorInfo && <div style={{color: "red"}}>{errorInfo.response.data}</div>}
-                {/* <form className="form-inline py-3 px-3">
-                    <div className="input-group-prepend">
-                        <span className="input-group-text">Add Business</span>
-                    </div>
-                    <select className="form-control mr-1"
-                    name="addedBusinessSelector" onChange={handleInputChange}
-                    >
-                        <option value="id">By ID</option>
-                        <option value="email">By Email</option>
-                    </select>
-                    <input style={{width:"300px"}} className="form-control mr-1" type="text"
-                        placeholder="Input Business Info..."
-                        name="addedBusinessInfo" onChange={handleInputChange}
-                    />
-                    <LoadingButton className="btn mr-2" buttonStyle="btn-outline-primary" type="submit" disabled={isLoading}
-                        onClick={(event) => addBusinessToCategory(event, addedBusinessSelector, addedBusinessInfo, detailedCategory.id)}
-                    >
-                        ADD
-                    </LoadingButton>
-                    <Link  to="/categories" className="ml-auto">
-                        <button className="btn btn-secondary">
-                            Back to Categories Overview
-                        </button>
-                    </Link>
-                </form> */}
+
             </BlockUi>
         )
     }
@@ -138,13 +84,7 @@ function DisplayCategory(props) {
                 {detailedCategory.description}
             </Descriptions.Item>
             <Descriptions.Item label="Businesses">
-                {/* {detailedCategory.businesses && detailedCategory.businesses.map((item) => {
-                    return (
-                        <div key={item._id}>
-                            <span>{item.businessName}</span>
-                            <span>{item.email}</span>
-                        </div>
-                )})} */}
+  
                 {(detailedCategory.businesses.length !== 0) && 
                     <BusinessesTable businesses={detailedCategory.businesses} 
                         handleDelete={handleDelete}
@@ -161,21 +101,25 @@ function BusinessesTable(props) {
         <table className="table table-hover table-borderless">
             <thead>
                 <tr className="row">
-                    <th className="col-2">Name</th>
-                    <th className="col-7">Email</th>
-                    <th className="col-3">Operation</th>
+                    <th className="col-2" style={{padding: "20px 20px"}}>Name</th>
+                    <th className="col-3" style={{padding: "20px 40px"}}>Email</th>
+                    <th className="col-4" style={{padding: "20px 60px"}}>ID</th>
+                    <th className="col-3" style={{padding: "20px 10px"}}>Operation</th>
                 </tr>
             </thead>
             <tbody>
+                {                    console.log(businesses)}
                 {businesses.map((item) => (
+
                     <tr key={item._id}  className="row">
                         <td className="col-2">{item.businessName}</td>
-                        <td className="col-7">{item.email}</td>
+                        <td className="col-3">{item.email}</td>
+                        <td className="col-4">{item._id}</td>
                         <td className="col-3">
-                            <Link to={`/businesses/lists/${item._id}`}>
+                            <Link to={`/businesses/list/${item._id}`}>
                                 <button type="button" className="btn btn-info btn-sm mr-4 px-1"
                                         style={{width: "30px"}} 
-                                        data-toggle="tooltip" data-placement="top" title="Details"
+                                        data-toggle="tooltip" data-placement="top" title="Check business details"
                                 >
                                     <FontAwesomeIcon icon={faInfo} 
                                         // onClick={() => handleDetail(item._id)} 
@@ -185,21 +129,13 @@ function BusinessesTable(props) {
                                     {/* /> */}
                                 </button>
                             </Link>
-                            <button type="button" className="btn btn-warning btn-sm mr-4"
-                                style={{width: "30px"}} 
-                                // onClick={() => handleUpdate(item._id)}
-                                data-toggle="tooltip" data-placement="top" title="Edit"
-                            >
-                                <FontAwesomeIcon icon={faEdit} />
-                                {/* <i className="far fa-edit text-light"/> */}
-                            </button>
+
                             <button type="button" className="btn btn-danger btn-sm mr-4"
                                 style={{width: "30px"}} 
                                 onClick={(event) => handleDelete(event, item._id)}
-                                data-toggle="tooltip" data-placement="top" title="Delete"
+                                data-toggle="tooltip" data-placement="top" title="Remove from category"
                             >
                                 <FontAwesomeIcon icon={faTrashAlt} />
-                                {/* <i className="far fa-trash-alt text-light"/> */}
                             </button>
                         </td>
                     </tr>
