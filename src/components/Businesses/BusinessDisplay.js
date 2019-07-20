@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {  Modal, Layout, Button, Input, Row, Col, Table } from 'antd';
+import { Layout, Button, Input, Row, Col, Table, Form } from 'antd';
 import { Link } from 'react-router-dom';
 import { deleteBusiness, fetchBusinesses} from '../../api/business';
 import BlockUi from 'react-block-ui';
 
 const { Search } = Input;
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 
 class BusinessDisplay extends Component{
     constructor(props) {
@@ -15,9 +15,7 @@ class BusinessDisplay extends Component{
             isFetching: false,
             isLoading: false,
             isSaving: false,
-            notFound: false,
             error: null,
-            visible: false,
         };
 
         this.columns = [
@@ -26,50 +24,50 @@ class BusinessDisplay extends Component{
                 dataIndex: 'businessName',          
                 key: 'businessName',
                 fixed: 'left',
-                width: '10%',
+                width: 150,
             },
             {
               title: 'E-mail',
               dataIndex: 'email',
               key: 'email',
-              width: '20%',
+              width: 250,
             },  
                     
             {
                 title: 'ABN',
                 dataIndex: 'ABN',
                 key: 'ABN',
-                width: '20%',
+                width: 200,
             },    
             {
                 title: 'Phone Number',
                 dataIndex: 'phone',          
                 key: 'phone',
-                width: '20%',
+                width: 200,
             },  
             {
                 title: 'Street Address',
                 dataIndex: 'streetAddress',            
                 key:'streetAddress',
-                width: '20%',
+                width: 200,
             },
             {
                 title: 'State',
                 dataIndex: 'state',            
                 key:'state',
-                width: '10%',
+                width: 200,
             },
             {
               title: 'Postcode',
               dataIndex: 'postcode',           
               key: 'postcode',
-              width: '20%',
+              width: 200,
             },        
             {
               title: 'Action',              
               key: 'action',
               fixed: 'right',
-           
+              width: 200,
               render:(text, record)=>
               ( 
               <div style={{ display: 'flex', justifyContent: 'center'}}>
@@ -93,16 +91,23 @@ class BusinessDisplay extends Component{
         this.setState({ isFetching: true, error: null});
         fetchBusinesses()
           .then(data => {       
-            this.setState({ businesses: data});
+            this.setState({ businesses: data.businesses});
           })
           .catch(error => {
             this.setState({ isFetching: false, error});
           });
       };
 
-    handleSearch = (data) => {
-        this.setState({search: data})
+    handleSearch = (value) =>{
+        fetchBusinesses(value)
+        .then(data => {       
+            this.setState({businesses: data.businesses});
+        })
+        .catch(error => {
+            this.setState({ isFetching: false, error});
+        });  
     }
+            // console.log(this.props.form.getFieldsValue());
          
     handleDelete = id => {       
         if (window.confirm("Do you want to delete this business ?")) {          
@@ -111,7 +116,7 @@ class BusinessDisplay extends Component{
               this.setState({ isFetching: false });
               fetchBusinesses()
               .then(data => {       
-                this.setState({ businesses: data});
+                this.setState({ businesses: data.businesses});
               })
           }).catch(error => {
               console.log(error);
@@ -119,31 +124,32 @@ class BusinessDisplay extends Component{
           }        
         }
     
-    render() {
-        return (<div>
+    render() {  
+    
+        return (
+        <div>     
             <Layout>
                 <Header className="bd-header">
-                    <Row>
-                        <Col span={12}>
-                            <div className="bd-search" 
-                            layout="inline">                         
-                                <Search
-                                    placeholder="input search text"
-                                    onSearch={this.handleSearch}
-                                    style={{ 
-                                        width: 200,
-                                     }}
-                                />    
-                            </div>
-                        </Col>
-                        <Col span={12}>
-                            <div className="bd-new">
-                                <Link className="bd-link" to={{pathname:`/businesses/list/create`}}>
-                                    <Button type="primary">New List</Button>
-                                </Link>
-                            </div>
-                        </Col>
-                    </Row>
+                  <Row>
+                    <Col span={12}>
+                        <div className="bd-search" layout="inline"> 
+                    
+                            <Search
+                                placeholder="input search text"
+                                style={{ width: 200 }}
+                                onSearch={value => this.handleSearch(value)}
+                            />                       
+                        </div> 
+                    </Col> 
+                    <Col span={12}>
+                        <div className="bd-new">
+
+                            <Link className="bd-link" to={{pathname:`/businesses/list/create`}}>
+                                <Button type="primary" block>New List</Button>
+                            </Link>
+                        </div>                          
+                    </Col>  
+                  </Row>
                 </Header>
                 <Content className="bd-content"> 
                     <BlockUi blocking={this.state.isLoading}>
@@ -152,20 +158,16 @@ class BusinessDisplay extends Component{
                             <Table 
                                 columns={this.columns} 
                                 dataSource={this.state.businesses} 
-                                scroll={{ x: 2000, y: 300 }}                  
+                                scroll={{ x: 1500, y: 300 }}                  
                             />
                     </BlockUi>
                 </Content>
-                <Footer className="bd-footer">
-                    
-                </Footer>
              </Layout>
          </div> 
         )
     }
 }
 
-    
-export default BusinessDisplay;
+export default Form.create()(BusinessDisplay);
 
 
