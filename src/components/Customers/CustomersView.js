@@ -88,8 +88,7 @@ export default class InfoView extends React.Component {
   };
 
   onClickSetPage = (event, pageCount) => {
-    const setPageAs = this.state.setPageAs;
-    // console.log('aaaaaaaaa' + setPageAs);
+    const setPageAs = parseInt(this.state.setPageAs);
     this.setState({ currentPage: setPageAs });
     event.preventDefault();
     if (setPageAs < 1 || setPageAs > pageCount) {
