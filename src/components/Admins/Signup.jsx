@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Input, Icon, Row, Col, Button } from 'antd';
+import { Form, Input, Button, Spin } from 'antd';
+import ErrorAlert from '../Ui/ErrorAlert';
 import { connect } from 'react-redux';
 import { addUser } from '../../api/auth';
 import { actionCreators } from './store';
@@ -9,7 +10,8 @@ class Signup extends Component {
         super(props);
         this.state = {
             confirmDirty: false,
-            autoCompleteResult: [],
+            isLoading: false,
+            error: null,
         }
     }
 
@@ -17,19 +19,22 @@ class Signup extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
+                this.setState({ isLoading: true });
                 const { email, password, nickname } = values;
                 addUser({email, password, name: nickname})
                     .then(res => {
+                        this.setState({ isLoading: false });
                         this.props.saveRegisterInfo(res);
                         this.props.history.push('/');
                     })
                     .catch(err => {
-                        console.log(err.response.data);
+                        this.setState({ isLoading: false });
+                        this.setState({ error: err.response.data})
                     })
             }
         });
     };
-
+ 
     handleConfirmBlur = e => {
         const { value } = e.target;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
@@ -50,6 +55,10 @@ class Signup extends Component {
         } else {
             callback();
         }
+    };
+
+    handleCloseErrorAlert = e => {
+        this.setState({ error: null });
     };
 
     formItemLayout = {
@@ -78,62 +87,71 @@ class Signup extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        // const formItemLayout = { labelCol: { span: 4, offset: 4 }, wrapperCol: { span: 8 } };
+        const { isLoading, error } = this.state;
+        
         return (
-            <Form { ...this.formItemLayout } onSubmit={this.handleSubmit} >
-                <Form.Item label="E-mail">
-                    {getFieldDecorator('email', {
-                        rules: [
-                            {
-                                type: 'email',
-                                message: 'Please input a valid E-mail!',
-                            },
-                            {
-                                required: true,
-                                message: 'Please input your E-mail!',
-                            },
-                        ],
-                    })(<Input />)}
-                </Form.Item>
-                <Form.Item label="Password" hasFeedback>
-                    {getFieldDecorator('password', {
-                        rules: [
-                            {
-                                required: true,
-                                message: 'Please input your password!',
-                            },
-                            {
-                                validator: this.validateToNextPassword,
-                            },
-                        ],
-                    })(<Input.Password />)}
-                </Form.Item>
-                <Form.Item label="Confirm Password" hasFeedback>
-                    {getFieldDecorator('confirm', {
-                        rules: [
-                            {
-                                required: true,
-                                message: 'Please confirm your password!',
-                            },
-                            {
-                                validator: this.compareToFirstPassword,
-                            },
-                        ],
-                    })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-                </Form.Item>
-                    <Form.Item label="Nickname">
-                        {getFieldDecorator('nickname', {
+            <Spin spinning={isLoading} tip="Loading...">
+                {error && (
+                    <ErrorAlert
+                        description={error}
+                        onClose={this.handleCloseErrorAlert}
+                    />
+                )}
+                <Form { ...this.formItemLayout } onSubmit={this.handleSubmit} >
+                    <Form.Item label="E-mail">
+                        {getFieldDecorator('email', {
                             rules: [
-                                { required: true, message: 'Please input your nickname!' }
+                                {
+                                    type: 'email',
+                                    message: 'Please input a valid E-mail!',
+                                },
+                                {
+                                    required: true,
+                                    message: 'Please input your E-mail!',
+                                },
                             ],
-                    })(<Input />)}
-                </Form.Item>
-                <Form.Item { ...this.tailFormItemLayout }>
-                    <Button type="primary" htmlType="submit">
-                        Register
-                    </Button>
-                </Form.Item>
-            </Form>
+                        })(<Input />)}
+                    </Form.Item>
+                    <Form.Item label="Password" hasFeedback>
+                        {getFieldDecorator('password', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: 'Please input your password!',
+                                },
+                                {
+                                    validator: this.validateToNextPassword,
+                                },
+                            ],
+                        })(<Input.Password />)}
+                    </Form.Item>
+                    <Form.Item label="Confirm Password" hasFeedback onBlur={this.handleConfirmBlur}>
+                        {getFieldDecorator('confirm', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: 'Please confirm your password!',
+                                },
+                                {
+                                    validator: this.compareToFirstPassword,
+                                },
+                            ],
+                        })(<Input.Password />)}
+                    </Form.Item>
+                        <Form.Item label="Nickname">
+                            {getFieldDecorator('nickname', {
+                                rules: [
+                                    { required: true, message: 'Please input your nickname!' }
+                                ],
+                        })(<Input />)}
+                    </Form.Item>
+                    <Form.Item { ...this.tailFormItemLayout }>
+                        <Button type="primary" htmlType="submit">
+                            Register
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Spin>
         )
     }
 }
