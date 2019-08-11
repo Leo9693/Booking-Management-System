@@ -10,7 +10,8 @@ import setting from './Admin/Setting';
 import Home from './Home';
 import OrderView from './Orders/OrderView';
 import OrderEdit from './Orders/Edit';
-import LoginView from './Admin/Login';
+import LoginView from './Admins/Login';
+import Signup from './Admins/Signup';
 import { loggedIn } from '../api/auth';
 import Category from '../components/category';
 import CategoryDetails from '../components/category/categoryDetails';
@@ -19,9 +20,12 @@ import BusinessList from './Businesses/BusinessList';
 
 export default () => (
   <div>
-    {!loggedIn() && <Route exact path='/' component={LoginView} />
-    //  <loginRoute exact path="/login" component={LoginView} />
-    }
+    { !loggedIn() && (
+      <div>
+        <Route exact path='/' component={LoginView} />
+        <Route exact path='/admin/signup' component={Signup} />
+      </div>
+    )}
     {loggedIn() && (
       <BasicLayout>
         <ProtectedRoute exact path='/' component={Home} />
@@ -71,6 +75,7 @@ export default () => (
         <ProtectedRoute path='/categories/:id' component={CategoryDetails} />
         <ProtectedRoute exact path='/admin/setting' component={setting} />
         <Route exact path='/admin/login' component={LoginView} />
+        <Route exact path='/admin/signup' component={LoginView} />
       </BasicLayout>
     )}
   </div>

@@ -3,14 +3,14 @@ import { Avatar, Row, Col} from 'antd';
 import React from 'react';
 import {withRouter} from "react-router-dom";
 
-import { getUsername, logout } from '../../api/auth';
+import { getUserName, logout } from '../../api/auth';
 
   class Logout extends React.Component {
     // constructor(props) {
     //     super(props);
     // }
   
-    username=getUsername();
+    username=getUserName();
     handleLogout=()=>{
        
         logout().then(() => this.props.history.replace('/'));
