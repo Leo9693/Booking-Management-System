@@ -14,24 +14,24 @@ class Login extends Component {
             error: null,
         }
     }
-  
+
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-        if (!err) {
-            this.setState({ isLoading: true });
-            const { username, password } = values;
-            login(username, password)
-                .then(res => {
-                    this.setState({ isLoading: false });
-                    this.props.saveLoginInfo(res);
-                    this.props.history.push('/');
-                })
-                .catch(err => {
-                    this.setState({ isLoading: false });
-                    this.setState({ error: err.response.data})
-                })
-        }
+            if (!err) {
+                this.setState({ isLoading: true });
+                const { username, password } = values;
+                login(username, password)
+                    .then(res => {
+                        this.setState({ isLoading: false });
+                        this.props.saveLoginInfo(res);
+                        this.props.history.push('/');
+                    })
+                    .catch(err => {
+                        this.setState({ isLoading: false });
+                        this.setState({ error: err.response.data })
+                    })
+            }
         });
     };
 
@@ -52,31 +52,31 @@ class Login extends Component {
                 )}
                 <Form onSubmit={this.handleSubmit} id="login-form">
                     <Form.Item>
-                    {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input admin email!' }],
-                    })(
-                        <Input
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="Registered email"
-                        />,
-                    )}
+                        {getFieldDecorator('username', {
+                            rules: [{ required: true, message: 'Please input admin name!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                placeholder="name"
+                            />,
+                        )}
                     </Form.Item>
                     <Form.Item>
-                    {getFieldDecorator('password', {
-                        rules: [{ required: true, message: 'Please input password!' }],
-                    })(
-                        <Input
-                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        type="password"
-                        placeholder="Password"
-                        />,
-                    )}
+                        {getFieldDecorator('password', {
+                            rules: [{ required: true, message: 'Please input password!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                type="password"
+                                placeholder="Password"
+                            />,
+                        )}
                     </Form.Item>
                     <Form.Item>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
-                        Log in
+                        <Button type="primary" htmlType="submit" className="login-form-button">
+                            Log in
                     </Button>
-                    Or <Link to='/admin/signup'>register now!</Link>
+                        Or <Link to='/admin/signup'>register now!</Link>
                     </Form.Item>
                 </Form>
             </Spin>

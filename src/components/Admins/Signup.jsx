@@ -21,7 +21,7 @@ class Signup extends Component {
             if (!err) {
                 this.setState({ isLoading: true });
                 const { email, password, nickname } = values;
-                addUser({email, password, name: nickname})
+                addUser({ email, password, name: nickname })
                     .then(res => {
                         this.setState({ isLoading: false });
                         this.props.saveRegisterInfo(res);
@@ -29,12 +29,12 @@ class Signup extends Component {
                     })
                     .catch(err => {
                         this.setState({ isLoading: false });
-                        this.setState({ error: err.response.data})
+                        this.setState({ error: err.response.data })
                     })
             }
         });
     };
- 
+
     handleConfirmBlur = e => {
         const { value } = e.target;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
@@ -43,10 +43,10 @@ class Signup extends Component {
     validateToNextPassword = (rule, value, callback) => {
         const { form } = this.props;
         if (value && this.state.confirmDirty) {
-          form.validateFields(['confirm'], { force: true });
+            form.validateFields(['confirm'], { force: true });
         }
         callback();
-      };
+    };
 
     compareToFirstPassword = (rule, value, callback) => {
         const { form } = this.props;
@@ -63,32 +63,32 @@ class Signup extends Component {
 
     formItemLayout = {
         labelCol: {
-          xs: { span: 24 },
-          sm: { span: 4, offset: 4 },
+            xs: { span: 24 },
+            sm: { span: 4, offset: 4 },
         },
         wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 8 },
+            xs: { span: 24 },
+            sm: { span: 8 },
         },
-      };
+    };
 
-      tailFormItemLayout = {
+    tailFormItemLayout = {
         wrapperCol: {
-          xs: {
-            span: 24,
-            offset: 0,
-          },
-          sm: {
-            span: 16,
-            offset: 8,
-          },
+            xs: {
+                span: 24,
+                offset: 0,
+            },
+            sm: {
+                span: 16,
+                offset: 8,
+            },
         },
-      };
+    };
 
     render() {
         const { getFieldDecorator } = this.props.form;
         const { isLoading, error } = this.state;
-        
+
         return (
             <Spin spinning={isLoading} tip="Loading...">
                 {error && (
@@ -97,7 +97,7 @@ class Signup extends Component {
                         onClose={this.handleCloseErrorAlert}
                     />
                 )}
-                <Form { ...this.formItemLayout } onSubmit={this.handleSubmit} >
+                <Form {...this.formItemLayout} onSubmit={this.handleSubmit} >
                     <Form.Item label="E-mail">
                         {getFieldDecorator('email', {
                             rules: [
@@ -138,14 +138,14 @@ class Signup extends Component {
                             ],
                         })(<Input.Password />)}
                     </Form.Item>
-                        <Form.Item label="Nickname">
-                            {getFieldDecorator('nickname', {
-                                rules: [
-                                    { required: true, message: 'Please input your nickname!' }
-                                ],
+                    <Form.Item label="Nickname">
+                        {getFieldDecorator('nickname', {
+                            rules: [
+                                { required: true, message: 'Please input your nickname!' }
+                            ],
                         })(<Input />)}
                     </Form.Item>
-                    <Form.Item { ...this.tailFormItemLayout }>
+                    <Form.Item {...this.tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
                             Register
                         </Button>
@@ -165,55 +165,3 @@ const mapDispatch = (dispatch) => ({
 const SignupForm = Form.create({ name: 'register' })(Signup);
 
 export default connect(null, mapDispatch)(SignupForm);
-
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-  
-//     render() {
-//       const { getFieldDecorator } = this.props.form;
-//       const { autoCompleteResult } = this.state;
-  
-//       const formItemLayout = {
-//         labelCol: {
-//           xs: { span: 24 },
-//           sm: { span: 8 },
-//         },
-//         wrapperCol: {
-//           xs: { span: 24 },
-//           sm: { span: 16 },
-//         },
-//       };
-//       const tailFormItemLayout = {
-//         wrapperCol: {
-//           xs: {
-//             span: 24,
-//             offset: 0,
-//           },
-//           sm: {
-//             span: 16,
-//             offset: 8,
-//           },
-//         },
-//       };
-
-// export default Form.create({ name: 'signup' }, (RegistrationForm))  
-
-  
-// //       return (
-        
-         
-// //       );
-// //     }
-// //   }
-  
-//   const WrappedRegistrationForm = Form.create({ name: 'register' })(RegistrationForm);
-  

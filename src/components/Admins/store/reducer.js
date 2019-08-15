@@ -1,5 +1,4 @@
 import { actionTypes } from './index';
-import { stat } from 'fs';
 
 const defaultState = {
     email: '',

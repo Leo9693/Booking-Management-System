@@ -8,11 +8,7 @@ export default function ErrorAlert(props) {
         description = '',
         ...rest
     } = props;
-
-    // const style = {
-
-    // }
-
+    
     return (    
         <Alert
             className="error-alert"
