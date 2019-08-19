@@ -6,17 +6,10 @@
         background-color: #fff!important;
     }
     &__header {
-        flex-wrap: nowrap;
-        justify-content: space-between;
+        height: 300px;
         margin-left: 4px;
         padding: 0 20px !important;
         background-color: #fff!important;
-        &__container {
-            display: flex;
-        }
-        &__item {
-            margin-left: auto;
-        }
     }
     &__content {
         margin-left: 4px;

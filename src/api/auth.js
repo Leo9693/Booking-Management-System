@@ -54,7 +54,7 @@ export function logout() {
     localStorage.removeItem('jwt_token');
     localStorage.removeItem('user_name');
     localStorage.removeItem('user_email');
-    localStorage.removeItem('user_email');
+    localStorage.removeItem('user_id');
     return Promise.resolve(null);
 }
 

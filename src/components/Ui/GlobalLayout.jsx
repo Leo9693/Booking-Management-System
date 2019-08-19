@@ -18,16 +18,23 @@ export default class GlobalLayout extends Component {
             collapsed: !prevState.collapsed,
         }));
     };
-    
+
     render() {
         const { collapsed } = this.state;
         return (
             <Layout className="global-layout" style={{ minHeight: '100vh' }}>
-                <Sider className="global-layout__sider"  trigger={null} collapsible collapsed={collapsed}>
-                    
+                <Sider
+                    className="global-layout__sider"
+                    breakpoint="md"
+                    collapsedWidth="0"
+                // trigger
+                // collapsible
+                // collapsed={collapsed}
+                >
+
                     {/* <div className="logo" /> */}
-                        
-                    <Menu theme="light"  defaultSelectedKeys={ ['home'] } >
+
+                    <Menu theme="light" defaultSelectedKeys={['home']} >
                         <Menu.Item key="home">
                             <Link to='/'>
                                 <Icon type='pie-chart' />
@@ -59,25 +66,25 @@ export default class GlobalLayout extends Component {
                             </Link>
                         </Menu.Item>
                     </Menu>
-                </Sider>
+                </Sider >
                 <Layout>
                     <Header className="global-layout__header">
-                        <Row  type="flex" justify="start" align="middle" gutter={8}>
-                            <Col span={1}>
+                        <Row type="flex" justify="start" align="middle" gutter={8}>
+                            {/* <Col span={1}>
                                 <Icon
                                     className="trigger"
                                     type={collapsed ? 'menu-unfold' : 'menu-fold'}
                                     onClick={this.toggle}
                                 />
+                            </Col> */}
+                            <Col span={16} md={16} style={{ textAlign: "left" }}>
+                                <h4>JR Handyman CMS</h4>
                             </Col>
-                            <Col lg={{offset: 8, span: 8}} md={{offset: 4, span: 12}} sm={{offset: 2, span: 14}}>
-                                <p>Welcome to JR Handyman CMS</p>
-                            </Col>
-                            <Col lg={{span: 7}} md={{span: 7}} sm={{span: 7}}>
+                            <Col span={8} md={8} style={{ textAlign: "right" }}>
                                 <div className="global-layout__header__container">
                                     <div className="global-layout__header__item">
                                         <Logout />
-                                    </div>  
+                                    </div>
                                 </div>
                             </Col>
                         </Row>
@@ -86,7 +93,7 @@ export default class GlobalLayout extends Component {
                         {this.props.children}
                     </Content>
                 </Layout>
-            </Layout>
+            </Layout >
         )
     }
 

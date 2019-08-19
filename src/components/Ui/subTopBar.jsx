@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { LoadingButton } from './Button.jsx';
 
-export default class SubTopNav extends Component {
+export default class SubTopBar extends Component {
     render() {
         const { title, searchList, sortList, isLoading } = this.props;
         const { onSearch, onInputChange, onShowCreateModal } = this.props;

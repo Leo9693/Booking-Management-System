@@ -44,7 +44,7 @@ class Logout extends Component {
             <Dropdown overlay={menu}>
                 <div>
                     <Avatar style={{ backgroundColor: '#87d068' }} icon="user" />
-                    <span style={{ marginLeft: "10px", marginRight: "10px" }}>Welcome {userName}</span>
+                    <span style={{ marginLeft: "10px", marginRight: "10px" }}>{userName}</span>
                     <Icon type="down" />
                 </div>
             </Dropdown>

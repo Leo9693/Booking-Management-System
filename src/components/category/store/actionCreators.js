@@ -1,14 +1,13 @@
 import { actionTypes } from './index';
-import { 
-    getAllCategories, 
-    getCategoriesByFilter, 
-    getCategoriesById, 
-    createNewCategory, 
-    deleteCategoryByID, 
+import {
+    getAllCategories,
+    getCategoriesByFilter,
+    getCategoriesById,
+    createNewCategory,
+    deleteCategoryByID,
     updateCategoryByID,
     addBusinessToCategoryById,
     getBusinessByFilter,
-    getBusinessByName,
     deleteBusinessFromCategoryById
 } from '../../../api/categoryData';
 
@@ -25,7 +24,7 @@ export const handleSearch = (currentPage, pageSize) => {
         getAllCategories(currentPage, pageSize)
             .then((res) => {
                 dispatch(setIsLoading(false));
-                const {categoryCount, categories} = res;
+                const { categoryCount, categories } = res;
                 dispatch(changeList(categoryCount, categories));
             })
             .catch((err) => {
@@ -40,13 +39,14 @@ export const handleSearchByFilter = (searchFilter, searchKeyword, currentPage, p
         dispatch(setIsLoading(true));
         getCategoriesByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue)
             .then((res) => {
-                const {categoryCount, categories} = res;
+                const { categoryCount, categories } = res;
                 dispatch(changeList(categoryCount, categories));
                 dispatch(setIsLoading(false));
             })
             .catch((err) => {
                 dispatch(setIsLoading(false));
-                dispatch(setError(err))})    
+                dispatch(setError(err))
+            })
     }
 }
 
@@ -122,7 +122,7 @@ export const getUpdateCategory = (id) => {
     return (dispatch) => {
         getCategoriesById(id)
             .then((res) => {
-                const {name, description} = res;
+                const { name, description } = res;
                 dispatch(handleInputChange('updateCategoryName', name));
                 dispatch(handleInputChange('updateCategoryDescription', description));
                 // dispatch(setSelectedCategoryID(''));
@@ -161,18 +161,11 @@ export const setIsLoading = (isLoading) => ({
 export const getDetailedCategory = (id) => {
     return (dispatch) => {
         getCategoriesById(id)
-            .then((res) => {          
+            .then((res) => {
                 dispatch(setIsLoading(false));
                 console.log('getCategoriesById')
                 console.log(res)
                 dispatch(handleInputChange('detailedCategory', res));
-
-                // const {name, description} = res;
-                // dispatch(handleInputChange('updateCategoryName', name));
-                // dispatch(handleInputChange('updateCategoryDescription', description));
-                // dispatch(setSelectedCategoryID(''));
-                // dispatch(setDeleteConfirm(false));
-                // dispatch(handleSearch());
             })
             .catch((err) => {
                 dispatch(setIsLoading(false));
@@ -194,7 +187,6 @@ export const addBusinessToCategory = (addedBusinessSelector, addedBusinessInfo, 
                     dispatch(setError(err))
                 });
         } else {
-            // getDataByFilter('businesses', addedBusinessSelector, addedBusinessInfo)
             getBusinessByFilter(addedBusinessSelector, addedBusinessInfo)
                 .then((res) => {
                     const id = res.businesses[0]._id;
