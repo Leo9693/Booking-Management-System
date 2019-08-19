@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { LoadingButton } from './Button.jsx';
+import { LoadingButton } from './Button.js';
 
 export default class SubTopBar extends Component {
     render() {
-        const { title, searchList, sortList, isLoading } = this.props;
+        const { title, searchList, sortList, isLoading, searchValue } = this.props;
         const { onSearch, onInputChange, onShowCreateModal } = this.props;
         return (
             <form className='form-inline bg-light py-3 px-3'>
@@ -12,7 +12,7 @@ export default class SubTopBar extends Component {
                         <button className="btn btn-success mr-auto"
                             onClick={onShowCreateModal}
                         >
-                            {title}
+                            + {title}
                         </button>
                     </div>
                     <div className="col-md-12 col-xl-7">
@@ -21,6 +21,7 @@ export default class SubTopBar extends Component {
                             type='search'
                             placeholder='Search Keyword...'
                             name='searchValue'
+                            value={searchValue}
                             onChange={onInputChange}
                         />
                         <select

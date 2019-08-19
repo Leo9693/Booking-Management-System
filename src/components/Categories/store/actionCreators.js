@@ -3,7 +3,7 @@ import {
     getAllCategories,
     getCategoriesByFilter,
     getCategoriesById,
-    createNewCategory,
+    addCategory,
     deleteCategoryByID,
     updateCategoryByID,
     addBusinessToCategoryById,
@@ -60,21 +60,7 @@ import {
 //     type: actionTypes.CLOSE_CREATE
 // });
 
-// export const createCategory = (name, description, currentPage, pageSize) => {
-//     return (dispatch) => {
-//         dispatch(setIsLoading(true));
-//         createNewCategory(name, description)
-//             .then((res) => {
-//                 dispatch(setIsLoading(false));
-//                 dispatch(closeCreate());
-//                 dispatch(handleSearch(currentPage, pageSize));
-//             })
-//             .catch((err) => {
-//                 dispatch(setIsLoading(false));
-//                 dispatch(setError(err));
-//             });
-//     }
-// }
+
 
 
 
@@ -207,14 +193,19 @@ import {
 //     }
 // }
 
-export const setIsLoading = (isLoading) => ({
+export const setIsLoading = isLoading => ({
     type: actionTypes.SET_IS_LOADING,
     isLoading
 });
 
-export const setError = (err) => ({
+export const setError = errorInfo => ({
     type: actionTypes.SET_ERROR,
-    errorInfo: err
+    errorInfo
+})
+
+export const setIsShowModal = isShowModal => ({
+    type: actionTypes.SET_IS_SHOW_MODAL,
+    isShowModal
 })
 
 const setDocumentsList = (documentCount, documentsList) => ({
@@ -237,5 +228,21 @@ export const searchByFilter = searchCondition => {
                 dispatch(setIsLoading(false));
                 dispatch(setError(err));
             })
+    }
+}
+
+export const addDocument = (newDocument) => {
+    return (dispatch) => {
+        console.log(newDocument);
+        dispatch(setIsLoading(true));
+        addCategory(newDocument)
+            .then((res) => {
+                dispatch(setIsLoading(false));
+                dispatch(setIsShowModal(false));
+            })
+            .catch((err) => {
+                dispatch(setIsLoading(false));
+                dispatch(setError(err));
+            });
     }
 }

@@ -3,7 +3,7 @@ import {
     getAllCategories,
     getCategoriesByFilter,
     getCategoriesById,
-    createNewCategory,
+    addCategory,
     deleteCategoryByID,
     updateCategoryByID,
     addBusinessToCategoryById,
@@ -67,7 +67,7 @@ export const closeCreate = () => ({
 export const createCategory = (name, description, currentPage, pageSize) => {
     return (dispatch) => {
         dispatch(setIsLoading(true));
-        createNewCategory(name, description)
+        addCategory(name, description)
             .then((res) => {
                 dispatch(setIsLoading(false));
                 dispatch(closeCreate());

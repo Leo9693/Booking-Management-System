@@ -33,7 +33,8 @@ export function getCategoriesById(id) {
         });
 }
 
-export function createNewCategory(name, description) {
+export function addCategory(newCategory) {
+    const { name, description } = newCategory;
     return axios.post('/categories', { name, description });
 }
 
