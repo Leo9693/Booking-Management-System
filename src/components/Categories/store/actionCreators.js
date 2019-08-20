@@ -289,3 +289,9 @@ export const deleteDocument = (id, searchCondition) => {
             });
     }
 }
+
+// export const selectPage = (pageSelected, searchCondition) => {
+//     return dispatch => {
+
+//     }
+// }

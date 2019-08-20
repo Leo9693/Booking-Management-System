@@ -11,7 +11,7 @@ import {
   faEraser
 } from '@fortawesome/free-solid-svg-icons';
 import SubTopNav from '../Ui/subTopNav';
-import PaginationBar from '../Ui/paginationBar';
+import PaginationBar from '../Ui/PaginationBar';
 
 export default class InfoView extends React.Component {
   constructor(props) {

@@ -8,7 +8,7 @@ import DeleteConfirmModal from './DeleteConfirmModal';
 import UpdateModal from './UpdateModal';
 import { LoadingButton } from '../Ui/Button';
 import SubTopBar from '../Ui/SubTopBar';
-import PaginationBar from '../Ui/paginationBar';
+import PaginationBar from '../Ui/PaginationBar';
 import { setIsLoading } from './store/actionCreators';
 import { ModalTitle } from 'react-bootstrap';
 import CategoryList from './CategoryList'
@@ -19,8 +19,8 @@ class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageRequested: '1',
-            pageSize: '5',
+            pageRequested: 1,
+            pageSize: 5,
             searchValue: '',
             searchField: 'searchAll',
             sortType: 'name',
@@ -34,17 +34,17 @@ class Category extends Component {
         };
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         const searchCondition = this.getSearchCondition();
         this.props.searchByFilter(searchCondition);
         window.addEventListener('resize', this.handleResize);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount = () => {
         window.removeEventListener('resize', this.handleResize);
     }
 
-    getSearchCondition() {
+    getSearchCondition = () => {
         const { searchField, searchValue, pageRequested, pageSize, sortType, sortValue } = this.state;
         const searchCondition = { searchField, searchValue, pageRequested, pageSize, sortType, sortValue };
         return searchCondition;
@@ -131,6 +131,33 @@ class Category extends Component {
         console.log(id);
     }
 
+    handleSelectPage = (event, pageSelected, pageCount) => {
+        event.preventDefault();
+        if (pageSelected > 0 && pageSelected < pageCount + 1) {
+            this.setState({
+                pageRequested: pageSelected
+            })
+            const searchCondition = this.getSearchCondition();
+            searchCondition.pageRequested = pageSelected;
+            this.props.searchByFilter(searchCondition);
+        }
+    }
+
+    handleSelectPageSize = event => {
+        const { value } = event.target;
+        const selectedPageSize = parseInt(value);
+        this.setState({
+            pageSize: selectedPageSize
+        })
+        const searchCondition = this.getSearchCondition();
+        searchCondition.pageSize = selectedPageSize;
+        this.props.searchByFilter(searchCondition);
+    }
+
+    handleSetPage = (event, pageSelected, pageCount) => {
+        console.log('handleSetPage');
+    }
+
     render() {
         // const { handleInputChange, handleSearch, handleDetail, handleDelete, handleUpdate, showCreate, selectPage, changePageSize } = this.props;
         // const { documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue, isShowCreate, setPageAs, documentCount, isLoading } = this.props;
@@ -210,18 +237,16 @@ class Category extends Component {
                             onClickDelete={this.handleClickDelete}
                         />
                         <div className="mt-5">
-                            {/* <PaginationBar documentCount={documentCount}
-                                currentPage={currentPage}
+                            <PaginationBar
+                                documentCount={documentCount}
+                                currentPage={pageRequested}
                                 pageSize={pageSize}
-                                pageSizeSelectorList={pageSizeSelectorList}
-                                pageSizeSelectorName={"pageSize"}
-                                setPageInputName={"setPageAs"}
-                                onClickSelectPage={onClickSelectPage}
-                                onClickSetPage={onClickSetPage}
-                                handleInputChange={handleInputChange}
-                                onChangePageSize={onChangePageSize}
+                                pageSizeSelectorList={[1, 3, 5, 10, 20]}
+                                pageSizeSelectorName="pageSize"
                                 isLoading={isLoading}
-                            /> */}
+                                onSelectPage={this.handleSelectPage}
+                                onSelectPageSize={this.handleSelectPageSize}
+                            />
                         </div>
                     </div>
 
@@ -324,6 +349,10 @@ const mapDispatch = dispatch => ({
     deleteDocument: (id, searchCondition) => {
         dispatch(actionCreators.deleteDocument(id, searchCondition));
     },
+
+    // selectPage: (pageSelected, searchCondition) => {
+    //     dispatch(actionCreators.selectPage(pageSelected, searchCondition));
+    // }
 });
 
 export default connect(mapState, mapDispatch)(Category);
