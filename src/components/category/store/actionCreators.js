@@ -2,7 +2,7 @@ import { actionTypes } from './index';
 import {
     getAllCategories,
     getCategoriesByFilter,
-    getCategoriesById,
+    getCategoryByID,
     addCategory,
     deleteCategoryByID,
     updateCategoryByID,
@@ -120,7 +120,7 @@ export const showUpdateModal = (isShowUpdateModal) => ({
 
 export const getUpdateCategory = (id) => {
     return (dispatch) => {
-        getCategoriesById(id)
+        getCategoryByID(id)
             .then((res) => {
                 const { name, description } = res;
                 dispatch(handleInputChange('updateCategoryName', name));
@@ -160,10 +160,10 @@ export const setIsLoading = (isLoading) => ({
 
 export const getDetailedCategory = (id) => {
     return (dispatch) => {
-        getCategoriesById(id)
+        getCategoryByID(id)
             .then((res) => {
                 dispatch(setIsLoading(false));
-                console.log('getCategoriesById')
+                console.log('getCategoryByID')
                 console.log(res)
                 dispatch(handleInputChange('detailedCategory', res));
             })

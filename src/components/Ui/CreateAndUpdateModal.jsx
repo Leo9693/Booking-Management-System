@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 
-export default class Modals extends Component {
+export default class CreateAndUpdateModal extends Component {
 
     render() {
         const {
@@ -13,7 +13,7 @@ export default class Modals extends Component {
             errorInfo = '',
             onInputChange,
             onCancel,
-            onSubmit
+            onSubmit,
         } = this.props;
         return (
             <Modal show={isShow} onHide={onCancel}>

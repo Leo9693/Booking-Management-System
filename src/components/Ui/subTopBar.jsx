@@ -6,16 +6,16 @@ export default class SubTopBar extends Component {
         const { title, searchList, sortList, isLoading, searchValue } = this.props;
         const { onSearch, onInputChange, onShowCreateModal } = this.props;
         return (
-            <form className='form-inline bg-light py-3 px-3'>
-                <div className="row" style={{ width: "100%" }}>
-                    <div className="col-md-12 col-xl-2">
+            <form className='form-inline bg-light py-3 px-2'>
+                <div className="row no-gutters" style={{ width: "100%" }}>
+                    <div className="col-md-12 col-xl-3">
                         <button className="btn btn-success mr-auto"
                             onClick={onShowCreateModal}
                         >
                             + {title}
                         </button>
                     </div>
-                    <div className="col-md-12 col-xl-7">
+                    <div className="col-md-12 col-xl-6" style={{ width: "300px" }}>
                         <input
                             className='form-control mr-1'
                             type='search'
@@ -47,7 +47,7 @@ export default class SubTopBar extends Component {
                             Search
                         </LoadingButton>
                     </div>
-                    <div className="col-md-12 col-xl-3">
+                    <div className="offset-n1 col-md-12 col-xl-3">
                         {sortList && (
                             <div className='input-group' style={{ width: "220px" }}>
                                 <div className='input-group-prepend'>

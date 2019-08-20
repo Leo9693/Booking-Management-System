@@ -2,9 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { actionCreators } from './store';
 import CreateModal from './CreateModal';
 import DeleteConfirmModal from './DeleteConfirmModal';
@@ -15,7 +12,7 @@ import PaginationBar from '../Ui/paginationBar';
 import { setIsLoading } from './store/actionCreators';
 import { ModalTitle } from 'react-bootstrap';
 import CategoryList from './CategoryList'
-import Modals from '../Ui/Modals';
+import CreateAndUpdateModal from '../Ui/CreateAndUpdateModal';
 import { CREATE, UPDATE, LARGE, SMALL } from '../../utils/constant'
 
 class Category extends Component {
@@ -28,6 +25,7 @@ class Category extends Component {
             searchField: 'searchAll',
             sortType: 'name',
             sortValue: 1,
+            selectedDocumentID: '',
             modalType: CREATE,
             modalTitle: 'Category',
             modalInputList: ['name', 'description'],
@@ -37,8 +35,7 @@ class Category extends Component {
     }
 
     componentDidMount() {
-        const { searchField, searchValue, pageRequested, pageSize, sortType, sortValue } = this.state;
-        const searchCondition = { searchField, searchValue, pageRequested, pageSize, sortType, sortValue };
+        const searchCondition = this.getSearchCondition();
         this.props.searchByFilter(searchCondition);
         window.addEventListener('resize', this.handleResize);
     }
@@ -47,8 +44,13 @@ class Category extends Component {
         window.removeEventListener('resize', this.handleResize);
     }
 
+    getSearchCondition() {
+        const { searchField, searchValue, pageRequested, pageSize, sortType, sortValue } = this.state;
+        const searchCondition = { searchField, searchValue, pageRequested, pageSize, sortType, sortValue };
+        return searchCondition;
+    }
+
     handleResize = event => {
-        console.log(event.target.innerWidth);
         if (event.target.innerWidth >= 576) {
             this.setState({
                 screenType: LARGE
@@ -78,8 +80,7 @@ class Category extends Component {
 
     handleSearch = event => {
         event.preventDefault();
-        const { searchField, searchValue, pageRequested, pageSize, sortType, sortValue } = this.state;
-        const searchCondition = { searchField, searchValue, pageRequested, pageSize, sortType, sortValue };
+        const searchCondition = this.getSearchCondition();
         this.props.searchByFilter(searchCondition);
     }
 
@@ -98,20 +99,35 @@ class Category extends Component {
 
     handlesubmitModal = event => {
         event.preventDefault();
-        if (this.state.modalType === CREATE) {
-            this.props.addDocument(this.state.modalInputValue);
+        const searchCondition = this.getSearchCondition();
+        const { modalType, modalInputValue, selectedDocumentID } = this.state;
+        if (modalType === CREATE) {
+            this.props.addDocument(modalInputValue, searchCondition);
+        } else {
+            this.props.updateDocument({ ...modalInputValue, id: selectedDocumentID }, searchCondition);
+        }
+    }
+
+    handleShowUpdateModal = id => {
+        const { documentsList } = this.props;
+        const selectedDocuments = documentsList.filter(item => item.id == id)
+        const { name, description } = selectedDocuments[0];
+        this.setState({
+            modalType: UPDATE,
+            modalInputValue: { name, description },
+            selectedDocumentID: id,
+        });
+        this.props.setIsShowModal(true);
+    }
+
+    handleClickDelete = id => {
+        const searchCondition = this.getSearchCondition();
+        if (window.confirm("Warning: do you want to delete it ?")) {
+            this.props.deleteDocument(id, searchCondition);
         }
     }
 
     handleClickDetails = id => {
-        console.log(id);
-    }
-
-    handleClickUpdate = id => {
-        console.log(id);
-    }
-
-    handleClickDelete = id => {
         console.log(id);
     }
 
@@ -171,7 +187,7 @@ class Category extends Component {
                         sortList={["name", "description"]}
                     />
                 </BlockUi>
-                <Modals
+                <CreateAndUpdateModal
                     isShow={isShowModal}
                     type={modalType}
                     title={modalTitle}
@@ -190,99 +206,9 @@ class Category extends Component {
                             screenType={screenType}
                             documentsList={documentsList}
                             onClickDetail={this.handleClickDetails}
-                            onClickUpdate={this.handleClickUpdate}
+                            onClickUpdate={this.handleShowUpdateModal}
                             onClickDelete={this.handleClickDelete}
                         />
-                        {/* <table className="my-3 table">
-                            <thead>
-                                {screenType === LARGE ?
-                                    (
-                                        <tr className="row">
-                                            <th className="col-2">Service</th>
-                                            <th className="col-6">Description</th>
-                                            <th className="col-4">Operation</th>
-                                        </tr>
-                                    )
-                                    : (
-                                        <tr className="row">
-                                            <th className="col-4">Service</th>
-                                            <th className="col-8">Operation</th>
-                                        </tr>
-                                    )
-                                }
-                            </thead>
-                            <tbody>
-                                {screenType === LARGE
-                                    ? (documentsList.map((item) => (
-                                        <tr key={item._id} className="row">
-                                            <td className="col-2">{item.name}</td>
-                                            <td className="col-6">{item.description}</td>
-                                            <td className="col-4">
-                                                {console.log(item._id)}
-                                                <Link to={`/categories/${item._id}`}>
-                                                    <button type="button" className="btn btn-info btn-sm mr-4 px-1"
-                                                        style={{ width: "30px" }}
-                                                        data-toggle="tooltip" data-placement="top" title="Details"
-                                                    >
-                                                        <FontAwesomeIcon icon={faInfo}
-                                                            onClick={() => this.handleClickDetail(item._id)} />
-
-                                                    </button>
-                                                </Link>
-                                                <button type="button" className="btn btn-warning btn-sm mr-4"
-                                                    style={{ width: "30px" }} onClick={() => this.handleClickUpdate(item._id)}
-                                                    data-toggle="tooltip" data-placement="top" title="Edit"
-                                                >
-                                                    <FontAwesomeIcon icon={faEdit} />
-
-                                                </button>
-                                                <button type="button" className="btn btn-danger btn-sm mr-4"
-                                                    style={{ width: "30px" }} onClick={() => this.handleClickDelete(item._id)}
-                                                    data-toggle="tooltip" data-placement="top" title="Delete"
-                                                >
-                                                    <FontAwesomeIcon icon={faTrashAlt} />
-                                                    <i className="far fa-trash-alt text-light" />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    )))
-                                    : (
-                                        documentsList.map((item) => (
-                                            <tr key={item._id} className="row">
-                                                <td className="col-4">{item.name}</td>
-                                                <td className="col-8">
-                                                    {console.log(item._id)}
-                                                    <Link to={`/categories/${item._id}`}>
-                                                        <button type="button" className="btn btn-info btn-sm mr-4 px-1"
-                                                            style={{ width: "30px" }}
-                                                            data-toggle="tooltip" data-placement="top" title="Details"
-                                                        >
-                                                            <FontAwesomeIcon icon={faInfo}
-                                                                onClick={() => this.handleClickDetail(item._id)} />
-
-                                                        </button>
-                                                    </Link>
-                                                    <button type="button" className="btn btn-warning btn-sm mr-4"
-                                                        style={{ width: "30px" }} onClick={() => this.handleClickUpdate(item._id)}
-                                                        data-toggle="tooltip" data-placement="top" title="Edit"
-                                                    >
-                                                        <FontAwesomeIcon icon={faEdit} />
-
-                                                    </button>
-                                                    <button type="button" className="btn btn-danger btn-sm mr-4"
-                                                        style={{ width: "30px" }} onClick={() => this.handleClickDelete(item._id)}
-                                                        data-toggle="tooltip" data-placement="top" title="Delete"
-                                                    >
-                                                        <FontAwesomeIcon icon={faTrashAlt} />
-                                                        <i className="far fa-trash-alt text-light" />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )
-                                }
-                            </tbody>
-                        </table> */}
                         <div className="mt-5">
                             {/* <PaginationBar documentCount={documentCount}
                                 currentPage={currentPage}
@@ -380,7 +306,6 @@ const mapDispatch = dispatch => ({
     },
 
     setIsShowModal: isShowModal => {
-        console.log(isShowModal);
         dispatch(actionCreators.setIsShowModal(isShowModal));
     },
 
@@ -388,9 +313,16 @@ const mapDispatch = dispatch => ({
         dispatch(actionCreators.setError(errorInfo));
     },
 
-    addDocument: newDocument => {
-        console.log(newDocument);
-        dispatch(actionCreators.addDocument(newDocument));
+    addDocument: (document, searchCondition) => {
+        dispatch(actionCreators.addDocument(document, searchCondition));
+    },
+
+    updateDocument: (document, searchCondition) => {
+        dispatch(actionCreators.updateDocument(document, searchCondition));
+    },
+
+    deleteDocument: (id, searchCondition) => {
+        dispatch(actionCreators.deleteDocument(id, searchCondition));
     },
 });
 

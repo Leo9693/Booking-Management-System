@@ -16,7 +16,7 @@ import ChangeProfile from './Admins/ChangeProfile';
 import ChangePassword from './Admins/ChangePassword';
 import { loggedIn } from '../api/auth';
 import Category from '../components/Categories';
-import CategoryDetails from '../components/Categories/categoryDetails';
+import CategoryDetails from '../components/Categories/CategoryDetails';
 import BusinessDisplay from './Businesses/BusinessDisplay';
 import BusinessList from './Businesses/BusinessList';
 

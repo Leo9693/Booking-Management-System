@@ -25,7 +25,7 @@ export default class GlobalLayout extends Component {
             <Layout className="global-layout" style={{ minHeight: '100vh' }}>
                 <Sider
                     className="global-layout__sider"
-                    breakpoint="md"
+                    breakpoint="lg"
                     collapsedWidth="0"
                 // trigger
                 // collapsible

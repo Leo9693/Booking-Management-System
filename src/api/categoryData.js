@@ -25,7 +25,7 @@ export function getCategoriesByFilter(searchCondition) {
     }
 }
 
-export function getCategoriesById(id) {
+export function getCategoryByID(id) {
     return axios.get(`/categories/${id}`)
         .then(res => {
             const { data } = res;
@@ -38,12 +38,13 @@ export function addCategory(newCategory) {
     return axios.post('/categories', { name, description });
 }
 
-export function deleteCategoryByID(id) {
-    return axios.delete(`/categories/${id}`);
+export function updateCategoryByID(updatedCategory) {
+    const { name, description, id } = updatedCategory;
+    return axios.put(`/categories/${id}`, { name, description });
 }
 
-export function updateCategoryByID(name, description, id) {
-    return axios.put(`/categories/${id}`, { name, description })
+export function deleteCategoryByID(id) {
+    return axios.delete(`/categories/${id}`);
 }
 
 export function addBusinessToCategoryById(addedBusinessInfo, categoryID) {

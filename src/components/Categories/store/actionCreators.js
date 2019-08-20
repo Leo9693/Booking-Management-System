@@ -2,10 +2,10 @@ import { actionTypes } from './index';
 import {
     getAllCategories,
     getCategoriesByFilter,
-    getCategoriesById,
+    getCategoryByID,
     addCategory,
-    deleteCategoryByID,
     updateCategoryByID,
+    deleteCategoryByID,
     addBusinessToCategoryById,
     getBusinessByFilter,
     deleteBusinessFromCategoryById
@@ -231,16 +231,59 @@ export const searchByFilter = searchCondition => {
     }
 }
 
-export const addDocument = (newDocument) => {
-    return (dispatch) => {
-        console.log(newDocument);
+export const addDocument = (document, searchCondition) => {
+    return dispatch => {
         dispatch(setIsLoading(true));
-        addCategory(newDocument)
-            .then((res) => {
-                dispatch(setIsLoading(false));
+        addCategory(document)
+            .then(res => {
                 dispatch(setIsShowModal(false));
+                getCategoriesByFilter(searchCondition)
+                    .then(res => {
+                        const { documentCount, documents } = res;
+                        dispatch(setDocumentsList(documentCount, documents));
+                        dispatch(setIsLoading(false));
+                    })
             })
-            .catch((err) => {
+            .catch(err => {
+                dispatch(setIsLoading(false));
+                dispatch(setError(err));
+            });
+    }
+}
+
+export const updateDocument = (document, searchCondition) => {
+    return dispatch => {
+        dispatch(setIsLoading(true));
+        updateCategoryByID(document)
+            .then(res => {
+                dispatch(setIsShowModal(false));
+                getCategoriesByFilter(searchCondition)
+                    .then(res => {
+                        const { documentCount, documents } = res;
+                        dispatch(setDocumentsList(documentCount, documents));
+                        dispatch(setIsLoading(false));
+                    })
+            })
+            .catch(err => {
+                dispatch(setIsLoading(false));
+                dispatch(setError(err));
+            });
+    }
+}
+
+export const deleteDocument = (id, searchCondition) => {
+    return dispatch => {
+        dispatch(setIsLoading(true));
+        deleteCategoryByID(id)
+            .then(res => {
+                getCategoriesByFilter(searchCondition)
+                    .then(res => {
+                        const { documentCount, documents } = res;
+                        dispatch(setDocumentsList(documentCount, documents));
+                        dispatch(setIsLoading(false));
+                    })
+            })
+            .catch(err => {
                 dispatch(setIsLoading(false));
                 dispatch(setError(err));
             });
