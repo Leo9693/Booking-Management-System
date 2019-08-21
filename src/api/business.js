@@ -1,37 +1,32 @@
 import axios from 'axios';
 
-export function fetchBusinesses(searchKeyword){
-    return axios
-    .get('/businesses?pageSize=40?page=1', {params: {searchKeyword}})
-    .then((response) => {
-        return response.data;
-    }) 
+export function getDocumentsByFilter(searchCondition) {
+    const { searchField, searchValue, pageRequested = 1, pageSize = 5, sortType, sortValue } = searchCondition;
+    if (searchField === 'searchAll') {
+        return axios.get('/businesses', { params: { pageRequested, pageSize, sortType, sortValue } })
+            .then(res => {
+                const { data } = res;
+                return data;
+            })
+    } else {
+        return axios.get('/businesses', { params: { searchField, searchValue, pageRequested, pageSize, sortType, sortValue } })
+            .then(res => {
+                const { data } = res;
+                return data;
+            })
+    }
 }
 
-export function fetchBusinessById(id){
-    return axios
-    .get(`/businesses/${id}`)
-    .then(response=>{
-        const business=response.data;
-        return business; 
-    })
-    .catch(error=>{
-        if (error.response){
-            const errorData=error.response;
-            throw new Error(`${errorData.status}:${errorData.statusText}`);
-        }
-        throw new Error('Some error occurred');
-    });
+export function addDocument(newDocument) {
+    const { name, ABN, email, phone, streetAddress, postcode, state } = newDocument;
+    return axios.post('/businesses', { name, ABN, email, phone, streetAddress, postcode, state });
 }
 
-export function createBusiness(data) {
-    return axios.post('/businesses', data);
-  }
-  
-  export function updateBusiness(id, data) {
-    return axios.put(`/businesses/${id}`, data, { 'Access-Control-Allow-Origin': '*' });
-  }
-  
-  export function deleteBusiness(id) {
+export function updateDocumentByID(document) {
+    const { name, ABN, email, phone, streetAddress, postcode, state, id } = document;
+    return axios.put(`/businesses/${id}`, { name, ABN, email, phone, streetAddress, postcode, state });
+}
+
+export function deleteDocumentByID(id) {
     return axios.delete(`/businesses/${id}`);
-  }
+}

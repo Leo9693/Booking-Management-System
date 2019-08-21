@@ -9,7 +9,7 @@ import {
     addBusinessToCategoryById,
     getBusinessByFilter,
     deleteBusinessFromCategoryById
-} from '../../../api/categoryData';
+} from '../../../api/category';
 
 // export const handleInputChange = (inputName, inputValue) => ({
 //     type: actionTypes.HANDLE_INPUT_CHANGE,
@@ -214,7 +214,7 @@ const setDocumentsList = (documentCount, documentsList) => ({
     documentsList
 });
 
-export const searchByFilter = searchCondition => {
+export const searchByFilterAsync = searchCondition => {
     return dispatch => {
         dispatch(setError(null));
         dispatch(setIsLoading(true));
@@ -231,8 +231,9 @@ export const searchByFilter = searchCondition => {
     }
 }
 
-export const addDocument = (document, searchCondition) => {
+export const addDocumentAsync = (document, searchCondition) => {
     return dispatch => {
+        dispatch(setError(null));
         dispatch(setIsLoading(true));
         addCategory(document)
             .then(res => {
@@ -251,8 +252,9 @@ export const addDocument = (document, searchCondition) => {
     }
 }
 
-export const updateDocument = (document, searchCondition) => {
+export const updateDocumentAsync = (document, searchCondition) => {
     return dispatch => {
+        dispatch(setError(null));
         dispatch(setIsLoading(true));
         updateCategoryByID(document)
             .then(res => {
@@ -271,8 +273,9 @@ export const updateDocument = (document, searchCondition) => {
     }
 }
 
-export const deleteDocument = (id, searchCondition) => {
+export const deleteDocumentAsync = (id, searchCondition) => {
     return dispatch => {
+        dispatch(setError(null));
         dispatch(setIsLoading(true));
         deleteCategoryByID(id)
             .then(res => {

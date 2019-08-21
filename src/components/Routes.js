@@ -15,10 +15,10 @@ import Signup from './Admins/Signup';
 import ChangeProfile from './Admins/ChangeProfile';
 import ChangePassword from './Admins/ChangePassword';
 import { loggedIn } from '../api/auth';
-import Category from '../components/Categories';
 import CategoryDetails from '../components/Categories/CategoryDetails';
-import BusinessDisplay from './Businesses/BusinessDisplay';
 import BusinessList from './Businesses/BusinessList';
+import Categories from '../components/Categories';
+import Businesses from '../components/Businesses';
 
 
 export default () => (
@@ -34,10 +34,8 @@ export default () => (
             <ProtectedRoute exact path='/orders/management' component={OrderManagement} />
             <ProtectedRoute exact path='/orders/management/edit/:id' component={OrderEdit} />
             <ProtectedRoute exact path='/orders/management/:id' component={OrderView} />
-            <ProtectedRoute exact path='/businesses' component={BusinessDisplay} />
-            <ProtectedRoute exact path='/businesses/list' component={BusinessList} />
-            <ProtectedRoute exact path='/businesses/list/:id' component={BusinessList} />
-            <ProtectedRoute exact path='/categories/' component={Category} />
+            <ProtectedRoute exact path='/businesses' component={Businesses} />
+            <ProtectedRoute exact path='/categories/' component={Categories} />
             <ProtectedRoute exact path='/categories/:id' component={CategoryDetails} />
             <ProtectedRoute exact path='/admin/setting' component={setting} />
             <ProtectedRoute exact path='/admin/change-profile' component={ChangeProfile} />

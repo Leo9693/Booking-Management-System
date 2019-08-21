@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import {LoadingButton} from '../Ui/Button';
+import { LoadingButton } from '../Ui/Button';
 import { connect } from 'react-redux';
 import { actionCreators } from './store';
 import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui';
 import { Descriptions } from 'antd';
-import SubTopNav from '../Ui/subTopNav';
+import SubTopBar from '../Ui/SubTopBar';
 import AddInfoBar from '../Ui/addInfoBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
-import { deleteBusinessFromCategoryById } from '../../api/categoryData';
+import { deleteBusinessFromCategoryById } from '../../api/category';
 
 
 class CategoryDetails extends Component {
     componentDidMount() {
-        const {id} = this.props.match.params;
+        const { id } = this.props.match.params;
         this.props.getCategoryByID(id);
         // isLoading = true;
         // getDocumentById()
@@ -26,8 +26,8 @@ class CategoryDetails extends Component {
     }
 
     render() {
-        const {isLoading, detailedCategory, addedBusinessSelector, addedBusinessInfo, searchKeyword, searchFilter, currentPage, pageSize, errorInfo, sortKey, sortValue} = this.props;
-        const {handleInputChange, handleSearch, addBusinessToCategory, deleteBusinessFromCategoryById} = this.props;
+        const { isLoading, detailedCategory, addedBusinessSelector, addedBusinessInfo, searchKeyword, searchFilter, currentPage, pageSize, errorInfo, sortKey, sortValue } = this.props;
+        const { handleInputChange, handleSearch, addBusinessToCategory, deleteBusinessFromCategoryById } = this.props;
 
         const search = (event) => {
             handleSearch(event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue)
@@ -42,29 +42,29 @@ class CategoryDetails extends Component {
         return (
             <BlockUi blocking={isLoading}>
 
-                <SubTopNav handleInputChange={handleInputChange} search={search} isLoading={isLoading}
-                        title={"Category Data Management"} titleLink={"/categories"}
-                        searchList={["name", "description"]} sortList={["name", "description"]}
+                <SubTopBar handleInputChange={handleInputChange} search={search} isLoading={isLoading}
+                    title={"Category Data Management"} titleLink={"/categories"}
+                    searchList={["name", "description"]} sortList={["name", "description"]}
                 />
 
-                
-                {(detailedCategory._id) && 
+
+                {(detailedCategory._id) &&
                     <DisplayCategory detailedCategory={detailedCategory}
-                        handleDelete={handleDelete} 
+                        handleDelete={handleDelete}
                     />}
 
-                {<AddInfoBar  addInfoTitle={"Add Business"}
-                            addInfoSelectorName={"addedBusinessSelector"}
-                            addInfoSelectorList={["businessName", "ABN", "email", "phone", "id"]}
-                            addInfoValue={"addedBusinessInfo"}
-                            isLoading={isLoading}
-                            linkPath={"categories"}
-                            handleInputChange={handleInputChange}
-                            handleAddClick={handleAddClick}
-                    />
+                {<AddInfoBar addInfoTitle={"Add Business"}
+                    addInfoSelectorName={"addedBusinessSelector"}
+                    addInfoSelectorList={["businessName", "ABN", "email", "phone", "id"]}
+                    addInfoValue={"addedBusinessInfo"}
+                    isLoading={isLoading}
+                    linkPath={"categories"}
+                    handleInputChange={handleInputChange}
+                    handleAddClick={handleAddClick}
+                />
                 }
 
-                {errorInfo && <div style={{color: "red"}}>{errorInfo.response.data}</div>}
+                {errorInfo && <div style={{ color: "red" }}>{errorInfo.response.data}</div>}
 
             </BlockUi>
         )
@@ -72,11 +72,11 @@ class CategoryDetails extends Component {
 }
 
 function DisplayCategory(props) {
-    const {detailedCategory, handleDelete} = props;
+    const { detailedCategory, handleDelete } = props;
     return (
 
         <Descriptions bordered column={1} className="my-3">
-                    {/* // title="Category Details" */}
+            {/* // title="Category Details" */}
             <Descriptions.Item label="Name">
                 {detailedCategory.name}
             </Descriptions.Item>
@@ -84,9 +84,9 @@ function DisplayCategory(props) {
                 {detailedCategory.description}
             </Descriptions.Item>
             <Descriptions.Item label="Businesses">
-  
-                {(detailedCategory.businesses.length !== 0) && 
-                    <BusinessesTable businesses={detailedCategory.businesses} 
+
+                {(detailedCategory.businesses.length !== 0) &&
+                    <BusinessesTable businesses={detailedCategory.businesses}
                         handleDelete={handleDelete}
                     />}
             </Descriptions.Item>
@@ -101,37 +101,37 @@ function BusinessesTable(props) {
         <table className="table table-hover table-borderless">
             <thead>
                 <tr className="row">
-                    <th className="col-2" style={{padding: "20px 20px"}}>Name</th>
-                    <th className="col-3" style={{padding: "20px 40px"}}>Email</th>
-                    <th className="col-4" style={{padding: "20px 60px"}}>ID</th>
-                    <th className="col-3" style={{padding: "20px 10px"}}>Operation</th>
+                    <th className="col-2" style={{ padding: "20px 20px" }}>Name</th>
+                    <th className="col-3" style={{ padding: "20px 40px" }}>Email</th>
+                    <th className="col-4" style={{ padding: "20px 60px" }}>ID</th>
+                    <th className="col-3" style={{ padding: "20px 10px" }}>Operation</th>
                 </tr>
             </thead>
             <tbody>
-                {                    console.log(businesses)}
+                {console.log(businesses)}
                 {businesses.map((item) => (
 
-                    <tr key={item._id}  className="row">
+                    <tr key={item._id} className="row">
                         <td className="col-2">{item.businessName}</td>
                         <td className="col-3">{item.email}</td>
                         <td className="col-4">{item._id}</td>
                         <td className="col-3">
                             <Link to={`/businesses/list/${item._id}`}>
                                 <button type="button" className="btn btn-info btn-sm mr-4 px-1"
-                                        style={{width: "30px"}} 
-                                        data-toggle="tooltip" data-placement="top" title="Check business details"
+                                    style={{ width: "30px" }}
+                                    data-toggle="tooltip" data-placement="top" title="Check business details"
                                 >
-                                    <FontAwesomeIcon icon={faInfo} 
-                                        // onClick={() => handleDetail(item._id)} 
+                                    <FontAwesomeIcon icon={faInfo}
+                                    // onClick={() => handleDetail(item._id)} 
                                     />
-                                        {/* <i className="fas fa-info text-light px-1" */}
-                                        {/* onClick={() => handleDetail(item._id)} */}
+                                    {/* <i className="fas fa-info text-light px-1" */}
+                                    {/* onClick={() => handleDetail(item._id)} */}
                                     {/* /> */}
                                 </button>
                             </Link>
 
                             <button type="button" className="btn btn-danger btn-sm mr-4"
-                                style={{width: "30px"}} 
+                                style={{ width: "30px" }}
                                 onClick={(event) => handleDelete(event, item._id)}
                                 data-toggle="tooltip" data-placement="top" title="Remove from category"
                             >
@@ -155,7 +155,7 @@ const mapState = (state) => ({
     sortValue: state.category.sortValue,
     isLoading: state.category.isLoading,
     detailedCategory: state.category.detailedCategory,
-    addedBusinessSelector: state.category.addedBusinessSelector, 
+    addedBusinessSelector: state.category.addedBusinessSelector,
     addedBusinessInfo: state.category.addedBusinessInfo,
 });
 
@@ -163,7 +163,7 @@ const mapDispatch = (dispatch) => ({
     handleInputChange: (event) => {
         event.preventDefault();
         dispatch(actionCreators.setError(''));
-        const {name, value} = event.target
+        const { name, value } = event.target
         dispatch(actionCreators.handleInputChange(name, value));
     },
 

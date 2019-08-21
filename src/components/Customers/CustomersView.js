@@ -10,7 +10,7 @@ import {
   faPen,
   faEraser
 } from '@fortawesome/free-solid-svg-icons';
-import SubTopNav from '../Ui/subTopNav';
+import SubTopBar from '../Ui/SubTopBar';
 import PaginationBar from '../Ui/PaginationBar';
 
 export default class InfoView extends React.Component {
@@ -191,7 +191,7 @@ export default class InfoView extends React.Component {
     return (
       <div>
         <BlockUi blocking={this.state.isFetching}>
-          <SubTopNav
+          <SubTopBar
             handleInputChange={this.handleInputChange}
             search={this.search}
             // isLoading={isLoading}

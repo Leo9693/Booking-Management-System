@@ -3,14 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui'
 import { actionCreators } from './store';
-import CreateModal from './CreateModal';
-import DeleteConfirmModal from './DeleteConfirmModal';
-import UpdateModal from './UpdateModal';
-import { LoadingButton } from '../Ui/Button';
 import SubTopBar from '../Ui/SubTopBar';
 import PaginationBar from '../Ui/PaginationBar';
-import { setIsLoading } from './store/actionCreators';
-import { ModalTitle } from 'react-bootstrap';
 import CategoryList from './CategoryList'
 import CreateAndUpdateModal from '../Ui/CreateAndUpdateModal';
 import { CREATE, UPDATE, LARGE, SMALL } from '../../utils/constant'
@@ -36,7 +30,7 @@ class Category extends Component {
 
     componentDidMount = () => {
         const searchCondition = this.getSearchCondition();
-        this.props.searchByFilter(searchCondition);
+        this.props.searchByFilterAsync(searchCondition);
         window.addEventListener('resize', this.handleResize);
     }
 
@@ -81,7 +75,7 @@ class Category extends Component {
     handleSearch = event => {
         event.preventDefault();
         const searchCondition = this.getSearchCondition();
-        this.props.searchByFilter(searchCondition);
+        this.props.searchByFilterAsync(searchCondition);
     }
 
     handleShowCreateModal = event => {
@@ -97,14 +91,14 @@ class Category extends Component {
         this.props.setError('');
     }
 
-    handlesubmitModal = event => {
+    handleSubmitModal = event => {
         event.preventDefault();
         const searchCondition = this.getSearchCondition();
         const { modalType, modalInputValue, selectedDocumentID } = this.state;
         if (modalType === CREATE) {
-            this.props.addDocument(modalInputValue, searchCondition);
+            this.props.addDocumentAsync(modalInputValue, searchCondition);
         } else {
-            this.props.updateDocument({ ...modalInputValue, id: selectedDocumentID }, searchCondition);
+            this.props.updateDocumentAsync({ ...modalInputValue, id: selectedDocumentID }, searchCondition);
         }
     }
 
@@ -123,7 +117,7 @@ class Category extends Component {
     handleClickDelete = id => {
         const searchCondition = this.getSearchCondition();
         if (window.confirm("Warning: do you want to delete it ?")) {
-            this.props.deleteDocument(id, searchCondition);
+            this.props.deleteDocumentAsync(id, searchCondition);
         }
     }
 
@@ -139,7 +133,7 @@ class Category extends Component {
             })
             const searchCondition = this.getSearchCondition();
             searchCondition.pageRequested = pageSelected;
-            this.props.searchByFilter(searchCondition);
+            this.props.searchByFilterAsync(searchCondition);
         }
     }
 
@@ -147,15 +141,13 @@ class Category extends Component {
         const { value } = event.target;
         const selectedPageSize = parseInt(value);
         this.setState({
-            pageSize: selectedPageSize
+            pageSize: selectedPageSize,
+            pageRequested: 1
         })
         const searchCondition = this.getSearchCondition();
         searchCondition.pageSize = selectedPageSize;
-        this.props.searchByFilter(searchCondition);
-    }
-
-    handleSetPage = (event, pageSelected, pageCount) => {
-        console.log('handleSetPage');
+        searchCondition.pageRequested = 1;
+        this.props.searchByFilterAsync(searchCondition);
     }
 
     render() {
@@ -209,7 +201,7 @@ class Category extends Component {
                         searchValue={searchValue}
                         isLoading={isLoading}
                         onShowCreateModal={this.handleShowCreateModal}
-                        title={"New category"}
+                        title={"New Category"}
                         searchList={["name", "description"]}
                         sortList={["name", "description"]}
                     />
@@ -223,7 +215,7 @@ class Category extends Component {
                     errorInfo={errorInfo}
                     onInputChange={this.handleModalInputChange}
                     onCancel={this.handleHideModal}
-                    onSubmit={this.handlesubmitModal}
+                    onSubmit={this.handleSubmitModal}
                 />
                 {errorInfo && <div style={{ color: "red" }}>Warning: {errorInfo.response.data}</div>}
 
@@ -326,8 +318,8 @@ const mapDispatch = dispatch => ({
     //     dispatch(actionCreators.handleSearchByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue));
     // },
 
-    searchByFilter: searchCondition => {
-        dispatch(actionCreators.searchByFilter(searchCondition));
+    searchByFilterAsync: searchCondition => {
+        dispatch(actionCreators.searchByFilterAsync(searchCondition));
     },
 
     setIsShowModal: isShowModal => {
@@ -338,16 +330,16 @@ const mapDispatch = dispatch => ({
         dispatch(actionCreators.setError(errorInfo));
     },
 
-    addDocument: (document, searchCondition) => {
-        dispatch(actionCreators.addDocument(document, searchCondition));
+    addDocumentAsync: (document, searchCondition) => {
+        dispatch(actionCreators.addDocumentAsync(document, searchCondition));
     },
 
-    updateDocument: (document, searchCondition) => {
-        dispatch(actionCreators.updateDocument(document, searchCondition));
+    updateDocumentAsync: (document, searchCondition) => {
+        dispatch(actionCreators.updateDocumentAsync(document, searchCondition));
     },
 
-    deleteDocument: (id, searchCondition) => {
-        dispatch(actionCreators.deleteDocument(id, searchCondition));
+    deleteDocumentAsync: (id, searchCondition) => {
+        dispatch(actionCreators.deleteDocumentAsync(id, searchCondition));
     },
 
     // selectPage: (pageSelected, searchCondition) => {
