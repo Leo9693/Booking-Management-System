@@ -30,7 +30,6 @@ class Business extends Component {
                 phone: '',
                 streetAddress: '',
                 postcode: '',
-                state: '',
             },
             screenType: LARGE,
         };
@@ -113,10 +112,10 @@ class Business extends Component {
     handleShowUpdateModal = id => {
         const { documentsList } = this.props;
         const selectedDocuments = documentsList.filter(item => item.id == id)
-        const { name, description } = selectedDocuments[0];
+        const { name, ABN, email, phone, streetAddress, postcode } = selectedDocuments[0];
         this.setState({
             modalType: UPDATE,
-            modalInputValue: { name, description },
+            modalInputValue: { name, ABN, email, phone, streetAddress, postcode },
             selectedDocumentID: id,
         });
         this.props.setIsShowModal(true);

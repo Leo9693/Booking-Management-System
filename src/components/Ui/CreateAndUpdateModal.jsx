@@ -18,7 +18,7 @@ export default class CreateAndUpdateModal extends Component {
         return (
             <Modal show={isShow} onHide={onCancel}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{`${type} ${title}` || "Modal"}</Modal.Title>
+                    <Modal.Title>{`${type} ${title}`}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form validated className="mx-2">
