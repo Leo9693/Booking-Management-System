@@ -39,6 +39,11 @@ class Business extends Component {
         const searchCondition = this.getSearchCondition();
         this.props.searchByFilterAsync(searchCondition);
         window.addEventListener('resize', this.handleResize);
+        if (window.innerWidth < 576) {
+            this.setState({
+                screenType: SMALL
+            })
+        }
     }
 
     componentWillUnmount = () => {
@@ -159,9 +164,10 @@ class Business extends Component {
 
     render() {
         const {
+            searchField,
+            searchValue,
             pageRequested,
             pageSize,
-            searchValue,
             modalType,
             modalTitle,
             modalInputList,
@@ -206,6 +212,7 @@ class Business extends Component {
                         <div className="mx-2 mt-5">
                             <BusinessList
                                 screenType={screenType}
+                                searchField={searchField}
                                 documentsList={documentsList}
                                 onClickDetail={this.handleClickDetails}
                                 onClickUpdate={this.handleShowUpdateModal}

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
@@ -6,34 +6,35 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { LARGE } from '../../utils/constant';
 
 export default function BusinessList(props) {
-    const { screenType, documentsList, onClickUpdate, onClickDelete } = props;
+    const { screenType, searchField, documentsList, onClickUpdate, onClickDelete } = props;
+    const isLargeScreen = screenType === LARGE;
     return (
         <table className="my-3 table">
             <thead>
                 <tr className="row">
-                    <th className="col-4 col-sm-2">Name</th>
-                    {screenType === LARGE && (
-                        <Fragment>
-                            <th className="col-3">Email</th>
-                            <th className="col-2">Phone</th>
-                            <th className="col-2">Postcode</th>
-                        </Fragment>
-                    )}
-                    <th className="col-8 col-sm-3">Operation</th>
+                    {(isLargeScreen || searchField === 'name' || searchField === 'searchAll')
+                        && <th className="col-5 col-sm-2">Name</th>}
+                    {(isLargeScreen || searchField === 'email')
+                        && <th className="col-5 col-sm-3">Email</th>}
+                    {(isLargeScreen || searchField === 'phone')
+                        && <th className="col-5 col-sm-2">Phone</th>}
+                    {(isLargeScreen || searchField === 'postcode')
+                        && <th className="col-5 col-sm-2">Postcode</th>}
+                    <th className="col-7 col-sm-3">Operation</th>
                 </tr>
             </thead>
             <tbody>
                 {documentsList.map((item) => (
                     <tr key={item._id} className="row">
-                        <td className="col-4 col-sm-2">{item.name}</td>
-                        {screenType === LARGE && (
-                            <Fragment>
-                                <td className="col-3">{item.email}</td>
-                                <td className="col-2">{item.phone}</td>
-                                <td className="col-2">{item.postcode}</td>
-                            </Fragment>
-                        )}
-                        <td className="col-8 col-sm-3">
+                        {(isLargeScreen || searchField === 'name' || searchField === 'searchAll')
+                            && <td className="col-5 col-sm-2">{item.name}</td>}
+                        {(isLargeScreen || searchField === 'email')
+                            && <td className="col-5 col-sm-3">{item.email}</td>}
+                        {(isLargeScreen || searchField === 'phone')
+                            && <td className="col-5 col-sm-2">{item.phone}</td>}
+                        {(isLargeScreen || searchField === 'postcode')
+                            && <td className="col-5 col-sm-2">{item.postcode}</td>}
+                        <td className="col-7 col-sm-3">
                             <Link to={`/businesses/${item._id}`}>
                                 <button
                                     type="button"
