@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { LoadingButton } from './Button.js';
+import { SEARCH_ALL } from '../../utils/constant'
 
 export default class SubTopBar extends Component {
     render() {
@@ -29,7 +30,7 @@ export default class SubTopBar extends Component {
                             name='searchField'
                             onChange={onInputChange}
                         >
-                            <option value='searchAll'>Search All</option>
+                            <option value={SEARCH_ALL}>Search All</option>
                             {searchList &&
                                 searchList.map(item => (
                                     <option key={item} value={item}>
@@ -49,7 +50,13 @@ export default class SubTopBar extends Component {
                     </div>
                     <div className="offset-n1 col-md-12 col-xl-3">
                         {sortList && (
-                            <div className='input-group' style={{ width: "220px" }}>
+                            <div
+                                className='input-group'
+                                style={{ width: "220px" }}
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Click 'Search' to sort again"
+                            >
                                 <div className='input-group-prepend'>
                                     <span className='input-group-text'>Sort By: </span>
                                 </div>

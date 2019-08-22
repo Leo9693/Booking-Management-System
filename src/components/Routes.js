@@ -1,9 +1,5 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import CustomersView from './Customers/CustomersView';
-import CustomersDetailView from './Customers/CustomerDetailView';
-import CustomerEditView from './Customers/CustomerEditView';
-import HandymanView from './Customers/HandymanView';
 import OrderManagement from './Orders/Management';
 import GlobalLayout from './Ui/GlobalLayout';
 import setting from './Admin/Setting';
@@ -16,10 +12,9 @@ import ChangeProfile from './Admins/ChangeProfile';
 import ChangePassword from './Admins/ChangePassword';
 import { loggedIn } from '../api/auth';
 import CategoryDetails from '../components/Categories/CategoryDetails';
-import BusinessList from './Businesses/BusinessList';
 import Categories from '../components/Categories';
 import Businesses from '../components/Businesses';
-
+import Customers from '../components/Customers'
 
 export default () => (
     <GlobalLayout>
@@ -27,16 +22,13 @@ export default () => (
             <Route exact path='/admin/login' component={LoginView} />
             <Route exact path='/admin/signup' component={LoginView} />
             <ProtectedRoute exact path='/' component={Home} />
-            <ProtectedRoute exact path='/customers' component={CustomersView} />
-            <ProtectedRoute exact path='/customers/edit/:id' component={CustomerEditView} />
-            <ProtectedRoute exact path='/customers/:id' component={CustomersDetailView} />
-            <ProtectedRoute exact path='/customers/booking/:id' component={HandymanView} />
-            <ProtectedRoute exact path='/orders/management' component={OrderManagement} />
-            <ProtectedRoute exact path='/orders/management/edit/:id' component={OrderEdit} />
-            <ProtectedRoute exact path='/orders/management/:id' component={OrderView} />
             <ProtectedRoute exact path='/businesses' component={Businesses} />
             <ProtectedRoute exact path='/categories/' component={Categories} />
             <ProtectedRoute exact path='/categories/:id' component={CategoryDetails} />
+            <ProtectedRoute exact path='/customers' component={Customers} />
+            <ProtectedRoute exact path='/orders/management' component={OrderManagement} />
+            <ProtectedRoute exact path='/orders/management/edit/:id' component={OrderEdit} />
+            <ProtectedRoute exact path='/orders/management/:id' component={OrderView} />
             <ProtectedRoute exact path='/admin/setting' component={setting} />
             <ProtectedRoute exact path='/admin/change-profile' component={ChangeProfile} />
             <ProtectedRoute exact path='/admin/change-password' component={ChangePassword} />

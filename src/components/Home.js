@@ -1,9 +1,10 @@
 import React from 'react';
 import { Statistic, Row, Col, Card, Icon } from 'antd';
 import { connect } from 'react-redux';
+import { SEARCH_ALL } from '../utils/constant';
 import { actionCreators as CategoryActionCreators } from './category/store';
-import { getDocumentsByFilter } from '../api/business';
-import { getCustomerByFilter } from '../api/customer';
+import { getDocumentsByFilter as getBusinessesAsync } from '../api/businesses';
+import { getDocumentsByFilter as getCustomersAsync } from '../api/customers';
 
 const PUBLIC_URL = process.env.PUBLIC_URL;
 const styles = {
@@ -43,7 +44,7 @@ class Home extends React.Component {
     getCount = (collectionType) => {
         switch (collectionType) {
             case 'businesses':
-                return getDocumentsByFilter({ searchField: "searchAll" })
+                return getBusinessesAsync({ searchField: SEARCH_ALL })
                     .then(res => {
                         const { businessCount } = res;
                         this.setState({
@@ -51,7 +52,7 @@ class Home extends React.Component {
                         })
                     });
             case 'customers':
-                return getCustomerByFilter()
+                return getCustomersAsync({ searchField: SEARCH_ALL })
                     .then(res => {
                         const { customerCount } = res;
                         this.setState({

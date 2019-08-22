@@ -4,7 +4,7 @@ import {
     addDocument,
     updateDocumentByID,
     deleteDocumentByID,
-} from '../../../api/businesses';
+} from '../../../api/customers';
 
 export const setIsLoading = isLoading => ({
     type: actionTypes.SET_IS_LOADING,
