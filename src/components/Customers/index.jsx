@@ -131,6 +131,10 @@ class Customer extends Component {
     handleClickDelete = id => {
         const searchCondition = this.getSearchCondition();
         if (window.confirm("Warning: do you want to delete it ?")) {
+            this.setState({
+                pageRequested: 1
+            });
+            searchCondition.pageRequested = 1;
             this.props.deleteDocumentAsync(id, searchCondition);
         }
     }
