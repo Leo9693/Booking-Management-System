@@ -3,29 +3,35 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
-import { LARGE } from '../../utils/constant';
+import { LARGE, SEARCH_ALL } from '../../utils/constant';
 
 export default function CategoryList(props) {
-    const { screenType, documentsList, onClickUpdate, onClickDelete } = props;
+    const { screenType, documentsList, searchField, onClickUpdate, onClickDelete } = props;
+    const isLargeScreen = (screenType === LARGE);
+    console.log(searchField);
     return (
         <table className="my-3 table">
             <thead>
                 <tr className="row">
-                    <th className="col-4 col-sm-2">Service</th>
-                    {screenType === LARGE && <th className="col-6">Description</th>}
-                    <th className="col-8 col-sm-4">Operation</th>
+                    {(isLargeScreen || searchField === 'name' || searchField === SEARCH_ALL)
+                        && <th className="col-6 col-sm-3">Service</th>}
+                    {(isLargeScreen || searchField === 'description')
+                        && <th className="col-6">Description</th>}
+                    <th className="col-6 col-sm-3 operation-col">Operation</th>
                 </tr>
             </thead>
             <tbody>
                 {documentsList.map((item) => (
                     <tr key={item._id} className="row">
-                        <td className="col-4 col-sm-2">{item.name}</td>
-                        {screenType === LARGE && <td className="col-6">{item.description}</td>}
-                        <td className="col-8 col-sm-4">
+                        {(isLargeScreen || searchField === 'name' || searchField === SEARCH_ALL)
+                            && <td className="col-6 col-sm-3">{item.name}</td>}
+                        {(isLargeScreen || searchField === 'description')
+                            && <td className="col-6">{item.description}</td>}
+                        <td className="col-6 col-sm-3 operation-col">
                             <Link to={`/categories/${item._id}`}>
                                 <button
                                     type="button"
-                                    className="btn btn-info btn-sm mr-4 px-1"
+                                    className="btn btn-info btn-sm mr-2 px-1"
                                     style={{ width: "30px" }}
                                     data-toggle="tooltip"
                                     data-placement="top"
@@ -36,7 +42,7 @@ export default function CategoryList(props) {
                             </Link>
                             <button
                                 type="button"
-                                className="btn btn-warning btn-sm mr-4"
+                                className="btn btn-warning btn-sm mr-2"
                                 style={{ width: "30px" }}
                                 onClick={() => onClickUpdate(item._id)}
                                 data-toggle="tooltip"
@@ -47,7 +53,7 @@ export default function CategoryList(props) {
                             </button>
                             <button
                                 type="button"
-                                className="btn btn-danger btn-sm mr-4"
+                                className="btn btn-danger btn-sm"
                                 style={{ width: "30px" }}
                                 onClick={() => onClickDelete(item._id)}
                                 data-toggle="tooltip"

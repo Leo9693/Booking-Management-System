@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { LARGE, SEARCH_ALL } from '../../utils/constant';
+import { getDateAndTime } from '../../utils/dateTransform';
 
 export default function BusinessList(props) {
     const { screenType, searchField, documentsList, onClickUpdate, onClickDelete } = props;
@@ -12,24 +13,28 @@ export default function BusinessList(props) {
         <table className="my-3 table">
             <thead>
                 <tr className="row">
-                    {(isLargeScreen || searchField === 'name' || searchField === SEARCH_ALL)
-                        && <th className="col-6 col-sm-3">Name</th>}
-                    {(isLargeScreen || searchField === 'email')
-                        && <th className="col-6 col-sm-4">Email</th>}
-                    {(isLargeScreen || searchField === 'phone')
-                        && <th className="col-6 col-sm-2">Phone</th>}
+                    {(isLargeScreen || searchField === SEARCH_ALL)
+                        && <th className="col-6 col-sm-3">Order Date</th>}
+                    {(isLargeScreen || searchField === 'customer')
+                        && <th className="col-6 col-sm-2">Customer</th>}
+                    {(isLargeScreen || searchField === 'business')
+                        && <th className="col-6 col-sm-2">Business</th>}
+                    {(isLargeScreen || searchField === 'category')
+                        && <th className="col-6 col-sm-2">Category</th>}
                     <th className="col-6 col-sm-3 operation-col">Operation</th>
                 </tr>
             </thead>
             <tbody>
                 {documentsList.map((item) => (
                     <tr key={item._id} className="row">
-                        {(isLargeScreen || searchField === 'name' || searchField === SEARCH_ALL)
-                            && <td className="col-6 col-sm-3">{item.name}</td>}
-                        {(isLargeScreen || searchField === 'email')
-                            && <td className="col-6 col-sm-4">{item.email}</td>}
-                        {(isLargeScreen || searchField === 'phone')
-                            && <td className="col-6 col-sm-2">{item.phone}</td>}
+                        {(isLargeScreen || searchField === SEARCH_ALL)
+                            && <td className="col-6 col-sm-3">{getDateAndTime(item.createdAt)}</td>}
+                        {(isLargeScreen || searchField === 'customer')
+                            && <td className="col-6 col-sm-2">{item.customer}</td>}
+                        {(isLargeScreen || searchField === 'business')
+                            && <td className="col-6 col-sm-2">{item.business}</td>}
+                        {(isLargeScreen || searchField === 'category')
+                            && <td className="col-6 col-sm-2">{item.category}</td>}
                         <td className="col-6 col-sm-3 operation-col">
                             <Link to={`/businesses/${item._id}`}>
                                 <button

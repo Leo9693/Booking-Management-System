@@ -12,7 +12,9 @@ export const CUSTOMER_MODAL_INPUT_LIST = ['name', 'email', 'phone'];
 // searchList
 export const BUSINESS_SEARCH_LIST = ['name', 'email', 'phone', 'postcode'];
 export const CUSTOMER_SEARCH_LIST = ['name', 'email', 'phone'];
+export const ORDER_SEARCH_LIST = ['customer', 'business', 'category'];
 
 // sortList
 export const BUSINESS_SORT_LIST = ['name', 'email', 'phone', 'postcode'];
 export const CUSTOMER_SORT_LIST = ['name', 'email', 'phone'];
+export const ORDER_SORT_LIST = ['customer', 'business', 'category'];

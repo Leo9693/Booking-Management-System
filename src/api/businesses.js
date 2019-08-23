@@ -18,13 +18,13 @@ export function getDocumentsByFilter(searchCondition) {
 }
 
 export function addDocument(newDocument) {
-    const { name, ABN, email, phone, streetAddress, postcode, state } = newDocument;
-    return axios.post('/businesses', { name, ABN, email, phone, streetAddress, postcode, state });
+    const { name, ABN, email, phone, streetAddress, postcode } = newDocument;
+    return axios.post('/businesses', { name, ABN, email, phone, streetAddress, postcode });
 }
 
 export function updateDocumentByID(document) {
-    const { name, ABN, email, phone, streetAddress, postcode, state, id } = document;
-    return axios.put(`/businesses/${id}`, { name, ABN, email, phone, streetAddress, postcode, state });
+    const { name, ABN, email, phone, streetAddress, postcode, id } = document;
+    return axios.put(`/businesses/${id}`, { name, ABN, email, phone, streetAddress, postcode });
 }
 
 export function deleteDocumentByID(id) {

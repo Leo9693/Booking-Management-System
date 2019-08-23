@@ -4,17 +4,16 @@ import { withRouter } from 'react-router-dom';
 import { logout, getUserName } from '../../api/auth';
 
 class Logout extends Component {
-
-    handleLogout = (event) => {
+    handleLogout = event => {
         logout()
             .then(this.props.history.replace('/'));
     }
 
-    handleChangeProfile = (event) => {
+    handleChangeProfile = event => {
         this.props.history.push('/admin/change-profile');
     }
 
-    handleChangePassword = (event) => {
+    handleChangePassword = event => {
         this.props.history.push('/admin/change-password');
     }
 

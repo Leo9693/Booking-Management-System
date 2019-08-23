@@ -228,6 +228,7 @@ class Category extends Component {
                     <div className="mx-2 mt-5">
                         <CategoryList
                             screenType={screenType}
+                            searchField={searchField}
                             documentsList={documentsList}
                             onClickDetail={this.handleClickDetails}
                             onClickUpdate={this.handleShowUpdateModal}
