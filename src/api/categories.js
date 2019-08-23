@@ -8,7 +8,7 @@ export function getAllCategories(pageRequested, pageSize) {
         })
 }
 
-export function getCategoriesByFilter(searchCondition) {
+export function getCategoriesByFilter(searchCondition = { searchField: 'searchAll' }) {
     const { searchField, searchValue, pageRequested, pageSize, sortType, sortValue } = searchCondition;
     if (searchField === 'searchAll') {
         return axios.get('/categories', { params: { pageRequested, pageSize, sortType, sortValue } })

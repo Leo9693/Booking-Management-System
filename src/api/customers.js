@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export function getDocumentsByFilter(searchCondition) {
-    const { searchField, searchValue, pageRequested = 1, pageSize = 5, sortType, sortValue } = searchCondition;
+export function getDocumentsByFilter(searchCondition = { searchField: 'searchAll' }) {
+    const { searchField, searchValue, pageRequested, pageSize, sortType, sortValue } = searchCondition;
     if (searchField === 'searchAll') {
         return axios.get('/customers', { params: { pageRequested, pageSize, sortType, sortValue } })
             .then(res => {

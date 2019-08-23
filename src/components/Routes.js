@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import GlobalLayout from './Ui/GlobalLayout';
 import setting from './Admin/Setting';
-import Home from './Home';
+import Home from './Home/Home';
 import LoginView from './Admins/Login';
 import Signup from './Admins/Signup';
 import ChangeProfile from './Admins/ChangeProfile';

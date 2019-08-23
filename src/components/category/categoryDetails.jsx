@@ -10,7 +10,7 @@ import AddInfoBar from '../Ui/addInfoBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
-import { deleteBusinessFromCategoryById } from '../../api/category';
+import { deleteBusinessFromCategoryById } from '../../api/categories';
 
 
 class CategoryDetails extends Component {

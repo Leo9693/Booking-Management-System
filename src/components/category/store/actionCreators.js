@@ -9,7 +9,7 @@ import {
     addBusinessToCategoryById,
     getBusinessByFilter,
     deleteBusinessFromCategoryById
-} from '../../../api/category';
+} from '../../../api/categories';
 
 export const handleInputChange = (inputName, inputValue) => ({
     type: actionTypes.HANDLE_INPUT_CHANGE,
