@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import GlobalLayout from './Ui/GlobalLayout';
+import GlobalLayout from './common/GlobalLayout';
 import setting from './Admin/Setting';
 import Home from './Home/Home';
 import LoginView from './Admins/Login';

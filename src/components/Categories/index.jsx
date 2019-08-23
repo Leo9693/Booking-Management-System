@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui'
 import { actionCreators } from './store';
-import SubTopBar from '../Ui/SubTopBar';
-import PaginationBar from '../Ui/PaginationBar';
+import SubTopBar from '../common/SubTopBar';
+import PaginationBar from '../common/PaginationBar';
 import CategoryList from './CategoryList'
-import CreateAndUpdateModal from '../Ui/CreateAndUpdateModal';
+import CreateAndUpdateModal from '../common/CreateAndUpdateModal';
 import { CREATE, UPDATE, LARGE, SMALL } from '../../utils/constant'
 
 class Category extends Component {

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui'
 import { actionCreators } from './store';
-import SubTopBar from '../Ui/SubTopBar';
-import PaginationBar from '../Ui/PaginationBar';
+import SubTopBar from '../common/SubTopBar';
+import PaginationBar from '../common/PaginationBar';
 import CustomerTable from './CustomerTable'
-import CreateAndUpdateModal from '../Ui/CreateAndUpdateModal';
+import CreateAndUpdateModal from '../common/CreateAndUpdateModal';
 import { CREATE, UPDATE, LARGE, SMALL, SEARCH_ALL, CUSTOMER_MODAL_INPUT_LIST, CUSTOMER_SEARCH_LIST, CUSTOMER_SORT_LIST } from '../../utils/constant'
 
 class Customer extends Component {

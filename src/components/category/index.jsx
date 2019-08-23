@@ -5,13 +5,13 @@ import { actionCreators } from './store';
 import CreateModal from './createModal';
 import DeleteConfirmModal from './deleteConfirmModal'; 
 import UpdateModal from './updateModal';
-import {LoadingButton} from '../Ui/Button';
+import {LoadingButton} from '../common/Button';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
-import SubTopNav from '../Ui/subTopNavCategory';
-import PaginationBar from '../Ui/paginationBar';
+import SubTopNav from '../common/subTopNavCategory';
+import PaginationBar from '../common/paginationBar';
 import BlockUi from 'react-block-ui'
 import { setIsLoading } from './store/actionCreators';
 

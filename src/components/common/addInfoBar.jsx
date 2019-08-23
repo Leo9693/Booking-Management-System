@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {LoadingButton} from './Button.jsx';
+import { LoadingButton } from './Button.jsx';
 import { Link } from 'react-router-dom';
 
 export default class AddInfoBar extends Component {
@@ -9,7 +9,7 @@ export default class AddInfoBar extends Component {
             addInfoSelectorName,
             addInfoSelectorList = ["businessName"],
             addInfoValue,
-            isLoading, 
+            isLoading,
             linkPath,
             handleInputChange,
             handleAddClick,
@@ -22,14 +22,14 @@ export default class AddInfoBar extends Component {
                             <span className="input-group-text">{addInfoTitle}</span>
                         </div>
                         <select className="form-control mr-1"
-                                name={addInfoSelectorName} onChange={handleInputChange}
+                            name={addInfoSelectorName} onChange={handleInputChange}
                         >
                             {addInfoSelectorList.map((item) => (
                                 <option key={item} value={item}>By {item}</option>
                             ))}
                         </select>
-                        <input  className="form-control mr-1" type="text"
-                            style={{width:"300px"}}
+                        <input className="form-control mr-1" type="text"
+                            style={{ width: "300px" }}
                             placeholder="Input add info..."
                             name={addInfoValue} onChange={handleInputChange}
                         />
@@ -38,7 +38,7 @@ export default class AddInfoBar extends Component {
                         >
                             ADD
                         </LoadingButton>
-                        <Link  to={`/${linkPath}`} className="ml-auto">
+                        <Link to={`/${linkPath}`} className="ml-auto">
                             <button className="btn btn-secondary">
                                 Back to {linkPath} overview
                             </button>
@@ -48,8 +48,7 @@ export default class AddInfoBar extends Component {
             </div>
         )
     }
-    
-        
+
+
 }
 
- 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button, Spin } from 'antd';
-import ErrorAlert from '../Ui/ErrorAlert';
+import ErrorAlert from '../common/ErrorAlert';
 import { Link } from 'react-router-dom'
 import { actionCreators } from './store';
 import { login } from '../../api/auth';

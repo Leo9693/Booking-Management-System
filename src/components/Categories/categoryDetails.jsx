@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { LoadingButton } from '../Ui/Button';
+import { LoadingButton } from '../common/Button';
 import { connect } from 'react-redux';
 import { actionCreators } from './store';
 import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui';
 import { Descriptions } from 'antd';
-import SubTopBar from '../Ui/SubTopBar';
-import AddInfoBar from '../Ui/addInfoBar';
+import SubTopBar from '../common/SubTopBar';
+import AddInfoBar from '../common/addInfoBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';

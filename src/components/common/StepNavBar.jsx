@@ -38,19 +38,31 @@ export default class StepNavBar extends Component {
                 <div className="steps-content">{children}</div>
                 <div className="steps-action">
                     {currentStep < stepSetting.length - 1 && (
-                        <Button type="primary" onClick={this.nextStep}>
+                        <Button
+                            style={{ paddingLeft: 30, paddingRight: 30 }}
+                            type="primary" ghost
+                            onClick={this.nextStep}
+                        >
                             Next
-                    </Button>
+                        </Button>
                     )}
                     {currentStep === stepSetting.length - 1 && (
-                        <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                        <Button
+                            style={{ paddingLeft: 30, paddingRight: 30 }}
+                            type="primary"
+                            onClick={() => message.success('Processing complete!')}
+                        >
                             Done
-                    </Button>
+                        </Button>
                     )}
                     {currentStep > 0 && (
-                        <Button style={{ marginLeft: 8 }} onClick={this.prevStep}>
+                        <Button
+                            style={{ marginLeft: 8 }}
+                            type="primary" ghost
+                            onClick={this.prevStep}
+                        >
                             Previous
-                    </Button>
+                        </Button>
                     )}
                 </div>
             </Fragment>

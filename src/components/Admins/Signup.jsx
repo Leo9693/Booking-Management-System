@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Spin } from 'antd';
-import ErrorAlert from '../Ui/ErrorAlert';
+import ErrorAlert from '../common/ErrorAlert';
 import { connect } from 'react-redux';
 import { addUser } from '../../api/auth';
 import { actionCreators } from './store';

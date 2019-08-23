@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import StepNavBar from '../Ui/StepNavBar';
+import StepNavBar from '../common/StepNavBar';
 
 const stepSetting = [
     {
