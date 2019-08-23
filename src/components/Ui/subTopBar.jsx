@@ -5,13 +5,13 @@ import { SEARCH_ALL } from '../../utils/constant'
 export default class SubTopBar extends Component {
     render() {
         const { title, searchList, sortList, isLoading, searchValue } = this.props;
-        const { onSearch, onInputChange, onShowCreateModal } = this.props;
+        const { onSearch, onInputChange, onShowCreate } = this.props;
         return (
             <form className='form-inline bg-light py-3 px-2'>
                 <div className="row no-gutters" style={{ width: "100%" }}>
                     <div className="col-md-12 col-xl-3">
                         <button className="btn btn-success mr-auto"
-                            onClick={onShowCreateModal}
+                            onClick={onShowCreate}
                         >
                             + {title}
                         </button>

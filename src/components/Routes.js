@@ -13,6 +13,7 @@ import Categories from '../components/Categories';
 import Businesses from '../components/Businesses';
 import Customers from '../components/Customers';
 import Orders from '../components/Orders';
+import OrderCreate from '../components/Orders/OrderCreate';
 
 export default () => (
     <GlobalLayout>
@@ -25,6 +26,7 @@ export default () => (
             <ProtectedRoute exact path='/categories/:id' component={CategoryDetails} />
             <ProtectedRoute exact path='/customers' component={Customers} />
             <ProtectedRoute exact path='/orders' component={Orders} />
+            <ProtectedRoute exact path='/orders/create' component={OrderCreate} />
             <ProtectedRoute exact path='/admin/setting' component={setting} />
             <ProtectedRoute exact path='/admin/change-profile' component={ChangeProfile} />
             <ProtectedRoute exact path='/admin/change-password' component={ChangePassword} />

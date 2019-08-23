@@ -89,15 +89,7 @@ class Order extends Component {
 
     handleShowCreateModal = event => {
         event.preventDefault();
-        // this.setState({
-        //     modalType: CREATE,
-        //     modalInputValue: {
-        //         name: '',
-        //         email: '',
-        //         phone: '',
-        //     },
-        // });
-        // this.props.setIsShowModal(true);
+        this.props.history.push('/orders/create')
     }
 
     handleHideModal = () => {
@@ -198,7 +190,7 @@ class Order extends Component {
                         onSearch={this.handleSearch}
                         searchValue={searchValue}
                         isLoading={isLoading}
-                        onShowCreateModal={this.handleShowCreateModal}
+                        onShowCreate={this.handleShowCreateModal}
                         title={"New Order"}
                         searchList={ORDER_SEARCH_LIST}
                         sortList={ORDER_SORT_LIST}

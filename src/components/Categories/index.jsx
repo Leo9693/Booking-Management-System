@@ -205,7 +205,7 @@ class Category extends Component {
                         onSearch={this.handleSearch}
                         searchValue={searchValue}
                         isLoading={isLoading}
-                        onShowCreateModal={this.handleShowCreateModal}
+                        onShowCreate={this.handleShowCreateModal}
                         title={"New Category"}
                         searchList={["name", "description"]}
                         sortList={["name", "description"]}

@@ -196,7 +196,7 @@ class Customer extends Component {
                         onSearch={this.handleSearch}
                         searchValue={searchValue}
                         isLoading={isLoading}
-                        onShowCreateModal={this.handleShowCreateModal}
+                        onShowCreate={this.handleShowCreateModal}
                         title={"New Customer"}
                         searchList={CUSTOMER_SEARCH_LIST}
                         sortList={CUSTOMER_SORT_LIST}

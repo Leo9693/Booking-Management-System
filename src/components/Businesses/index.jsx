@@ -203,7 +203,7 @@ class Business extends Component {
                         onSearch={this.handleSearch}
                         searchValue={searchValue}
                         isLoading={isLoading}
-                        onShowCreateModal={this.handleShowCreateModal}
+                        onShowCreate={this.handleShowCreateModal}
                         title={"New Business"}
                         searchList={BUSINESS_SEARCH_LIST}
                         sortList={BUSINESS_SORT_LIST}
