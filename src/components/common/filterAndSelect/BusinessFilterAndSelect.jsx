@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import BlockUi from 'react-block-ui';
 import PaginationBar from '../PaginationBar';
 import SearchBar from '../SearchBar';
-import { SEARCH_ALL, CATEGORY_SEARCH_LIST } from '../../../utils/constant'
-import { getDocumentsByFilter as getDocumentsByFilterAsync } from '../../../api/categories';
-import { LARGE } from '../../../utils/constant';
+import { SEARCH_ALL, BUSINESS_SEARCH_LIST } from '../../../utils/constant'
+import { getDocumentsByFilter as getDocumentsByFilterAsync } from '../../../api/businesses';
 import ErrorAlert from '../ErrorAlert';
+import { LARGE } from '../../../utils/constant';
 
-const searchList = CATEGORY_SEARCH_LIST;
+const searchList = BUSINESS_SEARCH_LIST;
 
-export default class CategoryFilterAndSelect extends Component {
+export default class BusinessFilterAndSelect extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -129,9 +129,13 @@ export default class CategoryFilterAndSelect extends Component {
                     <thead className="text-center">
                         <tr className="row">
                             <th className="col-1"></th>
-                            <th className="col-5 col-sm-3">Service</th>
-                            {(isLargeScreen || searchField === 'description')
-                                && <th className="col-6 col-sm-8">Description</th>}
+                            <th className="col-5 col-sm-3">Name</th>
+                            {(isLargeScreen || searchField === 'email')
+                                && <th className="col-6 col-sm-4">Email</th>}
+                            {(isLargeScreen || searchField === 'phone')
+                                && <th className="col-6 col-sm-2">Phone</th>}
+                            {(isLargeScreen || searchField === 'postcode')
+                                && <th className="col-6 col-sm-2">postcode</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -149,8 +153,12 @@ export default class CategoryFilterAndSelect extends Component {
                                     </div>
                                 </td>
                                 <td className="col-5 col-sm-3">{item.name}</td>
-                                {(isLargeScreen || searchField === 'description')
-                                    && <td className="col-6 col-sm-8">{item.description}</td>}
+                                {(isLargeScreen || searchField === 'email')
+                                    && <td className="col-6 col-sm-4">{item.email}</td>}
+                                {(isLargeScreen || searchField === 'phone')
+                                    && <td className="col-6 col-sm-2">{item.phone}</td>}
+                                {(isLargeScreen || searchField === 'postcode')
+                                    && <td className="col-6 col-sm-2">{item.postcode}</td>}
                             </tr>
                         ))}
                     </tbody>

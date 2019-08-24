@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Steps, Button, message } from 'antd';
+import { Steps, Button } from 'antd';
 
 const { Step } = Steps;
 
@@ -27,7 +27,7 @@ export default class StepNavBar extends Component {
 
     render() {
         const { currentStep } = this.state;
-        const { children, stepSetting, isNextButtonDisabled } = this.props;
+        const { children, stepSetting, isNextButtonDisabled, isCreateButtonDisabled, onClickCreate } = this.props;
         return (
             <Fragment>
                 <Steps current={currentStep}>
@@ -41,7 +41,6 @@ export default class StepNavBar extends Component {
                         <Button
                             style={{ paddingLeft: 30, paddingRight: 30 }}
                             type="primary"
-                            ghost
                             disabled={isNextButtonDisabled}
                             onClick={this.nextStep}
                         >
@@ -52,9 +51,10 @@ export default class StepNavBar extends Component {
                         <Button
                             style={{ paddingLeft: 30, paddingRight: 30 }}
                             type="primary"
-                            onClick={() => message.success('Processing complete!')}
+                            disabled={isCreateButtonDisabled}
+                            onClick={onClickCreate}
                         >
-                            Done
+                            Create
                         </Button>
                     )}
                     {currentStep > 0 && (

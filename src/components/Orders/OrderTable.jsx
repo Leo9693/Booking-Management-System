@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { LARGE, SEARCH_ALL } from '../../utils/constant';
-import { getDateAndTime } from '../../utils/dateTransform';
+import { getLocalDateAndTime } from '../../utils/dateTransform';
 
 export default function BusinessList(props) {
     const { screenType, searchField, documentsList, onClickUpdate, onClickDelete } = props;
@@ -28,7 +28,7 @@ export default function BusinessList(props) {
                 {documentsList.map((item) => (
                     <tr key={item._id} className="row">
                         {(isLargeScreen || searchField === SEARCH_ALL)
-                            && <td className="col-6 col-sm-3">{getDateAndTime(item.createdAt)}</td>}
+                            && <td className="col-6 col-sm-3">{getLocalDateAndTime(item.createdAt)}</td>}
                         {(isLargeScreen || searchField === 'customer')
                             && <td className="col-6 col-sm-2">{item.customer}</td>}
                         {(isLargeScreen || searchField === 'business')

@@ -8,7 +8,7 @@ import { LARGE, SEARCH_ALL } from '../../utils/constant';
 export default function CategoryList(props) {
     const { screenType, documentsList, searchField, onClickUpdate, onClickDelete } = props;
     const isLargeScreen = (screenType === LARGE);
-    console.log(searchField);
+
     return (
         <table className="my-3 table">
             <thead>

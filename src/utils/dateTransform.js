@@ -12,7 +12,23 @@ export const getDateAsYMD = date => {
     return newDate;
 }
 
-export const getDateAndTime = date => {
-    const newDateAndTime = date.slice(0, 16).replace('T', ' ');
-    return newDateAndTime
+export const getTimeAsHM = date => {
+    let hour = date.getHours();
+    if (hour >= 0 && hour <= 9) {
+        hour = '0' + hour;
+    }
+    let minute = date.getMinutes();
+    if (minute >= 0 && minute <= 9) {
+        minute = '0' + minute;
+    }
+    const newTime = `${hour}:${minute}`;
+    return newTime;
+}
+
+export const getLocalDateAndTime = date => {
+    const dateAndTime = new Date(date);
+    const newDate = getDateAsYMD(dateAndTime);
+    const newTime = getTimeAsHM(dateAndTime);
+    // const newDateAndTime = date.slice(0, 16).replace('T', ' ');
+    return `${newDate} ${newTime}`;
 }

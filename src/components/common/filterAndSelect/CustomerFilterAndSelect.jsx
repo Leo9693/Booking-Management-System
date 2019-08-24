@@ -107,9 +107,9 @@ export default class CustomerFilterAndSelect extends Component {
     }
 
     render() {
-        const { screenType = LARGE } = this.props;
         const { searchValue, isLoading, searchField, error, documentsList, documentCount, pageRequested, pageSize } = this.state;
-        const isLargeScreen = (screenType === LARGE);
+        const isLargeScreen = (this.props.screenType === LARGE);
+
         return (
             <BlockUi blocking={isLoading}>
                 {error && (
