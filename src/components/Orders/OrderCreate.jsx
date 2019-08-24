@@ -178,18 +178,20 @@ export default class OrderCreate extends Component {
                                     </tr>
                                 </tbody>
                             </Table>
-                            <Form.Group as={Row}>
-                                <Form.Label column sm={3}>Job location</Form.Label>
-                                <Col sm={9}>
-                                    <Form.Control
-                                        required
-                                        type="text"
-                                        placeholder={`Please input job location`}
-                                        value={jobLocation}
-                                        name="jobLocation"
-                                        onChange={this.handleInputChange} />
-                                </Col>
-                            </Form.Group>
+                            <Form validated>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Job location</Form.Label>
+                                    <Col sm={9}>
+                                        <Form.Control
+                                            required
+                                            type="text"
+                                            placeholder={`Please input job location`}
+                                            value={jobLocation}
+                                            name="jobLocation"
+                                            onChange={this.handleInputChange} />
+                                    </Col>
+                                </Form.Group>
+                            </Form>
                         </div>
                     }
                 </StepNavBar>

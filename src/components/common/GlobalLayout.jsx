@@ -71,7 +71,7 @@ class GlobalLayout extends Component {
                     <Header className="global-layout__header">
                         <Row type="flex" justify="start" align="middle" gutter={8}>
                             <Col span={16} md={16} style={{ textAlign: "left" }}>
-                                <h4>JR Handyman CMS</h4>
+                                <h4>Handyman CMS</h4>
                             </Col>
                             <Col span={8} md={8} style={{ textAlign: "right" }}>
                                 <div className="global-layout__header__container">
