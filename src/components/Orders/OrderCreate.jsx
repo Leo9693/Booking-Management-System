@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import StepNavBar from '../common/StepNavBar';
+import CustomerFilterAndSelect from '../common/filterAndSelect/CustomerFilterAndSelect';
+import CategoryFilterAndSelect from '../common/filterAndSelect/CategoryFilterAndSelect';
+import { LARGE, SMALL } from '../../utils/constant';
 
 const stepSetting = [
     {
@@ -21,22 +24,76 @@ export default class OrderCreate extends Component {
         super(props);
         this.state = {
             currentStep: 0,
+            screenType: LARGE,
+            isNextButtonDisabled: true,
+            selectedCustomer: {},
+            selectedCategory: {},
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener('resize', this.handleResize);
+        if (window.innerWidth < 576) {
+            this.setState({
+                screenType: SMALL
+            })
+        }
+    }
+
+    handleResize = event => {
+        if (event.target.innerWidth >= 576) {
+            this.setState({
+                screenType: LARGE
+            })
+        } else {
+            this.setState({
+                screenType: SMALL
+            })
         }
     }
 
     getCurrentStep = step => {
         this.setState({
             currentStep: step,
+            isNextButtonDisabled: true,
+        })
+    }
+
+    getSelectedCustomer = selectedCustomer => {
+        this.setState({
+            selectedCustomer,
+            isNextButtonDisabled: false
+        })
+    }
+
+    getSelectedCategory = selectedCategory => {
+        this.setState({
+            selectedCategory,
+            isNextButtonDisabled: false
         })
     }
 
     render() {
-        const { currentStep } = this.state;
+        const { currentStep, screenType, isNextButtonDisabled } = this.state;
         return (
             <Fragment>
-                <StepNavBar stepSetting={stepSetting} getCurrentStep={this.getCurrentStep}>
-                    {currentStep === 0 && <div>Step0</div>}
-                    {currentStep === 1 && <div>Step1</div>}
+                <StepNavBar
+                    stepSetting={stepSetting}
+                    getCurrentStep={this.getCurrentStep}
+                    isNextButtonDisabled={isNextButtonDisabled}
+                >
+                    {currentStep === 0 &&
+                        <CustomerFilterAndSelect
+                            screenType={screenType}
+                            getSelectedDocument={this.getSelectedCustomer}
+                        />
+                    }
+                    {currentStep === 1 &&
+                        <CategoryFilterAndSelect
+                            screenType={screenType}
+                            getSelectedDocument={this.getSelectedCategory}
+                        />
+                    }
                     {currentStep === 2 && <div>Step2</div>}
                 </StepNavBar>
             </Fragment>

@@ -1,11 +1,11 @@
 import { actionTypes } from './index';
 import {
     getAllCategories,
-    getCategoriesByFilter,
+    getDocumentsByFilter,
     getCategoryByID,
-    addCategory,
-    updateCategoryByID,
-    deleteCategoryByID,
+    addDocument,
+    updateDocumentByID,
+    deleteDocumentByID,
     addBusinessToCategoryById,
     getBusinessByFilter,
     deleteBusinessFromCategoryById
@@ -37,7 +37,7 @@ import {
 // export const handleSearchByFilter = (searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue) => {
 //     return (dispatch) => {
 //         dispatch(setIsLoading(true));
-//         getCategoriesByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue)
+//         getDocumentsByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue)
 //             .then((res) => {
 //                 const { categoryCount, categories } = res;
 //                 dispatch(setDocumentsList(categoryCount, categories));
@@ -77,7 +77,7 @@ import {
 // export const deleteSelectedCategory = (id, currentPage, pageSize) => {
 //     return (dispatch) => {
 //         dispatch(setIsLoading(true));
-//         deleteCategoryByID(id)
+//         deleteDocumentByID(id)
 //             .then(() => {
 //                 dispatch(setIsLoading(false));
 //                 dispatch(setSelectedCategoryID(''));
@@ -115,7 +115,7 @@ import {
 
 // export const updateCategory = (name, description, id, currentPage, pageSize) => {
 //     return (dispatch) => {
-//         updateCategoryByID(name, description, id)
+//         updateDocumentByID(name, description, id)
 //             .then((res) => {
 //                 dispatch(setSelectedCategoryID(''));
 //                 dispatch(showUpdateModal(false));
@@ -218,7 +218,7 @@ export const searchByFilterAsync = searchCondition => {
     return dispatch => {
         dispatch(setError(null));
         dispatch(setIsLoading(true));
-        getCategoriesByFilter(searchCondition)
+        getDocumentsByFilter(searchCondition)
             .then(res => {
                 const { documentCount, documents } = res;
                 dispatch(setDocumentsList(documentCount, documents));
@@ -235,10 +235,10 @@ export const addDocumentAsync = (document, searchCondition) => {
     return dispatch => {
         dispatch(setError(null));
         dispatch(setIsLoading(true));
-        addCategory(document)
+        addDocument(document)
             .then(res => {
                 dispatch(setIsShowModal(false));
-                getCategoriesByFilter(searchCondition)
+                getDocumentsByFilter(searchCondition)
                     .then(res => {
                         const { documentCount, documents } = res;
                         dispatch(setDocumentsList(documentCount, documents));
@@ -256,10 +256,10 @@ export const updateDocumentAsync = (document, searchCondition) => {
     return dispatch => {
         dispatch(setError(null));
         dispatch(setIsLoading(true));
-        updateCategoryByID(document)
+        updateDocumentByID(document)
             .then(res => {
                 dispatch(setIsShowModal(false));
-                getCategoriesByFilter(searchCondition)
+                getDocumentsByFilter(searchCondition)
                     .then(res => {
                         const { documentCount, documents } = res;
                         dispatch(setDocumentsList(documentCount, documents));
@@ -277,9 +277,9 @@ export const deleteDocumentAsync = (id, searchCondition) => {
     return dispatch => {
         dispatch(setError(null));
         dispatch(setIsLoading(true));
-        deleteCategoryByID(id)
+        deleteDocumentByID(id)
             .then(res => {
-                getCategoriesByFilter(searchCondition)
+                getDocumentsByFilter(searchCondition)
                     .then(res => {
                         const { documentCount, documents } = res;
                         dispatch(setDocumentsList(documentCount, documents));

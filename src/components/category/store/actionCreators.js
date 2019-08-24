@@ -50,9 +50,9 @@ export const handleSearchByFilter = (searchFilter, searchKeyword, currentPage, p
     }
 }
 
-const changeList = (documentsCount, documentsList) => ({
+const changeList = (documentCount, documentsList) => ({
     type: actionTypes.CHANGE_LIST,
-    documentsCount,
+    documentCount,
     documentsList
 });
 

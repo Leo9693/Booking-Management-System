@@ -32,6 +32,11 @@ class Category extends Component {
         const searchCondition = this.getSearchCondition();
         this.props.searchByFilterAsync(searchCondition);
         window.addEventListener('resize', this.handleResize);
+        if (window.innerWidth < 576) {
+            this.setState({
+                screenType: SMALL
+            })
+        }
     }
 
     componentWillUnmount = () => {
@@ -74,7 +79,11 @@ class Category extends Component {
 
     handleSearch = event => {
         event.preventDefault();
+        this.setState({
+            pageRequested: 1
+        });
         const searchCondition = this.getSearchCondition();
+        searchCondition.pageRequested = 1;
         this.props.searchByFilterAsync(searchCondition);
     }
 
@@ -105,7 +114,7 @@ class Category extends Component {
 
     handleShowUpdateModal = id => {
         const { documentsList } = this.props;
-        const selectedDocuments = documentsList.filter(item => item.id == id)
+        const selectedDocuments = documentsList.filter(item => item.id === id)
         const { name, description } = selectedDocuments[0];
         this.setState({
             modalType: UPDATE,

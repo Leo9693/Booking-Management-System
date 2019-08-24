@@ -27,7 +27,7 @@ export default class StepNavBar extends Component {
 
     render() {
         const { currentStep } = this.state;
-        const { stepSetting, children } = this.props;
+        const { children, stepSetting, isNextButtonDisabled } = this.props;
         return (
             <Fragment>
                 <Steps current={currentStep}>
@@ -40,7 +40,9 @@ export default class StepNavBar extends Component {
                     {currentStep < stepSetting.length - 1 && (
                         <Button
                             style={{ paddingLeft: 30, paddingRight: 30 }}
-                            type="primary" ghost
+                            type="primary"
+                            ghost
+                            disabled={isNextButtonDisabled}
                             onClick={this.nextStep}
                         >
                             Next
@@ -58,7 +60,8 @@ export default class StepNavBar extends Component {
                     {currentStep > 0 && (
                         <Button
                             style={{ marginLeft: 8 }}
-                            type="primary" ghost
+                            type="primary"
+                            ghost
                             onClick={this.prevStep}
                         >
                             Previous

@@ -23,7 +23,7 @@ class Category extends Component {
     
     render() {
         const {handleInputChange, handleSearch, handleDetail, handleDelete, handleUpdate, showCreate, selectPage, changePageSize} = this.props;
-        const {documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue, isShowCreate, setPageAs, documentsCount, isLoading} = this.props;
+        const {documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue, isShowCreate, setPageAs, documentCount, isLoading} = this.props;
 
         const search = (event) => {
             handleSearch(event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue)
@@ -115,7 +115,7 @@ class Category extends Component {
                     </tbody>
                 </table>
                 <div className="mt-5">
-                    <PaginationBar documentsCount={documentsCount}
+                    <PaginationBar documentCount={documentCount}
                         currentPage={currentPage}
                         pageSize={pageSize}
                         pageSizeSelectorList={pageSizeSelectorList}
@@ -140,7 +140,7 @@ class Category extends Component {
 const mapState = (state) => ({
     searchKeyword: state.category.searchKeyword,
     searchFilter: state.category.searchFilter,
-    documentsCount: state.category.documentsCount, 
+    documentCount: state.category.documentCount, 
     documentsList: state.category.documentsList,
     currentPage: state.category.currentPage,
     pageSize: state.category.pageSize,

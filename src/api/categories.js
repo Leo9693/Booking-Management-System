@@ -8,7 +8,7 @@ export function getAllCategories(pageRequested, pageSize) {
         })
 }
 
-export function getCategoriesByFilter(searchCondition = { searchField: 'searchAll' }) {
+export function getDocumentsByFilter(searchCondition = { searchField: 'searchAll' }) {
     const { searchField, searchValue, pageRequested, pageSize, sortType, sortValue } = searchCondition;
     if (searchField === 'searchAll') {
         return axios.get('/categories', { params: { pageRequested, pageSize, sortType, sortValue } })
@@ -33,17 +33,17 @@ export function getCategoryByID(id) {
         });
 }
 
-export function addCategory(newCategory) {
-    const { name, description } = newCategory;
+export function addDocument(newDocument) {
+    const { name, description } = newDocument;
     return axios.post('/categories', { name, description });
 }
 
-export function updateCategoryByID(updatedCategory) {
-    const { name, description, id } = updatedCategory;
+export function updateDocumentByID(document) {
+    const { name, description, id } = document;
     return axios.put(`/categories/${id}`, { name, description });
 }
 
-export function deleteCategoryByID(id) {
+export function deleteDocumentByID(id) {
     return axios.delete(`/categories/${id}`);
 }
 

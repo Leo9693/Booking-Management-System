@@ -83,7 +83,11 @@ class Customer extends Component {
 
     handleSearch = event => {
         event.preventDefault();
+        this.setState({
+            pageRequested: 1
+        });
         const searchCondition = this.getSearchCondition();
+        searchCondition.pageRequested = 1;
         this.props.searchByFilterAsync(searchCondition);
     }
 
@@ -118,7 +122,7 @@ class Customer extends Component {
 
     handleShowUpdateModal = id => {
         const { documentsList } = this.props;
-        const selectedDocuments = documentsList.filter(item => item.id == id)
+        const selectedDocuments = documentsList.filter(item => item.id === id)
         const { name, ABN, email, phone, streetAddress, postcode } = selectedDocuments[0];
         this.setState({
             modalType: UPDATE,

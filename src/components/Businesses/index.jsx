@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import BlockUi from 'react-block-ui'
+import BlockUi from 'react-block-ui';
 import { actionCreators } from './store';
 import SubTopBar from '../common/SubTopBar';
 import PaginationBar from '../common/PaginationBar';
-import BusinessList from './BusinessList'
+import BusinessList from './BusinessList';
 import CreateAndUpdateModal from '../common/CreateAndUpdateModal';
 import { CREATE, UPDATE, LARGE, SMALL, BUSINESS_MODAL_INPUT_LIST, BUSINESS_SEARCH_LIST, BUSINESS_SORT_LIST } from '../../utils/constant'
 
@@ -86,7 +86,11 @@ class Business extends Component {
 
     handleSearch = event => {
         event.preventDefault();
+        this.setState({
+            pageRequested: 1
+        });
         const searchCondition = this.getSearchCondition();
+        searchCondition.pageRequested = 1;
         this.props.searchByFilterAsync(searchCondition);
     }
 
@@ -124,7 +128,7 @@ class Business extends Component {
 
     handleShowUpdateModal = id => {
         const { documentsList } = this.props;
-        const selectedDocuments = documentsList.filter(item => item.id == id)
+        const selectedDocuments = documentsList.filter(item => item.id === id)
         const { name, ABN, email, phone, streetAddress, postcode } = selectedDocuments[0];
         this.setState({
             modalType: UPDATE,

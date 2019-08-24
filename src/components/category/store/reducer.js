@@ -3,7 +3,7 @@ import { actionTypes } from './index';
 const defaultState = {
     searchKeyword: '',
     searchFilter: 'searchAll',
-    documentsCount: 0,
+    documentCount: 0,
     documentsList: '',
     currentPage: 1,
     pageSize: 5,
@@ -32,8 +32,8 @@ export default (state = defaultState, action) => {
             return {...state, [inputName]: inputValue};
         
         case actionTypes.CHANGE_LIST:
-            const {documentsCount, documentsList} = action;
-            return {...state, documentsCount, documentsList};
+            const {documentCount, documentsList} = action;
+            return {...state, documentCount, documentsList};
 
         case actionTypes.SHOW_CREATE:
             return {...state, isShowCreate: true};
