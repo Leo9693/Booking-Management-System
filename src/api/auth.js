@@ -33,16 +33,12 @@ export function updateUser(user) {
             const { data } = res;
             localStorage.setItem('user_name', data.name);
             localStorage.setItem('user_email', data.email);
-            console.log(data);
             return data;
         });
 }
 
 export function updatePassword(user) {
     const { id, originalPassword, newPassword } = user;
-    console.log(originalPassword);
-    console.log(newPassword);
-    console.log(id);
     return axios.put(`/users/password/${id}`, { originalPassword, newPassword })
         .then(res => {
             const { data } = res;

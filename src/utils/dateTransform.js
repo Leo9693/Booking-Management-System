@@ -29,6 +29,5 @@ export const getLocalDateAndTime = date => {
     const dateAndTime = new Date(date);
     const newDate = getDateAsYMD(dateAndTime);
     const newTime = getTimeAsHM(dateAndTime);
-    // const newDateAndTime = date.slice(0, 16).replace('T', ' ');
     return `${newDate} ${newTime}`;
 }

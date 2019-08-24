@@ -11,8 +11,8 @@ axios.defaults.baseURL = 'https://booking-management-database.herokuapp.com/V1';
 const baseURL = process.env.PUBLIC_URL || '';
 
 ReactDOM.render(
-  <Router basename={baseURL}>
-    <App />
-  </Router>,
-  document.getElementById('root')
+    <Router basename={baseURL}>
+        <App />
+    </Router>,
+    document.getElementById('root')
 );

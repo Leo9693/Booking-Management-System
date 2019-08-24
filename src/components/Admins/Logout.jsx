@@ -20,9 +20,9 @@ class Logout extends Component {
     render() {
         const userName = getUserName();
         const menu = (
-            <Menu>
+            <Menu style={{ textAlign: "right" }}>
                 <Menu.Item>
-                    <span onClick={this.handleChangeProfile}>
+                    <span onClick={this.handleChangeProfile} style={{}}>
                         Change Profile
                     </span>
                 </Menu.Item>

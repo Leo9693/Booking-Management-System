@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Pagination } from 'react-bootstrap';
-import { LoadingButton } from './Button.js'
+import { LoadingButton } from './Button.jsx';
 
 export default class PaginationBar extends Component {
     constructor(props) {
@@ -186,8 +186,8 @@ export default class PaginationBar extends Component {
                                     onChange={this.handleInputChange}
                                 />
                                 <LoadingButton
-                                    className="btn ml-1"
-                                    buttonStyle="btn-primary"
+                                    className="btn btn-outline-primary ml-1"
+                                    // buttonStyle="btn-primary"
                                     type="submit"
                                     isLoading={isLoading}
                                     onClick={(event) => onSelectPage(event, parseInt(slectedPage), pageCount)}

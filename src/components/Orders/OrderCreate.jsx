@@ -23,7 +23,7 @@ const stepSetting = [
         content: 'business',
     },
     {
-        title: 'Confirm',
+        title: 'Confirm and set location',
         content: 'confirm',
     },
 ];
@@ -125,7 +125,6 @@ export default class OrderCreate extends Component {
 
     render() {
         const { error, jobLocation, currentStep, screenType, isNextButtonDisabled, selectedCustomer, selectedBusiness, selectedCategory } = this.state;
-        console.log(!jobLocation);
         return (
             <Fragment>
                 {error && (

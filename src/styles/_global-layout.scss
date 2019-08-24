@@ -18,4 +18,19 @@
         background-color: #fff;
         min-height: 280px;
     }
+    .logo {
+        // border-bottom: 4px solid #eee;
+        img {
+            width: 100%;
+            height: 80%;
+            border-radius: 5px;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 10px;
+        }
+    }
+    .footer {
+        text-align: center;
+        height: 6vh;
+    }
 }

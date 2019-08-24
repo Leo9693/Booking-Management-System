@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui';
 import { actionCreators } from './store';
 import SubTopBar from '../common/SubTopBar';
 import PaginationBar from '../common/PaginationBar';
 import BusinessList from './BusinessList';
 import CreateAndUpdateModal from '../common/CreateAndUpdateModal';
-import { CREATE, UPDATE, LARGE, SMALL, BUSINESS_MODAL_INPUT_LIST, BUSINESS_SEARCH_LIST, BUSINESS_SORT_LIST } from '../../utils/constant'
+import {
+    CREATE, UPDATE, LARGE, SMALL,
+    BUSINESS_MODAL_INPUT_LIST, BUSINESS_SEARCH_LIST, BUSINESS_SORT_LIST
+} from '../../utils/constant'
 
 class Business extends Component {
     constructor(props) {
@@ -190,14 +192,7 @@ class Business extends Component {
             modalInputValue,
             screenType
         } = this.state;
-
-        const {
-            isLoading,
-            isShowModal,
-            errorInfo,
-            documentCount,
-            documentsList,
-        } = this.props;
+        const { isLoading, isShowModal, errorInfo, documentCount, documentsList } = this.props;
 
         return (
             <Fragment>
@@ -247,7 +242,6 @@ class Business extends Component {
                                 />
                             </div>
                         </div>
-
                     }
                 </BlockUi>
             </Fragment>

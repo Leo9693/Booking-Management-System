@@ -19,7 +19,6 @@ export function getDocumentsByFilter(searchCondition = { searchField: 'searchAll
 
 export function addDocument(newDocument) {
     const { customer, business, category, jobEstimatedTime, jobLocation, status } = newDocument;
-    console.log({ customer, business, category, jobEstimatedTime, jobLocation, status });
     return axios.post('/orders', { customer, business, category, jobEstimatedTime, jobLocation, status });
 }
 

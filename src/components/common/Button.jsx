@@ -1,39 +1,50 @@
 import React from 'react';
 import classnames from 'classnames';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
-export default function Button(props) {
-    const {
-        children,
-        className='btn',
-        buttonStyle='btn btn-outline-secondary',
-        type = 'button',
-        ...rest
-    } = props;
-
+export default function Button({
+    children,
+    className,
+    primary,
+    danger,
+    linkTo,
+    type = 'button',
+    ...rest
+}) {
+    let buttonStyle = 'btn-default';
+    if (primary) {
+        buttonStyle = 'btn-primary';
+    }
+    if (danger) {
+        buttonStyle = 'btn-danger';
+    }
+    if (linkTo) {
+        return (
+            <Link
+                to={linkTo}
+                className={classnames('btn-borderless', className)}
+                {...rest}
+            >
+                {children}
+            </Link>
+        );
+    }
     return (
-    
-        <button className={classnames(className, buttonStyle)}
-                type={type} {...rest}
+        <button
+            className={classnames('btn', className)}
+            type={type}
+            {...rest}
         >
-            {console.log(1)}
             {children}
         </button>
     );
 }
 
-export function LoadingButton(props) {
-    const {
-        children,
-        isLoading=false,
-        ...rest
-    } = props;
-
+export function LoadingButton({ children, loading, ...rest }) {
     return (
-        <Button className="btn btn-primary" disabled={isLoading} {...rest}>
-            {isLoading && <FontAwesomeIcon icon={faCircleNotch} spin/>}
+        <Button primary disabled={loading} {...rest}>
+            {loading && <i className='fa fa-circle-o-notch fa-pulse fa-fw' />}
             {children}
         </Button>
-    )
+    );
 }

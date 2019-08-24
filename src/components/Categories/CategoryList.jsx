@@ -28,7 +28,7 @@ export default function CategoryList(props) {
                         {(isLargeScreen || searchField === 'description')
                             && <td className="col-6">{item.description}</td>}
                         <td className="col-6 col-sm-3 operation-col">
-                            <Link to={`/categories/${item._id}`}>
+                            {/* <Link to={`/categories/${item._id}`}>
                                 <button
                                     type="button"
                                     className="btn btn-info btn-sm mr-2 px-1"
@@ -39,7 +39,7 @@ export default function CategoryList(props) {
                                 >
                                     <FontAwesomeIcon icon={faInfo} />
                                 </button>
-                            </Link>
+                            </Link> */}
                             <button
                                 type="button"
                                 className="btn btn-warning btn-sm mr-2"

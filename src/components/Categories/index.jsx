@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui'
 import { actionCreators } from './store';
 import SubTopBar from '../common/SubTopBar';
 import PaginationBar from '../common/PaginationBar';
 import CategoryList from './CategoryList'
 import CreateAndUpdateModal from '../common/CreateAndUpdateModal';
-import { CREATE, UPDATE, LARGE, SMALL } from '../../utils/constant'
+import {
+    CREATE, UPDATE, LARGE, SMALL,
+    CATEGORY_MODAL_INPUT_LIST, CATEGORY_SEARCH_LIST, CATEGORY_SORT_LIST
+} from '../../utils/constant'
 
 class Category extends Component {
     constructor(props) {
@@ -22,7 +24,7 @@ class Category extends Component {
             selectedDocumentID: '',
             modalType: CREATE,
             modalTitle: 'Category',
-            modalInputList: ['name', 'description'],
+            modalInputList: CATEGORY_MODAL_INPUT_LIST,
             modalInputValue: { name: '', description: '' },
             screenType: LARGE,
         };
@@ -165,46 +167,18 @@ class Category extends Component {
     }
 
     render() {
-        // const { handleInputChange, handleSearch, handleDetail, handleDelete, handleUpdate, showCreate, selectPage, changePageSize } = this.props;
-        // const { documentsList, searchKeyword, searchFilter, isShowUpdateModal, errorInfo, currentPage, pageSize, sortKey, sortValue, isShowCreate, setPageAs, documentCount, isLoading } = this.props;
         const {
             pageRequested,
             pageSize,
             searchValue,
             searchField,
-            sortType,
-            sortValue,
             modalType,
             modalTitle,
             modalInputList,
             modalInputValue,
             screenType
         } = this.state;
-
-        const {
-            isLoading,
-            isShowModal,
-            errorInfo,
-            documentCount,
-            documentsList,
-        } = this.props;
-
-        // const search = (event) => {
-        //     handleSearch(event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue)
-        // };
-        // const onClickSelectPage = (event, page, pageCount) => {
-        //     event.preventDefault();
-        //     selectPage(page, pageCount, searchFilter, searchKeyword, pageSize, sortKey, sortValue);
-        // };
-        // const onClickSetPage = (event, pageCount) => {
-        //     event.preventDefault();
-        //     const page = parseInt(setPageAs);
-        //     selectPage(page, pageCount, searchFilter, searchKeyword, pageSize, sortKey, sortValue);
-        // };
-        // const onChangePageSize = (event) => {
-        //     changePageSize(event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue)
-        // }
-        // const pageSizeSelectorList = [1, 3, 5, 10, 15, 20];
+        const { isLoading, isShowModal, errorInfo, documentCount, documentsList } = this.props;
 
         return (
             <Fragment>
@@ -216,48 +190,46 @@ class Category extends Component {
                         isLoading={isLoading}
                         onShowCreate={this.handleShowCreateModal}
                         title={"New Category"}
-                        searchList={["name", "description"]}
-                        sortList={["name", "description"]}
+                        searchList={CATEGORY_SEARCH_LIST}
+                        sortList={CATEGORY_SORT_LIST}
                     />
-                </BlockUi>
-                <CreateAndUpdateModal
-                    isShow={isShowModal}
-                    type={modalType}
-                    title={modalTitle}
-                    inputList={modalInputList}
-                    inputValue={modalInputValue}
-                    errorInfo={errorInfo}
-                    onInputChange={this.handleModalInputChange}
-                    onCancel={this.handleHideModal}
-                    onSubmit={this.handleSubmitModal}
-                />
-                {errorInfo && <div style={{ color: "red" }}>Warning: {errorInfo.response.data}</div>}
-
-                {documentsList &&
-                    <div className="mx-2 mt-5">
-                        <CategoryList
-                            screenType={screenType}
-                            searchField={searchField}
-                            documentsList={documentsList}
-                            onClickDetail={this.handleClickDetails}
-                            onClickUpdate={this.handleShowUpdateModal}
-                            onClickDelete={this.handleClickDelete}
-                        />
-                        <div className="mt-5">
-                            <PaginationBar
-                                documentCount={documentCount}
-                                currentPage={pageRequested}
-                                pageSize={pageSize}
-                                pageSizeSelectorList={[1, 3, 5, 10, 20]}
-                                pageSizeSelectorName="pageSize"
-                                isLoading={isLoading}
-                                onSelectPage={this.handleSelectPage}
-                                onSelectPageSize={this.handleSelectPageSize}
+                    <CreateAndUpdateModal
+                        isShow={isShowModal}
+                        type={modalType}
+                        title={modalTitle}
+                        inputList={modalInputList}
+                        inputValue={modalInputValue}
+                        errorInfo={errorInfo}
+                        onInputChange={this.handleModalInputChange}
+                        onCancel={this.handleHideModal}
+                        onSubmit={this.handleSubmitModal}
+                    />
+                    {errorInfo && <div style={{ color: "red" }}>Warning: {errorInfo.response.data}</div>}
+                    {documentsList &&
+                        <div className="mx-2 mt-5">
+                            <CategoryList
+                                screenType={screenType}
+                                searchField={searchField}
+                                documentsList={documentsList}
+                                onClickDetail={this.handleClickDetails}
+                                onClickUpdate={this.handleShowUpdateModal}
+                                onClickDelete={this.handleClickDelete}
                             />
+                            <div className="mt-5">
+                                <PaginationBar
+                                    documentCount={documentCount}
+                                    currentPage={pageRequested}
+                                    pageSize={pageSize}
+                                    pageSizeSelectorList={[1, 3, 5, 10, 20]}
+                                    pageSizeSelectorName="pageSize"
+                                    isLoading={isLoading}
+                                    onSelectPage={this.handleSelectPage}
+                                    onSelectPageSize={this.handleSelectPageSize}
+                                />
+                            </div>
                         </div>
-                    </div>
-
-                }
+                    }
+                </BlockUi>
             </Fragment>
         )
     }
@@ -269,70 +241,9 @@ const mapState = state => ({
     isLoading: state.category.isLoading,
     isShowModal: state.category.isShowModal,
     errorInfo: state.category.errorInfo,
-    // isShowCreate: state.category.isShowCreate,
-    // isShowUpdateModal: state.category.isShowUpdateModal,
-
-    // isShowCreate: state.category.isShowCreate,
-    // setPageAs: state.category.setPageAs,
-
 });
 
 const mapDispatch = dispatch => ({
-    // handleInputChange: (event) => {
-    //     event.preventDefault();
-    //     dispatch(actionCreators.setError(''));
-    //     const { name, value } = event.target
-    //     dispatch(actionCreators.handleInputChange(name, value));
-    // },
-
-    // handleSearch: (event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue) => {
-    //     event.preventDefault();
-    //     dispatch(actionCreators.setError(''));
-    //     dispatch(actionCreators.handleSearchByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue));
-    // },
-
-    // initializeData: (searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue) => {
-    //     dispatch(actionCreators.handleInputChange('pageSize', 5))
-    //     dispatch(actionCreators.selectPage(1));
-    //     dispatch(actionCreators.handleSearchByFilter());
-    // },
-
-    // showCreate: (event) => {
-    //     console.log('showCreate, showCreate, showCreate, showCreate,showCreate ')
-    //     event.preventDefault();
-    //     dispatch(actionCreators.showCreate());
-    // },
-
-    // handleDetail: (id) => {
-    //     console.log(id);
-    // },
-
-    // handleUpdate: (id) => {
-    //     dispatch(actionCreators.setSelectedCategoryID(id));
-    //     dispatch(actionCreators.showUpdateModal(true));
-    // },
-
-    // handleDelete: (id) => {
-    //     dispatch(actionCreators.setSelectedCategoryID(id));
-    //     dispatch(actionCreators.setDeleteConfirm(true));
-    // },
-
-    // selectPage: (page, pageCount, searchFilter, searchKeyword, pageSize, sortKey, sortValue) => {
-    //     if (page < 1 || page > pageCount) {
-    //         return;
-    //     }
-    //     dispatch(actionCreators.setIsLoading(true));
-    //     dispatch(actionCreators.selectPage(page));
-    //     dispatch(actionCreators.handleSearchByFilter(searchFilter, searchKeyword, page, pageSize, sortKey, sortValue));
-    // },
-
-    // changePageSize: (event, searchKeyword, searchFilter, currentPage, pageSize, sortKey, sortValue) => {
-    //     const { name, value } = event.target
-    //     dispatch(actionCreators.handleInputChange(name, value));
-    //     pageSize = value;
-    //     dispatch(actionCreators.handleSearchByFilter(searchFilter, searchKeyword, currentPage, pageSize, sortKey, sortValue));
-    // },
-
     searchByFilterAsync: searchCondition => {
         dispatch(actionCreators.searchByFilterAsync(searchCondition));
     },
@@ -356,10 +267,6 @@ const mapDispatch = dispatch => ({
     deleteDocumentAsync: (id, searchCondition) => {
         dispatch(actionCreators.deleteDocumentAsync(id, searchCondition));
     },
-
-    // selectPage: (pageSelected, searchCondition) => {
-    //     dispatch(actionCreators.selectPage(pageSelected, searchCondition));
-    // }
 });
 
 export default connect(mapState, mapDispatch)(Category);

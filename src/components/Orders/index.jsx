@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import BlockUi from 'react-block-ui'
 import { actionCreators } from './store';
 import SubTopBar from '../common/SubTopBar';
 import PaginationBar from '../common/PaginationBar';
-import OrderTable from './OrderTable'
+import OrderTable from './OrderTable';
 import CreateAndUpdateModal from '../common/CreateAndUpdateModal';
-import { CREATE, UPDATE, LARGE, SMALL, SEARCH_ALL, ORDER_MODAL_INPUT_LIST, ORDER_SEARCH_LIST, ORDER_SORT_LIST } from '../../utils/constant'
+import {
+    CREATE, UPDATE, LARGE, SMALL, SEARCH_ALL,
+    ORDER_MODAL_INPUT_LIST, ORDER_SEARCH_LIST, ORDER_SORT_LIST
+} from '../../utils/constant';
 
 class Order extends Component {
     constructor(props) {
@@ -20,14 +22,15 @@ class Order extends Component {
             sortType: 'jobEstimatedTime',
             sortValue: 1,
             selectedDocumentID: '',
-            // modalType: CREATE,
-            // modalTitle: 'Order',
-            // modalInputList: ORDER_MODAL_INPUT_LIST,
-            // modalInputValue: {
-            //     name: '',
-            //     email: '',
-            //     phone: '',
-            // },
+            modalType: UPDATE,
+            modalTitle: 'Order',
+            modalInputList: ORDER_MODAL_INPUT_LIST,
+            modalInputValue: {
+                customer: '',
+                business: '',
+                category: '',
+                jobLocation: '',
+            },
             screenType: LARGE,
         };
     }
@@ -75,10 +78,10 @@ class Order extends Component {
 
     handleModalInputChange = event => {
         event.preventDefault();
-        // const { name, value } = event.target;
-        // this.setState({
-        //     modalInputValue: { ...this.state.modalInputValue, [name]: value }
-        // })
+        const { name, value } = event.target;
+        this.setState({
+            modalInputValue: { ...this.state.modalInputValue, [name]: value }
+        })
     }
 
     handleSearch = event => {
@@ -96,33 +99,32 @@ class Order extends Component {
         this.props.history.push('/orders/create')
     }
 
+    handleShowUpdateModal = id => {
+        const { documentsList } = this.props;
+        const selectedDocuments = documentsList.filter(item => item.id === id)
+        const { customer, business, category, jobLocation } = selectedDocuments[0];
+        this.setState({
+            modalType: UPDATE,
+            modalInputValue: { customer, business, category, jobLocation },
+            selectedDocumentID: id,
+        });
+        this.props.setIsShowModal(true);
+    }
+
     handleHideModal = () => {
-        // this.props.setIsShowModal(false);
-        // this.props.setError('');
+        this.props.setIsShowModal(false);
+        this.props.setError('');
     }
 
     handleSubmitModal = event => {
         event.preventDefault();
-        // const searchCondition = this.getSearchCondition();
-        // const { modalType, modalInputValue, selectedDocumentID } = this.state;
-        // if (modalType === CREATE) {
-        //     this.props.addDocumentAsync(modalInputValue, searchCondition);
-        // } else {
-        //     this.props.updateDocumentAsync({ ...modalInputValue, id: selectedDocumentID }, searchCondition);
-        // }
-    }
-
-    handleShowUpdateModal = id => {
-        console.log(id);
-        // const { documentsList } = this.props;
-        // const selectedDocuments = documentsList.filter(item => item.id === id)
-        // const { name, ABN, email, phone, streetAddress, postcode } = selectedDocuments[0];
-        // this.setState({
-        //     modalType: UPDATE,
-        //     modalInputValue: { name, ABN, email, phone, streetAddress, postcode },
-        //     selectedDocumentID: id,
-        // });
-        // this.props.setIsShowModal(true);
+        const searchCondition = this.getSearchCondition();
+        const { modalType, modalInputValue, selectedDocumentID } = this.state;
+        if (modalType === CREATE) {
+            this.props.addDocumentAsync(modalInputValue, searchCondition);
+        } else {
+            this.props.updateDocumentAsync({ ...modalInputValue, id: selectedDocumentID }, searchCondition);
+        }
     }
 
     handleClickDelete = id => {
@@ -171,21 +173,14 @@ class Order extends Component {
             searchValue,
             pageRequested,
             pageSize,
-            // modalType,
-            // modalTitle,
-            // modalInputList,
-            // modalInputValue,
-            screenType
+            screenType,
+            modalType,
+            modalTitle,
+            modalInputList,
+            modalInputValue
         } = this.state;
-        const {
-            isLoading,
-            isShowModal,
-            errorInfo,
-            documentCount,
-            documentsList,
-        } = this.props;
-        console.log('documentsList');
-        console.log(documentCount);
+        const { isLoading, isShowModal, errorInfo, documentCount, documentsList } = this.props;
+
         return (
             <Fragment>
                 <BlockUi blocking={isLoading}>
@@ -199,7 +194,7 @@ class Order extends Component {
                         searchList={ORDER_SEARCH_LIST}
                         sortList={ORDER_SORT_LIST}
                     />
-                    {/* <CreateAndUpdateModal
+                    <CreateAndUpdateModal
                         isShow={isShowModal}
                         type={modalType}
                         title={modalTitle}
@@ -209,11 +204,10 @@ class Order extends Component {
                         onInputChange={this.handleModalInputChange}
                         onCancel={this.handleHideModal}
                         onSubmit={this.handleSubmitModal}
-                    /> */}
+                    />
                     {errorInfo && <div style={{ color: "red" }}>Warning: {errorInfo.response.data}</div>}
                     {documentsList &&
                         <div className="mx-2 mt-5">
-                            {console.log(documentsList)}
                             <OrderTable
                                 screenType={screenType}
                                 searchField={searchField}

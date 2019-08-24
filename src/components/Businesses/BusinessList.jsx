@@ -35,7 +35,7 @@ export default function BusinessList(props) {
                         {(isLargeScreen || searchField === 'postcode')
                             && <td className="col-6 col-sm-2">{item.postcode}</td>}
                         <td className="col-6 col-sm-3 operation-col">
-                            <Link to={`/businesses/${item._id}`}>
+                            {/* <Link to={`/businesses/${item._id}`}>
                                 <button
                                     type="button"
                                     className="btn btn-info btn-sm mr-2 px-1"
@@ -46,7 +46,7 @@ export default function BusinessList(props) {
                                 >
                                     <FontAwesomeIcon icon={faInfo} />
                                 </button>
-                            </Link>
+                            </Link> */}
                             <button
                                 type="button"
                                 className="btn btn-warning btn-sm mr-2"

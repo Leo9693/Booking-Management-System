@@ -40,7 +40,7 @@ class Home extends React.Component {
         return (
             <BlockUi blocking={this.props.isLoading}>
                 <div id="home-page">
-                    <h2 class="text-center mb-5">Data Profile</h2>
+                    <h2 className="text-center mb-5">Data Profile</h2>
                     <Row gutter={16} align="bottom">
                         <Col xs={24} md={12}>
                             <Row>
@@ -49,7 +49,7 @@ class Home extends React.Component {
                                 </Col>
                                 <Col span={14} offset={2}>
                                     <Statistic
-                                        title="Handymen Online"
+                                        title="Businesses Online"
                                         value={businessDocumentCount}
                                         valueStyle={{ color: '#3f8600' }}
                                         prefix={<Icon type="arrow-up" />}

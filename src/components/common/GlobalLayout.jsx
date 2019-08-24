@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import Logout from '../Admins/Logout';
 
-const { Header, Footer, Sider, Content } = Layout;
-
-export default class GlobalLayout extends Component {
+const { Header, Sider, Content, Footer } = Layout;
+const PUBLIC_URL = process.env.PUBLIC_URL;
+class GlobalLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,23 +21,22 @@ export default class GlobalLayout extends Component {
     };
 
     render() {
-        const { collapsed } = this.state;
+        const url = this.props.history.location.pathname;
+        const firstPartUrl = url.split('/')[1];
+
         return (
             <Layout className="global-layout" style={{ minHeight: '100vh' }}>
                 <Sider
                     className="global-layout__sider"
                     breakpoint="lg"
                     collapsedWidth="0"
-                // trigger
-                // collapsible
-                // collapsed={collapsed}
                 >
-
-                    {/* <div className="logo" /> */}
-
-                    <Menu theme="light" defaultSelectedKeys={['home']} >
+                    <div className="logo">
+                        <img src={`${PUBLIC_URL}/logo.png`} alt="logo" />
+                    </div>
+                    <Menu theme="light" defaultSelectedKeys={['home']} selectedKeys={firstPartUrl || 'home'}>
                         <Menu.Item key="home">
-                            <Link to='/'>
+                            <Link to='/home'>
                                 <Icon type='pie-chart' />
                                 <span>Home</span>
                             </Link>
@@ -70,13 +70,6 @@ export default class GlobalLayout extends Component {
                 <Layout>
                     <Header className="global-layout__header">
                         <Row type="flex" justify="start" align="middle" gutter={8}>
-                            {/* <Col span={1}>
-                                <Icon
-                                    className="trigger"
-                                    type={collapsed ? 'menu-unfold' : 'menu-fold'}
-                                    onClick={this.toggle}
-                                />
-                            </Col> */}
                             <Col span={16} md={16} style={{ textAlign: "left" }}>
                                 <h4>JR Handyman CMS</h4>
                             </Col>
@@ -92,9 +85,11 @@ export default class GlobalLayout extends Component {
                     <Content className="global-layout__content">
                         {this.props.children}
                     </Content>
+                    <Footer className="footer">Handyman CMS by Leo</Footer>
                 </Layout>
             </Layout >
         )
     }
-
 }
+
+export default withRouter(GlobalLayout);

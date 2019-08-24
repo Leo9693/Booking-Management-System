@@ -9,6 +9,7 @@ export const SEARCH_ALL = 'searchAll';
 export const CATEGORY_MODAL_INPUT_LIST = ['name', 'description'];
 export const BUSINESS_MODAL_INPUT_LIST = ['name', 'ABN', 'email', 'phone', 'streetAddress', 'postcode'];
 export const CUSTOMER_MODAL_INPUT_LIST = ['name', 'email', 'phone'];
+export const ORDER_MODAL_INPUT_LIST = ['customer', 'business', 'category', 'jobLocation'];
 
 // searchList
 export const CATEGORY_SEARCH_LIST = ['name', 'description'];

@@ -135,7 +135,6 @@ class ChangeProfile extends Component {
 }
 
 const mapState = (state) => {
-    console.log(state);
     return ({
         userName: state.admin.name,
         userEmail: state.admin.email

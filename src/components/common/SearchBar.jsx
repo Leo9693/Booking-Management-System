@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LoadingButton } from './Button.js';
+import { LoadingButton } from './Button.jsx';
 import { SEARCH_ALL } from '../../utils/constant'
 
 export default class SearchBar extends Component {
@@ -31,8 +31,8 @@ export default class SearchBar extends Component {
                             ))}
                     </select>
                     <LoadingButton
-                        className='btn col-3 col-sm-2 col-lg-1'
-                        buttonStyle='btn-outline-primary'
+                        className='btn btn-outline-primary col-3 col-sm-2 col-lg-1'
+                        // buttonStyle='btn-outline-primary'
                         type='submit'
                         onClick={onSearch}
                         isLoading={isLoading}
