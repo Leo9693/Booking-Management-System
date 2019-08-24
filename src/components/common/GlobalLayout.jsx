@@ -34,7 +34,7 @@ class GlobalLayout extends Component {
                     <div className="logo">
                         <img src={`${PUBLIC_URL}/logo.png`} alt="logo" />
                     </div>
-                    <Menu theme="light" defaultSelectedKeys={['home']} selectedKeys={firstPartUrl || 'home'}>
+                    <Menu theme="light" defaultSelectedKeys={['home']} selectedKeys={[firstPartUrl] || ['home']}>
                         <Menu.Item key="home">
                             <Link to='/home'>
                                 <Icon type='pie-chart' />
@@ -85,7 +85,7 @@ class GlobalLayout extends Component {
                     <Content className="global-layout__content">
                         {this.props.children}
                     </Content>
-                    <Footer className="footer">Handyman CMS by Leo</Footer>
+                    <Footer className="footer">JR Handyman CMS by Leo</Footer>
                 </Layout>
             </Layout >
         )
