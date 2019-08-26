@@ -1,25 +1,30 @@
-.global-layout {
-    &__sider {
+#global-layout {
+    .global-layout__sider {
         width: 100%;
         min-height: 100vh;
-        position: fixed;
-        background-color: #fff!important;
+        background-color: #fff;
     }
-    &__header {
-        height: 300px;
+    .sider-spread {
+        position: absolute;
+        z-index: 2;
+    }
+    .global-layout__header {
+        min-height: 64px;
         margin-left: 4px;
         padding: 0 20px !important;
-        background-color: #fff!important;
+        background-color: #fff;
     }
-    &__content {
+    .global-layout__content {
         margin-left: 4px;
         margin-top: 4px;
         padding: 24px;
         background-color: #fff;
         min-height: 280px;
     }
+    .layout-mask {
+        background-color: rgba($color: #000000, $alpha: 0.1);
+    }
     .logo {
-        // border-bottom: 4px solid #eee;
         img {
             width: 100%;
             height: 80%;
@@ -29,7 +34,7 @@
             margin-bottom: 10px;
         }
     }
-    .footer {
+    .global-layout__footer {
         text-align: center;
         height: 6vh;
     }

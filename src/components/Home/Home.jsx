@@ -40,7 +40,7 @@ class Home extends React.Component {
         return (
             <BlockUi blocking={this.props.isLoading}>
                 <div id="home-page">
-                    <h2 className="text-center mb-5">Data Profile</h2>
+                    <h4 className="text-center mb-5">Data Profile</h4>
                     <Row gutter={16} align="bottom">
                         <Col xs={24} md={12}>
                             <Row>
