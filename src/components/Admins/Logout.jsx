@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Dropdown, Icon, Avatar } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { logout, getUserName } from '../../api/auth';
 
 class Logout extends Component {
@@ -9,33 +9,21 @@ class Logout extends Component {
             .then(this.props.history.replace('/'));
     }
 
-    handleChangeProfile = event => {
-        this.props.history.push('/admin/change-profile');
-    }
-
-    handleChangePassword = event => {
-        this.props.history.push('/admin/change-password');
-    }
-
     render() {
         const userName = getUserName();
         const menu = (
             <Menu style={{ textAlign: "right" }}>
                 <Menu.Item>
-                    <span onClick={this.handleChangeProfile} style={{}}>
-                        Change Profile
-                    </span>
+                    <Link to="/admin/change-profile">Change Profile</Link>
                 </Menu.Item>
                 <Menu.Item>
-                    <span onClick={this.handleChangePassword}>
-                        Change Password
-                    </span>
+                    <Link to="/admin/change-password">Change Password</Link>
                 </Menu.Item>
                 <Menu.Divider />
-                <Menu.Item>
-                    <span onClick={this.handleLogout}>
+                <Menu.Item style={{ margin: 0 }}>
+                    <a onClick={this.handleLogout}>
                         Logout
-                    </span>
+                    </a>
                 </Menu.Item>
             </Menu>
         );
