@@ -32,7 +32,6 @@ export default class SearchBar extends Component {
                     </select>
                     <LoadingButton
                         className='btn btn-outline-primary col-3 col-sm-2 col-lg-1'
-                        // buttonStyle='btn-outline-primary'
                         type='submit'
                         onClick={onSearch}
                         isLoading={isLoading}

@@ -187,7 +187,6 @@ export default class PaginationBar extends Component {
                                 />
                                 <LoadingButton
                                     className="btn btn-outline-primary ml-1"
-                                    // buttonStyle="btn-primary"
                                     type="submit"
                                     isLoading={isLoading}
                                     onClick={(event) => onSelectPage(event, parseInt(slectedPage), pageCount)}

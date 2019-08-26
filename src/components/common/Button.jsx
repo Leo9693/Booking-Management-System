@@ -11,13 +11,6 @@ export default function Button({
     type = 'button',
     ...rest
 }) {
-    let buttonStyle = 'btn-default';
-    if (primary) {
-        buttonStyle = 'btn-primary';
-    }
-    if (danger) {
-        buttonStyle = 'btn-danger';
-    }
     if (linkTo) {
         return (
             <Link
