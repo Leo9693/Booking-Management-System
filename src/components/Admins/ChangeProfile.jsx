@@ -139,7 +139,6 @@ const mapState = (state) => {
         userName: state.admin.name,
         userEmail: state.admin.email
     })
-
 };
 
 const mapDispatch = (dispatch) => ({

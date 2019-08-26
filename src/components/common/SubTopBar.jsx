@@ -41,7 +41,6 @@ export default class SubTopBar extends Component {
                             </select>
                             <LoadingButton
                                 className='btn btn-outline-primary col-4 col-sm-3 col-lg-2'
-                                // buttonStyle='btn-outline-primary'
                                 type='submit'
                                 onClick={onSearch}
                                 isLoading={isLoading}

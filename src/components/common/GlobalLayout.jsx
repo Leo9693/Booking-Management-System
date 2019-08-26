@@ -15,7 +15,6 @@ class GlobalLayout extends Component {
     }
 
     setCollapse = collapsed => {
-        console.log(collapsed);
         this.setState({ isSpreadByToggle: !collapsed });
     };
 
