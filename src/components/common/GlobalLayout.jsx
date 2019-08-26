@@ -74,10 +74,10 @@ class GlobalLayout extends Component {
                 <Layout>
                     <Header className={`global-layout__header ${isSpreadByToggle ? "layout-mask" : null}`}>
                         <Row type="flex" justify="start" align="middle" gutter={8}>
-                            <Col span={12} md={16} style={{ textAlign: "left" }}>
+                            <Col span={11} sm={13} md={15} lg={17} xl={19} xxl={20} style={{ textAlign: "left" }}>
                                 <h4>JR CMS</h4>
                             </Col>
-                            <Col span={12} md={8} style={{ textAlign: "right" }}>
+                            <Col span={13} sm={11} md={9} lg={7} xl={5} xxl={4} style={{ textAlign: "right" }}>
                                 <div className="global-layout__header__container">
                                     <div className="global-layout__header__item">
                                         <Logout />

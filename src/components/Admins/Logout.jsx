@@ -25,7 +25,7 @@ class Logout extends Component {
     render() {
         const userName = getUserName();
         const menu = (loggedIn()
-            ? (<Menu style={{ textAlign: "right" }}>
+            ? (<Menu style={{ textAlign: "left" }}>
                 <Menu.Item key="1">
                     <Link to="/admin/change-profile">Change Profile</Link>
                 </Menu.Item>
