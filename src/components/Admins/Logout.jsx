@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Menu, Dropdown, Icon, Avatar, message } from 'antd';
 import { withRouter, Link } from 'react-router-dom';
 import { logout, getUserName, loggedIn } from '../../api/auth';
@@ -24,8 +24,8 @@ class Logout extends Component {
 
     render() {
         const userName = getUserName();
-        const menu = (
-            <Menu style={{ textAlign: "right" }}>
+        const menu = (loggedIn()
+            ? (<Menu style={{ textAlign: "right" }}>
                 <Menu.Item key="1">
                     <Link to="/admin/change-profile">Change Profile</Link>
                 </Menu.Item>
@@ -38,24 +38,25 @@ class Logout extends Component {
                         Logout
                     </a>
                 </Menu.Item>
-            </Menu>
+            </Menu>)
+            : (<div></div>)
         );
         return (
-            <div>
-                {loggedIn() &&
-                    < Dropdown
-                        overlay={menu}
-                        trigger={['click']}
-                        onVisibleChange={this.handleVisibleChange}
-                    >
-                        <div>
-                            <Avatar style={{ backgroundColor: '#87d068' }} icon="user" />
+            < Dropdown
+                overlay={menu}
+                trigger={['click']}
+                onVisibleChange={this.handleVisibleChange}
+            >
+                <div>
+                    <Avatar style={{ backgroundColor: '#87d068' }} icon="user" />
+                    {loggedIn() &&
+                        <Fragment>
                             <span style={{ marginLeft: "10px", marginRight: "10px" }}>{userName}</span>
                             <Icon type="down" />
-                        </div>
-                    </Dropdown>
-                }
-            </div>
+                        </Fragment>
+                    }
+                </div>
+            </Dropdown>
         )
     }
 }
