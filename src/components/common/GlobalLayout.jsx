@@ -10,26 +10,31 @@ class GlobalLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapsed: false,
+            isSpreadByToggle: false,
         }
     }
 
-    toggle = () => {
-        this.setState(prevState => ({
-            collapsed: !prevState.collapsed,
-        }));
+    setCollapse = collapsed => {
+        console.log(collapsed);
+        this.setState({ isSpreadByToggle: !collapsed });
     };
 
     render() {
         const url = this.props.history.location.pathname;
         const firstPartUrl = url.split('/')[1];
+        const { isSpreadByToggle } = this.state;
 
         return (
-            <Layout className="global-layout" style={{ minHeight: '100vh' }}>
+            <Layout id="global-layout" style={{ minHeight: '100vh' }}>
                 <Sider
-                    className="global-layout__sider"
+                    className={`global-layout__sider ${isSpreadByToggle ? "sider-spread" : null}`}
                     breakpoint="lg"
                     collapsedWidth="0"
+                    onCollapse={(collapsed, type) => {
+                        if (type === 'clickTrigger') {
+                            this.setCollapse(collapsed);
+                        }
+                    }}
                 >
                     <div className="logo">
                         <img src={`${PUBLIC_URL}/logo.png`} alt="logo" />
