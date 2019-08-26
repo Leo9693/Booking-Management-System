@@ -10,29 +10,52 @@ class GlobalLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isSpreadByToggle: false,
+            isCollapsed: true,
+            isSmallScreen: false,
+        }
+    }
+
+    componentDidMount = () => {
+        window.addEventListener('resize', this.handleResize);
+        if (window.innerWidth < 992) {
+            this.setState({ isSmallScreen: true });
+        }
+    }
+
+    componentWillUnmount = () => {
+        window.removeEventListener('resize', this.handleResize);
+    }
+
+    handleResize = event => {
+        if (event.target.innerWidth >= 992) {
+            this.setState({ isSmallScreen: false });
+        } else {
+            this.setState({ isSmallScreen: true });
         }
     }
 
     setCollapse = collapsed => {
-        this.setState({ isSpreadByToggle: !collapsed });
+        this.setState({ isCollapsed: collapsed });
     };
+
+    handleCloseMenuSider = () => {
+        this.setState({ isCollapsed: true });
+    }
 
     render() {
         const url = this.props.history.location.pathname;
         const firstPartUrl = url.split('/')[1];
-        const { isSpreadByToggle } = this.state;
+        const { isCollapsed, isSmallScreen } = this.state;
 
         return (
             <Layout id="global-layout" style={{ minHeight: '100vh' }}>
                 <Sider
-                    className={`global-layout__sider ${isSpreadByToggle ? "sider-spread" : null}`}
+                    className={`global-layout__sider ${(isSmallScreen && !isCollapsed) ? "sider-spread" : null}`}
                     breakpoint="lg"
                     collapsedWidth="0"
+                    collapsed={isSmallScreen && isCollapsed}
                     onCollapse={(collapsed, type) => {
-                        if (type === 'clickTrigger') {
-                            this.setCollapse(collapsed);
-                        }
+                        this.setCollapse(collapsed);
                     }}
                 >
                     <div className="logo">
@@ -72,7 +95,8 @@ class GlobalLayout extends Component {
                     </Menu>
                 </Sider >
                 <Layout>
-                    <Header className={`global-layout__header ${isSpreadByToggle ? "layout-mask" : null}`}>
+
+                    <Header className="global-layout__header">
                         <Row type="flex" justify="start" align="middle" gutter={8}>
                             <Col span={11} sm={13} md={15} lg={17} xl={19} xxl={20} style={{ textAlign: "left" }}>
                                 <h4>JR CMS</h4>
@@ -86,14 +110,20 @@ class GlobalLayout extends Component {
                             </Col>
                         </Row>
                     </Header>
-                    <Content className={`global-layout__content ${isSpreadByToggle ? "layout-mask" : null}`}>
+                    <Content className="global-layout__content">
                         {this.props.children}
                     </Content>
-                    <Footer className={`global-layout__footer ${isSpreadByToggle ? "layout-mask" : null}`}>
+
+                    <Footer className="global-layout__footer">
                         JR Handyman CMS by Leo
                         </Footer>
+                    <div
+                        className={(isSmallScreen && !isCollapsed) && "layout-mask"}
+                        onClick={this.handleCloseMenuSider}>
+                    </div>
                 </Layout>
             </Layout >
+
         )
     }
 }
