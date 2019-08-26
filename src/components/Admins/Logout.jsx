@@ -1,31 +1,35 @@
 import React, { Component } from 'react';
-import { Menu, Dropdown, Icon, Avatar } from 'antd';
+import { Menu, Dropdown, Icon, Avatar, message } from 'antd';
 import { withRouter, Link } from 'react-router-dom';
-import { logout, getUserName } from '../../api/auth';
+import { logout, getUserName, loggedIn } from '../../api/auth';
 
 class Logout extends Component {
     handleLogout = event => {
         logout()
-            .then(this.props.history.replace('/'));
+            .then(() => this.props.history.replace('/'))
+            .catch(err => message.error(err))
     }
 
     render() {
         const userName = getUserName();
-        const menu = (
-            <Menu style={{ textAlign: "right" }}>
-                <Menu.Item>
-                    <Link to="/admin/change-profile">Change Profile</Link>
-                </Menu.Item>
-                <Menu.Item>
-                    <Link to="/admin/change-password">Change Password</Link>
-                </Menu.Item>
-                <Menu.Divider />
-                <Menu.Item style={{ margin: 0 }}>
-                    <a onClick={this.handleLogout}>
-                        Logout
+        const menu = (!loggedIn() ?
+            (<div></div>)
+            : (
+                <Menu style={{ textAlign: "right" }}>
+                    <Menu.Item>
+                        <Link to="/admin/change-profile">Change Profile</Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Link to="/admin/change-password">Change Password</Link>
+                    </Menu.Item>
+                    <Menu.Divider />
+                    <Menu.Item style={{ margin: 0 }}>
+                        <a onClick={this.handleLogout}>
+                            Logout
                     </a>
-                </Menu.Item>
-            </Menu>
+                    </Menu.Item>
+                </Menu>
+            )
         );
         return (
             <Dropdown overlay={menu}>
