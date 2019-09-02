@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import BlockUi from 'react-block-ui';
 import PaginationBar from '../PaginationBar';
 import SearchBar from '../SearchBar';
-import { SEARCH_ALL, CATEGORY_SEARCH_LIST } from '../../../utils/constant'
+import { LARGE, SEARCH_ALL, CATEGORY_SEARCH_LIST } from '../../../utils/constant'
 import { getDocumentsByFilter as getDocumentsByFilterAsync } from '../../../api/categories';
-import { LARGE } from '../../../utils/constant';
 import ErrorAlert from '../ErrorAlert';
 
 const searchList = CATEGORY_SEARCH_LIST;
@@ -125,12 +124,12 @@ export default class CategoryFilterAndSelect extends Component {
                     onSearch={this.handleSearch}
                     onInputChange={this.handleInputChange}
                 />
-                <table className="my-3 ml-3 table">
+                <table className="my-3 mx-3 table">
                     <thead className="text-center">
                         <tr className="row">
                             <th className="col-1"></th>
                             <th className="col-5 col-sm-3">Service</th>
-                            {(isLargeScreen || searchField === 'description')
+                            {(isLargeScreen || searchField === 'description' || searchField === SEARCH_ALL)
                                 && <th className="col-6 col-sm-8">Description</th>}
                         </tr>
                     </thead>
@@ -149,7 +148,7 @@ export default class CategoryFilterAndSelect extends Component {
                                     </div>
                                 </td>
                                 <td className="col-5 col-sm-3">{item.name}</td>
-                                {(isLargeScreen || searchField === 'description')
+                                {(isLargeScreen || searchField === 'description' || searchField === SEARCH_ALL)
                                     && <td className="col-6 col-sm-8">{item.description}</td>}
                             </tr>
                         ))}
