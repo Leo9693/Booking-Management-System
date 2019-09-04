@@ -7,7 +7,10 @@ import "antd/dist/antd.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-block-ui/style.css';
 
-axios.defaults.baseURL = 'https://booking-management-database.herokuapp.com/V1';
+axios.defaults.baseURL = 'http://handyman-cms.us-east-2.elasticbeanstalk.com/V1';
+
+// backup backend server
+//axios.defaults.baseURL = 'https://booking-management-database.herokuapp.com/V1';
 const baseURL = process.env.PUBLIC_URL || '';
 
 ReactDOM.render(
