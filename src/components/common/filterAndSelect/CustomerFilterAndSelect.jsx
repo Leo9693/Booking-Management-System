@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import BlockUi from 'react-block-ui';
 import PaginationBar from '../PaginationBar';
 import SearchBar from '../SearchBar';
-import { SEARCH_ALL, CUSTOMER_SEARCH_LIST } from '../../../utils/constant'
+import { LARGE, SEARCH_ALL, CUSTOMER_SEARCH_LIST } from '../../../utils/constant'
 import { getDocumentsByFilter as getDocumentsByFilterAsync } from '../../../api/customers';
-import { LARGE } from '../../../utils/constant';
 import ErrorAlert from '../ErrorAlert';
 
 const searchList = CUSTOMER_SEARCH_LIST;
@@ -125,12 +124,12 @@ export default class CustomerFilterAndSelect extends Component {
                     onSearch={this.handleSearch}
                     onInputChange={this.handleInputChange}
                 />
-                <table className="my-3 ml-3 table">
+                <table className="my-3 mx-3 table">
                     <thead className="text-center">
                         <tr className="row">
                             <th className="col-1"></th>
                             <th className="col-5 col-sm-3">Name</th>
-                            {(isLargeScreen || searchField === 'email')
+                            {(isLargeScreen || searchField === 'email' || searchField === SEARCH_ALL)
                                 && <th className="col-6 col-sm-5">Email</th>}
                             {(isLargeScreen || searchField === 'phone')
                                 && <th className="col-6 col-sm-2">Phone</th>}
@@ -151,7 +150,7 @@ export default class CustomerFilterAndSelect extends Component {
                                     </div>
                                 </td>
                                 <td className="col-5 col-sm-3">{item.name}</td>
-                                {(isLargeScreen || searchField === 'email')
+                                {(isLargeScreen || searchField === 'email' || searchField === SEARCH_ALL)
                                     && <td className="col-6 col-sm-5">{item.email}</td>}
                                 {(isLargeScreen || searchField === 'phone')
                                     && <td className="col-6 col-sm-2">{item.phone}</td>}

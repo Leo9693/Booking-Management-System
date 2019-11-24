@@ -2,6 +2,7 @@ import React from 'react';
 import { Statistic, Row, Col, Icon } from 'antd';
 import BlockUi from 'react-block-ui'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { actionCreators as categoryActionCreators } from '../Categories/store';
 import { actionCreators as businessActionCreators } from '../Businesses/store';
 import { actionCreators as customerActionCreators } from '../Customers/store';
@@ -45,7 +46,9 @@ class Home extends React.Component {
                         <Col xs={24} md={12}>
                             <Row>
                                 <Col span={8}>
-                                    <img className="img-cover" src={`${PUBLIC_URL}/business.png`} alt="business" />
+                                    <Link to="/businesses">
+                                        <img className="img-cover" src={`${PUBLIC_URL}/business.png`} alt="business" />
+                                    </Link>
                                 </Col>
                                 <Col span={14} offset={2}>
                                     <Statistic
@@ -60,7 +63,9 @@ class Home extends React.Component {
                         <Col xs={24} md={12}>
                             <Row>
                                 <Col span={8}>
-                                    <img className="img-cover" src={`${PUBLIC_URL}/customer.png`} alt="customer" />
+                                    <Link to="/customers">
+                                        <img className="img-cover" src={`${PUBLIC_URL}/customer.png`} alt="customer" />
+                                    </Link>
                                 </Col>
                                 <Col span={14} offset={2}>
                                     <Statistic
@@ -77,7 +82,9 @@ class Home extends React.Component {
                         <Col xs={24} md={12}>
                             <Row>
                                 <Col span={8}>
-                                    <img className="img-cover" src={`${PUBLIC_URL}/order.png`} alt="order" />
+                                    <Link to="/orders">
+                                        <img className="img-cover" src={`${PUBLIC_URL}/order.png`} alt="order" />
+                                    </Link>
                                 </Col>
                                 <Col span={14} offset={2}>
                                     <Statistic
@@ -92,7 +99,9 @@ class Home extends React.Component {
                         <Col xs={24} md={12}>
                             <Row>
                                 <Col span={8}>
-                                    <img className="img-cover" src={`${PUBLIC_URL}/category.png`} alt="category" />
+                                    <Link to="/categories">
+                                        <img className="img-cover" src={`${PUBLIC_URL}/category.png`} alt="category" />
+                                    </Link>
                                 </Col>
                                 <Col span={14} offset={2}>
                                     <Statistic
